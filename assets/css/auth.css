@@ -1,0 +1,39 @@
+.card > div{
+	background: url('../img/sidebar-2.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	/*background-color: black;*/
+}
+
+#left{
+	background-color: #FFF;
+	padding: 10px 20px;
+}
+
+.btn-round{
+	border-radius: 20px;
+}
+
+#right{
+	padding: 10px 5px;
+	padding-left: 20px;
+}
+
+#right *{
+	color: #fff;
+}
+
+#right h1{
+	font-weight: bolder;
+	font-size: 35pt;
+}
+
+#copyright{
+	margin-top: 10px;
+	color: #FFF;
+}
+
+#copyright a{
+	color: yellow;
+}

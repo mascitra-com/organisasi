@@ -50,7 +50,7 @@ class Auth extends MY_Controller {
 	{
         # set configuration for view
         $this->_view['page']  = 'auth/login';
-        $this->_view['title'] = 'Login HOTELS';
+        $this->_view['title'] = 'Login Organisasi';
 		$this->data['title'] = $this->lang->line('login_heading');
 
 		//validate form input

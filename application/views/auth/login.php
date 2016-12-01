@@ -6,11 +6,11 @@
         <form action="<?=site_url('auth/login')?>" method="post" accept-charset="utf-8">
           <div class="form-group">
             <label for="">USERNAME</label>
-            <input type="text" class="form-control" name="identity" placeholder="username">
+            <input type="text" class="form-control" name="identity" placeholder="Username">
           </div>
           <div class="form-group">
             <label for="">PASSWORD</label>
-            <input type="password" class="form-control" name="password" placeholder="password">
+            <input type="password" class="form-control" name="password" placeholder="Password">
           </div>
           <div class="form-group">
             <label>
@@ -23,7 +23,7 @@
                   <button class="btn btn-primary btn-round" type="submit">Masuk</button>
               </div>
               <div class="btn-group">
-                  <button class="btn btn-warning btn-round" type="button">Kembali</button>
+                  <button class="btn btn-warning btn-round" type="reset">Reset</button>
               </div>
             </div>
           </div>
@@ -31,12 +31,12 @@
           <a href="<?= site_url('auth/forgot_password') ?>">Lupa password?</a>
       </div>
       <div class="col-md-6" id="right">
-        <h1>HOTELS</h1>
-        <span>Tempat mencari hotel</span>
+        <h1>LOREM IPSUM</h1>
+        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, unde?</p>
         <a href="" class="btn btn-success">Daftar disini</a>
       </div>
     </div>
   </div>
-<span id="copyright">copyright <a href="http://www.mascitra.com">MasCitra.com</a> &copy <?=date('Y')?>. All right reserved.</span>
+<span id="copyright">Copyright <a href="http://www.mascitra.com">MasCitra.com</a> &copy <?=date('Y')?>. All right reserved.</span>
 </div>

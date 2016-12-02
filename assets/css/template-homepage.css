@@ -1,0 +1,54 @@
+/*@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:300,400');*/
+
+body{
+	background-color: #bdc3c7;
+}
+
+.navbar{
+	padding: 10px 10px;
+}
+
+.navbar .navbar-brand{
+	font-size: 22pt;
+	font-weight: 700;
+	font-family: 'Montserrat', 'sans-serif';
+	padding-left: 75px;
+	color: #1abc9c;
+}
+
+.navbar ul.navbar-right{
+	padding-right: 50px; 
+}
+
+.navbar ul.nav li{
+	font-size: 11pt;
+	font-weight: 400;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.navbar ul.nav li a{
+	color: #212121;
+}
+
+.navbar ul.nav li a:hover{
+	color: red;
+}
+
+.footer{
+	height: 60px;
+	position: relative;
+	bottom: 0;
+	padding: 10px 0;
+	background-color: grey;
+}
+
+.footer h4.title{
+	font-weight: 700;
+	font-family: 'Montserrat', 'sans-serif';
+}
+
+@media (max-width: 768px) {
+	.navbar .navbar-brand{
+		padding-left: 10px;
+	}
+}

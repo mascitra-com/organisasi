@@ -1,0 +1,40 @@
+.jumbotron{
+	margin: 0;
+	min-height: 400px;
+}
+
+.jumbotron .container p, p.content{
+	font-family: 'Roboto', 'sans-serif';
+	font-weight: 400;
+}
+
+.jumbotron .container h1, h1.title{
+	font-family: 'Montserrat', 'sans-serif';
+	font-weight: 700;
+}
+
+.navbar{
+	margin-bottom: 0;
+}
+
+.container-fluid .section{
+	padding: 15px 10px;
+	background-color: #FFF;
+}
+
+.container-fluid .section > div{
+	padding: 15px;
+}
+
+.container-fluid .section .title{
+	margin-top:0;
+}
+
+.container-fluid .section .content{
+	font-size: 12pt;
+}
+
+.container-fluid .section img{
+	height: 200px;
+	background-color: grey;
+}

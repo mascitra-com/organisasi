@@ -1,7 +1,17 @@
-/*@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:300,400');*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:300,400');
 
 body{
-	background-color: #bdc3c7;
+	background-color: #FFF;
+	padding-top: 50px;
+}
+
+p{
+	font-family: 'Roboto', 'sans-serif';
+	font-weight: 400;
+}
+
+img{
+	object-fit: cover;
 }
 
 .navbar{
@@ -35,20 +45,52 @@ body{
 }
 
 .footer{
-	height: 60px;
+	min-height: 80px;
 	position: relative;
 	bottom: 0;
 	padding: 10px 0;
-	background-color: grey;
+	padding-top: 30px;
+	background-color: #16a085;
+	color: #8ff0dc;
 }
 
-.footer h4.title{
-	font-weight: 700;
+.footer .site-map{
+	float: right;
+}
+.footer .site-map a{
+	margin-right: 20px;
+	text-decoration: none;
+	color: #8ff0dc;
 	font-family: 'Montserrat', 'sans-serif';
+}
+
+button.btn, a.btn{
+	font-family: 'Roboto', 'sans-serif';
+	font-weight: 300;
+	font-size: smaller;
+	border-radius: 3px;
+	box-shadow: -1px 1px 3px rgba(0,0,0,.3);
+}
+
+.page-header{
+	margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
 	.navbar .navbar-brand{
 		padding-left: 10px;
+	}
+
+	.footer{
+		padding-top: 20px;
+	}
+
+	.footer .site-map{
+		float: none;
+		margin-top: 5px;
+	}
+
+	.footer .site-map a{
+		margin-right: 10px;
 	}
 }

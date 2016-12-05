@@ -1,6 +1,8 @@
 .jumbotron{
 	margin: 0;
 	min-height: 400px;
+	background-color: #16a085;
+	color: #FFF;
 }
 
 .jumbotron .container p, p.content{
@@ -30,11 +32,31 @@
 	margin-top:0;
 }
 
-.container-fluid .section .content{
+#sejarah .section p{
 	font-size: 12pt;
+	font-weight: lighter;
 }
 
 .container-fluid .section img{
 	height: 200px;
+	width: 100%;
 	background-color: grey;
+}
+
+#news img.news-thumbnail{
+	height: 180px;
+	background-color: grey;
+}
+
+#news .caption .title{
+	margin-top: 0px;
+	font-weight: bolder;
+}
+
+#news .caption .date{
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: small;
+	color: rgba(0,0,0,.5);
 }

@@ -16,12 +16,13 @@ img{
 
 .navbar{
 	padding: 10px 10px;
+	background-color: #FFF;
 }
 
 .navbar .navbar-brand{
 	font-size: 22pt;
-	font-weight: 700;
 	font-family: 'Montserrat', 'sans-serif';
+	font-weight: 700;
 	padding-left: 75px;
 	color: #1abc9c;
 }
@@ -33,7 +34,7 @@ img{
 .navbar ul.nav li{
 	font-size: 11pt;
 	font-weight: 400;
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
 
 .navbar ul.nav li a{
@@ -42,6 +43,11 @@ img{
 
 .navbar ul.nav li a:hover{
 	color: red;
+}
+
+.navbar ul.nav li .navbar-btn{
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .footer{

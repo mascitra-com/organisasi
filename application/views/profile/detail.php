@@ -12,4 +12,4 @@
         <td><?= $profile->body ?></td>
     </tr>
 </table>
-<a href="<?=site_url('profile')?>">Kembali</a>
+<a href="<?=site_url('profile')?>" class="btn btn-default">Kembali</a>

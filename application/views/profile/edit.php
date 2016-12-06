@@ -13,4 +13,5 @@
         <textarea class="form-control" id="body" name="body"><?= $profile->body ?></textarea>
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
+    <a href="<?=site_url('profile')?>" class="btn btn-default">Kembali</a>
 </form>

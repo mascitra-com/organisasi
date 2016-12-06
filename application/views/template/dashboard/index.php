@@ -10,12 +10,20 @@
 	<div class="container-fluid display-table">
 		<div class="row display-table-row">
 			<!-- LOAD SIDEBAR -->
-			<?php $this->load->view('template/dashboard/sidebar'); ?>
+			<div class="col-sm-1 col-md-2 display-table-cell hidden-xs" id="side-nav">
+				<?php $this->load->view('template/dashboard/sidebar'); ?>
+			</div>
 			
 			<!-- MAIN CONTENT -->
-			<div class="col-md-10 display-table-cell top">
+			<div class="col-sm-11 col-md-10 display-table-cell top">
 				<!-- LOAD NAVBAR -->
 				<?php $this->load->view('template/dashboard/navbar'); ?>
+				<!-- LOAD PAGE -->
+				<?php 
+					if(isset($_view['page'])):
+						$this->load->view($_view['page']);
+					endif;
+				?>
 				<!-- LOAD FOOTER -->
 				<?php $this->load->view('template/dashboard/footer') ?>
 			</div>

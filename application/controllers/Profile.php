@@ -73,6 +73,11 @@ class Profile extends MY_Controller
 
     public function destroy($id)
     {
-        $this->profile_model->delete($id);
+        if($this->profile_model->delete(array($id))){
+            $this->message('<strong>Berhasil</strong> menghapus Data Profil', 'success');
+        } else {
+            $this->message('<strong>Gagal</strong> menghapus Data Profil', 'danger');
+        }
+        redirect('profile');
     }
 }

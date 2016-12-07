@@ -196,6 +196,7 @@ class MY_Model extends CI_Model
         They add user id on create and update. If you comment this out don't forget to do the same for the methods()*/
         $this->before_create[]='add_creator';
         $this->before_update[]='add_updater';
+        $this->before_delete[]='add_deleter';
 
     }
 
@@ -1986,6 +1987,12 @@ class MY_Model extends CI_Model
     public function add_updater($data)
     {
 	    $data['updated_by'] = $_SESSION['user_id'];
+	    return $data;
+    }
+
+    public function add_deleter($data)
+    {
+	    $data['deleted_by'] = $_SESSION['user_id'];
 	    return $data;
     }
 }

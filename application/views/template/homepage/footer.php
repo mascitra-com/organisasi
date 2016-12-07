@@ -12,7 +12,7 @@
 					<a href="#">Agenda</a>
 					<a href="#">Galeri</a>
 					<a href="#">PPID</a>
-					<a href="<?=site_url('auth')?>">Login</a>
+					<a href="<?=site_url('auth/login')?>">Login</a>
 				</div>
 			</div>
 		</div>

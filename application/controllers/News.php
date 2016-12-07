@@ -12,7 +12,7 @@ class News extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->_view['template'] = 'template/news/index';
+        $this->_view['template'] = 'template/dashboard/index';
         $this->load->model('news_model');
     }
 
@@ -73,7 +73,7 @@ class News extends MY_Controller
 
     public function destroy($id)
     {
-        if($this->news_model->delete(array($id))){
+        if($this->news_model->delete($id)){
             $this->message('<strong>Berhasil</strong> menghapus Berita', 'success');
         } else {
             $this->message('<strong>Gagal</strong> menghapus Berita', 'danger');

@@ -17,7 +17,7 @@
             <td>
                 <a href="<?=site_url('agenda/show/'.$agenda->id)?>">Detail</a>
                 <a href="<?=site_url('agenda/edit/'.$agenda->id)?>">Edit</a>
-                <a href="<?=site_url('agenda/destroy/'.$agenda->id)?>">Hapus</a>
+                <a href="<?=site_url('agenda/destroy/'.$agenda->id)?>" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
             </td>
         </tr>
     <?php endforeach; endif; ?>

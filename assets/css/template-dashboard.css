@@ -1,7 +1,7 @@
 /*@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:300,400');*/
 
 html,body{
-	background-color: #bdc3c7;
+	background-color:#ededed;
 	color: #333;
 	font-family: 'Roboto', sans-serif;
 	height: 100%;
@@ -36,7 +36,6 @@ html,body{
 	color:#094338;
 	text-align: center;
 	margin:10px;
-	margin-bottom: 25px;
 }
 
 #side-nav ul{
@@ -49,10 +48,12 @@ html,body{
 	display: block;
 	padding: 12px 20px;
 	padding-right: 5px;
-	text-decoration: none;
 	color: #FFF;
 	font-family: 'Roboto', sans-serif;
 	font-size: 15px;
+	font-weight: 300;
+	text-decoration: none;
+	text-transform: capitalize;
 }
 
 #side-nav a:hover{
@@ -69,13 +70,29 @@ html,body{
 }
 
 #side-nav .glyphicon{
+	font-size: 20px;
 	margin-right: 10px;
+}
+
+#side-nav .nav-label, #side-nav .glyphicon{
+	vertical-align: middle;
 }
 
 #top-nav{
 	background-color: #FFF;
 	padding: 10px;
 	padding-bottom: 15px;
+}
+
+#top-nav .top-nav-title{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 18px;
+	font-weight: 400;
+	color:#777;
+}
+
+#content{
+	padding: 20px;
 }
 
 #footer-nav{
@@ -94,4 +111,20 @@ html,body{
 
 .top{
 	vertical-align: top;
+}
+
+@media (max-width: 767px) {
+	#side-nav{
+		width: 60px;
+	}
+
+	#side-nav .link a .nav-label{
+		display: none;!important
+	}
+}
+
+@media (max-width: 991px) {
+	#side-nav .link a .nav-label{
+		display: none;!important
+	}
 }

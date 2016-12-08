@@ -41,7 +41,7 @@ class Profile extends MY_Controller {
 	}
 
 	public function show($id = 1) {
-		$this->_data['profile'] = $this->profile_model->as_array()->get(array('id' => $id));
+		$this->_data['profile'] = $this->profile_model->get(array('id' => $id));
 		$this->_view['title'] = 'Detail Profil';
 		$this->_view['page'] = 'profile/detail';
 		$this->init();

@@ -26,9 +26,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm10">
-                    <button class="btn btn-primary" type="submit">Simpan</button>
-                    <button class="btn btn-warning" type="reset">Batal</button>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" type="submit">Simpan</button>
+                    <button class="btn btn-default" type="reset">Batal</button>
                 </div>
             </div>
         </form>

@@ -38,7 +38,7 @@ class MY_Controller extends CI_Controller {
 	 * @param string $msg = isi pesan
 	 * @param string $typ = tipe pesan (default, primary, success, warning, danger)
 	 */
-	protected function message($msg = 'pesan', $typ = 'default') {
+	protected function message($msg = 'pesan', $typ = 'info') {
 		$this->session->set_flashdata('message', array($msg, $typ));
 	}
 

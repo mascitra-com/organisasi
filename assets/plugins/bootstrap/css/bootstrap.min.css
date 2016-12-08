@@ -5544,19 +5544,21 @@ button.list-group-item-danger.active:hover {
 .panel {
     margin-bottom: 20px;
     background-color: #fff;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .05)
+    /*border: 1px solid transparent;*/
+    border-radius: 0px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
 }
 .panel-body {
     padding: 15px
 }
 .panel-heading {
-    padding: 10px 15px;
+    padding: 17px 15px;
     border-bottom: 1px solid transparent;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px
+    /*border-top-left-radius: 3px;*/
+    /*border-top-right-radius: 3px;*/
+    text-transform: uppercase;
+    
 }
 .panel-heading>.dropdown .dropdown-toggle {
     color: inherit
@@ -5564,8 +5566,16 @@ button.list-group-item-danger.active:hover {
 .panel-title {
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 16px;
-    color: inherit
+    font-size: 17px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 700;
+    color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: normal;
+    width: 75%;
+    padding-top: 5px;
 }
 .panel-title>.small,
 .panel-title>.small>a,
@@ -5777,7 +5787,7 @@ button.list-group-item-danger.active:hover {
     border-bottom: 1px solid #ddd
 }
 .panel-default {
-    border-color: #ddd
+    /*border-color: #ddd*/
 }
 .panel-default>.panel-heading {
     color: #333;
@@ -5795,7 +5805,7 @@ button.list-group-item-danger.active:hover {
     border-bottom-color: #ddd
 }
 .panel-primary {
-    border-color: #337ab7
+    /*border-color: #337ab7*/
 }
 .panel-primary>.panel-heading {
     color: #fff;
@@ -5813,12 +5823,12 @@ button.list-group-item-danger.active:hover {
     border-bottom-color: #337ab7
 }
 .panel-success {
-    border-color: #d6e9c6
+    /*border-color: #d6e9c6*/
 }
 .panel-success>.panel-heading {
-    color: #3c763d;
-    background-color: #dff0d8;
-    border-color: #d6e9c6
+    color: #FFF;
+    background-color: #1abc9c;
+    border-color: #16a085
 }
 .panel-success>.panel-heading+.panel-collapse>.panel-body {
     border-top-color: #d6e9c6
@@ -5831,11 +5841,11 @@ button.list-group-item-danger.active:hover {
     border-bottom-color: #d6e9c6
 }
 .panel-info {
-    border-color: #bce8f1
+    /*border-color: #bce8f1*/
 }
 .panel-info>.panel-heading {
-    color: #31708f;
-    background-color: #d9edf7;
+    color: #FFF;
+    background-color: #3498db;
     border-color: #bce8f1
 }
 .panel-info>.panel-heading+.panel-collapse>.panel-body {
@@ -5849,12 +5859,12 @@ button.list-group-item-danger.active:hover {
     border-bottom-color: #bce8f1
 }
 .panel-warning {
-    border-color: #faebcc
+    /*border-color: #faebcc*/
 }
 .panel-warning>.panel-heading {
-    color: #8a6d3b;
-    background-color: #fcf8e3;
-    border-color: #faebcc
+    color: #333;
+    background-color: #ffff00;
+    border-color: #ffbf00
 }
 .panel-warning>.panel-heading+.panel-collapse>.panel-body {
     border-top-color: #faebcc
@@ -5867,12 +5877,12 @@ button.list-group-item-danger.active:hover {
     border-bottom-color: #faebcc
 }
 .panel-danger {
-    border-color: #ebccd1
+    /*border-color: #ebccd1*/
 }
 .panel-danger>.panel-heading {
-    color: #a94442;
-    background-color: #f2dede;
-    border-color: #ebccd1
+    color: #FFF;
+    background-color: #e74c3c;
+    border-color: #c0392b
 }
 .panel-danger>.panel-heading+.panel-collapse>.panel-body {
     border-top-color: #ebccd1

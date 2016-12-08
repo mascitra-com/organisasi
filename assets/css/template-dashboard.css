@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400|Open+Sans:400,700');
 
 html,body{
-	background-color:#efefef;
+	background-color:#FFF;
 	color: #333;
 	font-family: 'Roboto', sans-serif;
 	height: 100%;
@@ -27,15 +27,19 @@ html,body{
 }
 
 #side-nav{
-	background-color: #FFF;
+	background-color: #444;
 	padding: 0;
 }
 
 #side-nav .title{
-	padding: 0px 25px;
-	margin-bottom:20px;
-	font-family: 'Roboto Condensed', sans-serif;
+	padding: 15px 25px;
+	margin: 0;
+	margin-bottom: 20px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
 	text-align: left;
+	text-transform: lowercase;
+	letter-spacing: 1px;
 	color:#FFF;
 	background-color: #159d82;
 }
@@ -50,16 +54,17 @@ html,body{
 	display: block;
 	padding: 17px 25px;
 	padding-right: 5px;
-	color: #444;
-	font-family: 'Roboto Condensed', sans-serif;
+	color: #FFF;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
 	font-weight: 400;
 	text-decoration: none;
-	text-transform: uppercase;
+	text-transform: capitalize;
 }
 
 #side-nav a:hover{
 	color: #1fe0ba;
+	border-left: 2px #159d82 solid;
 }
 
 #side-nav .active a{
@@ -67,35 +72,51 @@ html,body{
 }
 
 #side-nav .collapseable{
-	background-color: #FFF;
-	border-left: 5px #3f5973 solid;
+	background-color: #333;
+	border-left: 5px #111 solid;
 }
 
-#side-nav .glyphicon{
+#side-nav .fa{
 	font-size: 20px;
 	margin-right: 15px;
 }
 
-#side-nav .nav-label, #side-nav .glyphicon{
+#side-nav .nav-label, #side-nav .fa{
 	vertical-align: middle;
 }
 
 #top-nav{
 	/*background-color:#ededed;*/
-	padding: 10px;
-	padding-bottom: 15px;
-	border-bottom: 1px #CCC solid;
+	padding: 13px 15px;
+	padding-right: 20px;
+	/*border-bottom: 1px #CCC solid;*/
 }
 
 #top-nav .top-nav-title{
-	font-family: 'Roboto Condensed', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-size: 18px;
 	font-weight: 400;
-	color:#777;
+	color:#8c8c8c;
+}
+
+#top-nav .top-nav-menu{
+	text-decoration: none;
+	color: #8c8c8c;
+	font-size: 15px;
+	margin-left: 18px;
+}
+
+#top-nav .top-nav-menu i{
+	font-size: 20px;
+	margin-right: 7px;
+}
+
+#top-nav .top-nav-menu i, #top-nav .top-nav-menu span{
+	vertical-align: middle;
 }
 
 #content{
-	padding: 20px;
+	padding: 20px 15px;
 }
 
 #footer-nav{

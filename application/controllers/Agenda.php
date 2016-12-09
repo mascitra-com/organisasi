@@ -42,11 +42,21 @@ class Agenda extends MY_Controller {
 		}
 	}
 
-	public function show($id = 1) {
-		$this->_data['agenda'] = $this->agenda_model->get(array('id' => $id));
-		$this->_view['title'] = 'Detail Agenda';
-		$this->_view['page'] = 'agenda/detail';
-		$this->init();
+	public function show($id = NULL) {
+		if ($id != NULL) {
+			if ($this->agenda_model->get(array('id' => $id))) {
+				$this->_data['agenda'] = $this->agenda_model->get(array('id' => $id));
+				$this->_view['title'] = 'Detail Agenda';
+				$this->_view['page'] = 'agenda/detail';
+				$this->init();
+			}
+			else{
+				$this->message('<strong>Gagal</strong>. Agenda tidak ditemukan', 'warning');
+				$this->go('agenda');
+			}
+		}else{
+			$this->go('agenda');
+		}
 	}
 
 	public function edit($id = NULL) {

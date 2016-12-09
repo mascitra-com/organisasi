@@ -40,18 +40,50 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function show($id = 1) {
-		$this->_data['profile'] = $this->profile_model->get(array('id' => $id));
-		$this->_view['title'] = 'Detail Profil';
-		$this->_view['page'] = 'profile/detail';
-		$this->init();
+	public function show($id = NULL) {
+		if ($id != NULL) 
+		{
+			$profiles = $this->profile_model->get(array('id' => $id));
+				if ($profiles) 
+				{
+					$this->_data['profile'] = $profiles;
+					$this->_view['title'] = 'Detail Profil';
+					$this->_view['page'] = 'profile/detail';
+					$this->init();
+				}
+				else
+				{
+					$this->message('<strong>Gagal</strong>. Profil tidak ditemukan', 'warning');
+					$this->go('profile');
+				}
+		}
+		else
+		{
+			$this->go('profile');
+		}
 	}
 
-	public function edit($id = 1) {
-		$this->_data['profile'] = $this->profile_model->get(array('id' => $id));
-		$this->_view['title'] = 'Edit Profil';
-		$this->_view['page'] = 'profile/edit';
-		$this->init();
+	public function edit($id = NULL) {
+		if ($id != NULL) 
+		{
+			$profiles = $this->profile_model->get(array('id' => $id));
+				if ($profiles) 
+				{
+					$this->_data['profile'] = $profiles;
+					$this->_view['title'] = 'Edit Profil';
+					$this->_view['page'] = 'profile/edit';
+					$this->init();
+				}
+				else
+				{
+					$this->message('<strong>Gagal</strong>. Profil tidak ditemukan', 'warning');
+					$this->go('profile');
+				}
+		}
+		else
+		{
+			$this->go('profile');
+		}
 	}
 
 	public function update() {

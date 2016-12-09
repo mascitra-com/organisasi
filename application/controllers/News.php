@@ -58,7 +58,7 @@ class News extends MY_Controller
         $this->init();
     }
     
-    public function update()
+    public function update($id = NULL)
     {
         $update_data = $this->input->post();
         $update_id = $update_data['id'];

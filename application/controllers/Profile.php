@@ -86,13 +86,14 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function update() {
-		$data = $this->input->post();
+	public function update($id = NULL) {
+        $update_data = $this->input->post();
 		if ($this->profile_model->from_form(NULL, NULL, array('id'))->update()) {
 			$this->message('<strong>Berhasil</strong> mengedit Data Profil', 'success');
 			redirect('profile');
 		} else {
-			$this->_data['profile'] = (object) $data;
+            $update_data['id'] = $id;
+			$this->_data['profile'] = (object) $update_data;
 			$this->_view['title'] = 'Edit Profil';
 			$this->_view['page'] = 'profile/edit';
 			$this->init();

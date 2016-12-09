@@ -6,6 +6,9 @@
 	<!-- Load style/css -->
 	<?php $this->load->view('template/_main/styles') ?>
 	<link rel="stylesheet" href="<?=base_url('assets/css/template-auth.css')?>">
+	<script type="text/javascript">
+		var site_url = <?= site_url() ?>
+	</script>
 </head>
 <body>
 	<!-- Load message -->

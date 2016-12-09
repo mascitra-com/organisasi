@@ -10,14 +10,14 @@ class Auth extends MY_Controller {
 		$this->load->helper(array('url', 'language'));
 
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-		$this->_view['template'] = 'template/auth/index'; # Set template location
+		$this->_view['template'] = 'template/dashboard/index'; # Set template location
 		$this->_view['css'] = 'auth'; # Set CSS
 		$this->lang->load('auth');
 	}
 
 	// redirect if needed, otherwise display the user list
 	public function index() {
-
+        $this->data['title'] = "Daftar Pengguna";
 		if (!$this->ion_auth->logged_in()) {
 			// redirect them to the login page
 			redirect('auth/login', 'refresh');
@@ -47,6 +47,7 @@ class Auth extends MY_Controller {
 		# set configuration for view
 		$this->_view['page'] = 'auth/login';
 		$this->_view['title'] = 'Login Organisasi';
+        $this->_view['template'] = 'template/auth/index'; # Set template location
 		$this->data['title'] = $this->lang->line('login_heading');
 
 		//validate form input
@@ -61,7 +62,7 @@ class Auth extends MY_Controller {
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
 				//if the login is successful
 				//redirect them back to the home page
-				$this->session->set_flashdata('message', $this->ion_auth->messages());
+				$this->session->set_flashdata('message', array($this->ion_auth->messages(), 'success'));
 				redirect('dashboard', 'refresh');
 			} else {
 				// if the login was un-successful
@@ -677,6 +678,13 @@ class Auth extends MY_Controller {
 		$this->_render_page('auth/edit_group', $this->data);
 	}
 
+    public function groups()
+    {
+        $this->data['title'] = "Groups";
+        $this->data['groups'] = $this->ion_auth->groups()->result();
+        $this->_render_page('auth/groups', $this->data);
+	}
+
 	public function _get_csrf_nonce() {
 		$this->load->helper('string');
 		$key = random_string('alnum', 8);
@@ -698,14 +706,10 @@ class Auth extends MY_Controller {
 
 	public function _render_page($view, $data = null, $returnhtml = false) //I think this makes more sense
 	{
-
-		$this->viewdata = (empty($data)) ? $this->data : $data;
-
-		$view_html = $this->load->view($view, $this->viewdata, $returnhtml);
-
-		if ($returnhtml) {
-			return $view_html;
-		}
+		$this->_data = $this->data;
+        $this->_view['title'] = $this->data['title'];
+        $this->_view['page'] = $view;
+        $this->init();
 //This will return html on 3rd argument being true
 	}
 

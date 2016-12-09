@@ -9,12 +9,6 @@
 				<span class="nav-label">Dashboard</span>
 			</a>
 		</li>
-		<li class="link <?=(strpos($_view['page'], 'profile')!==FALSE)?'active':''?>">
-			<a href="<?=site_url('profile')?>">
-				<i class="fa fa-user fa-fw"></i>
-				<span class="nav-label">Profil</span>
-			</a>
-		</li>
 		<li class="link <?=(strpos($_view['page'], 'news')!==FALSE)?'active':''?>">
 			<a href="#collapse-post" data-toggle="collapse" aria-controls="collapse-post">
 				<i class="fa fa-newspaper-o fa-fw"></i>
@@ -36,6 +30,12 @@
 				</li>
 			</ul>
 		</li>
+		<li class="link <?=(strpos($_view['page'], 'profile')!==FALSE)?'active':''?>">
+			<a href="<?=site_url('profile')?>">
+				<i class="fa fa-bank fa-fw"></i>
+				<span class="nav-label">Profil Organisasi</span>
+			</a>
+		</li>
 		<li class="link <?=(strpos($_view['page'], 'agenda')!==FALSE)?'active':''?>">
 			<a href="<?=site_url('agenda')?>">
 				<i class="fa fa-calendar fa-fw"></i>
@@ -43,10 +43,52 @@
 			</a>
 		</li>
 		<li class="link">
-			<a href="#">
-				<i class="fa fa-photo fa-fw"></i>
+			<a href="#collapse-gallery" data-toggle="collapse" aria-controls="collapse-gallery">
+				<i class="fa fa-picture-o fa-fw"></i>
 				<span class="nav-label">Galeri</span>
+				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
 			</a>
+			<ul class="collapse collapseable" id="collapse-gallery">
+				<li class="<?=(strpos($_view['page'], 'gallery/photos')!==FALSE)?'active':''?>">
+					<a href="<?=site_url('gallery/photos')?>">
+						<i class="fa fa-file-image-o fa-fw"></i>
+						<span class="nav-label">Foto</span>
+					</a>
+				</li>
+				<li class="<?=(strpos($_view['page'], 'gallery/videos')!==FALSE)?'active':''?>">
+					<a href="<?=site_url('gallery/videos')?>">
+						<i class="fa fa-file-video-o fa-fw"></i>
+						<span class="nav-label">Video</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="link <?=(strpos($_view['page'], 'User')!==FALSE)?'active':''?>">
+			<a href="#collapse-hak" data-toggle="collapse" aria-controls="collapse-hak">
+				<i class="fa fa-user fa-fw"></i>
+				<span class="nav-user">Hak Akses</span>
+				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
+			</a>
+			<ul class="collapse collapseable" id="collapse-hak">
+				<li>
+					<a href="<?=site_url('auth')?>">
+						<i class="fa fa-user fa-fw"></i>
+						<span class="nav-label">User</span>
+					</a>
+				</li>
+				<li>
+					<a href="<?=site_url('auth/create_group')?>">
+						<i class="fa fa-users fa-fw"></i>
+						<span class="nav-label">User Group</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-bars fa-fw"></i>
+						<span class="nav-label">Menu</span>
+					</a>
+				</li>
+			</ul>
 		</li>
 		<li class="link">
 			<a href="#">

@@ -5,8 +5,7 @@
                 <h3 class="panel-title">Agenda</h3>
             </div>
             <div class="panel-body">
-                <form action="<?=site_url('profile/update')?>" method="POST">
-                    <input type="text" name="id" value="<?=$profile->id?>" hidden>
+                <form action="<?=site_url('profile/update/'.$profile->id)?>" method="POST">
                     <div class="form-group">
                         <label for="name">Nama Profil</label>
                         <?php echo form_error('name'); ?>

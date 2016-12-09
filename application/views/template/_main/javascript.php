@@ -6,5 +6,5 @@
 
 <!-- Load CUSTOM JAVASCRIPT -->
 <?php if(isset($_view['js']) && !empty($_view['js'])): ?>
-<link rel="stylesheet" href="<?=base_url('assets/js/'.$_view['js'].'.js')?>">
+<script src="<?=base_url('assets/js/'.$_view['js'].'.js')?>"></script>
 <?php endif; ?>

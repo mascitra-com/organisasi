@@ -78,6 +78,7 @@
  * @property Ion_auth            $ion_auth             Layout Class
  ***************** YOUR MODELS *****************
  * @property ion_auth_model      $ion_auth_model
+ * @property gallery_model       $gallery_model
  * @property profile_model       $profile_model
  */
 class CI_Controller

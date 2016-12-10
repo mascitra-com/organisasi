@@ -205,7 +205,8 @@ if ( ! function_exists('form_input'))
 		$defaults = array(
 			'type' => 'text',
 			'name' => is_array($data) ? '' : $data,
-			'value' => $value
+			'value' => $value,
+			'class' => 'form-control'
 		);
 
 		return '<input '._parse_form_attributes($data, $defaults)._attributes_to_string($extra)." />\n";

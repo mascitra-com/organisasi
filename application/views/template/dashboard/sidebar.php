@@ -33,7 +33,7 @@
 		<li class="link <?=(strpos($_view['page'], 'profile')!==FALSE)?'active':''?>">
 			<a href="<?=site_url('profile')?>">
 				<i class="fa fa-bank fa-fw"></i>
-				<span class="nav-label">Profil Organisasi</span>
+				<span class="nav-label">Organisasi</span>
 			</a>
 		</li>
 		<li class="link <?=(strpos($_view['page'], 'agenda')!==FALSE)?'active':''?>">
@@ -66,7 +66,7 @@
 		<li class="link <?=(strpos($_view['page'], 'User')!==FALSE)?'active':''?>">
 			<a href="#collapse-hak" data-toggle="collapse" aria-controls="collapse-hak">
 				<i class="fa fa-user fa-fw"></i>
-				<span class="nav-user">Hak Akses</span>
+				<span class="nav-label">Hak Akses</span>
 				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
 			</a>
 			<ul class="collapse collapseable" id="collapse-hak">

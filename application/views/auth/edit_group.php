@@ -1,20 +1,26 @@
-<h1><?php echo lang('edit_group_heading');?></h1>
-<p><?php echo lang('edit_group_subheading');?></p>
-
-<div id="infoMessage"><?php echo $message;?></div>
-
-<?php echo form_open(current_url());?>
-
-      <p>
-            <?php echo lang('edit_group_name_label', 'group_name');?> <br />
-            <?php echo form_input($group_name);?>
-      </p>
-
-      <p>
-            <?php echo lang('edit_group_desc_label', 'description');?> <br />
-            <?php echo form_input($group_description);?>
-      </p>
-
-      <p><?php echo form_submit('submit', lang('edit_group_submit_btn'));?></p>
-
-<?php echo form_close();?>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-success">
+			<div class="panel-heading">
+				<h3 class="panel-title">Edit Grup</h3>
+			</div>
+			<div class="panel-body">
+				<div id="infoMessage"><?php echo $message;?></div>
+				<form action="<?=current_url()?>" method="post">
+					<div class="form-group">
+						<label for="">Nama Grup</label>
+						<?php echo form_input($group_name);?>
+					</div>
+					<div class="form-group">
+						<label for="">Deskripsi Grup</label>
+						<?php echo form_input($group_description);?>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default">Simpan</button>
+						<button type="reset" class="btn btn-default">Batal</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

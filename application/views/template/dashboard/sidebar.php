@@ -77,13 +77,13 @@
 					</a>
 				</li>
 				<li>
-					<a href="<?=site_url('auth/create_group')?>">
+					<a href="<?=site_url('auth/groups')?>">
 						<i class="fa fa-users fa-fw"></i>
 						<span class="nav-label">User Group</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="<?=site_url('menu')?>">
 						<i class="fa fa-bars fa-fw"></i>
 						<span class="nav-label">Menu</span>
 					</a>

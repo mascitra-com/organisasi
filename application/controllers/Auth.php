@@ -162,6 +162,8 @@ class Auth extends MY_Controller {
 
 	// forgot password
 	public function forgot_password() {
+		$this->_view['template'] = 'template/auth/index';
+		$this->data['title'] = 'Lupa Password';
 		// setting validation rules by checking whether identity is username or email
 		if ($this->config->item('identity', 'ion_auth') != 'email') {
 			$this->form_validation->set_rules('identity', $this->lang->line('forgot_password_identity_label'), 'required');

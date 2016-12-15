@@ -14,7 +14,10 @@
                     <div class="form-group">
                         <label for="link">Link Menu</label>
                         <?php echo form_error('link'); ?>
-                        <input type="text" class="form-control" id="link" name="link" value="<?= $menu->link ?>">
+                        <div class="input-group">
+                            <div class="input-group-addon"><?=site_url().'/'?></div>
+                            <input type="text" class="form-control" id="link" name="link" value="<?= $menu->link ?>">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="menu_date">Deskripsi Menu</label>

@@ -13,6 +13,7 @@ class News extends MY_Controller
     {
         parent::__construct();
         $this->_view['template'] = 'template/dashboard/index';
+        $this->_view['css']      = 'news';
         $this->_view['js']       = 'news';
         $this->load->model('news_model');
     }

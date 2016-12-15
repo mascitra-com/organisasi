@@ -1,0 +1,16 @@
+.panel-body .row{
+	padding: 10px 0px;
+}
+
+.panel-body .row [class*="col-"]{
+	margin-top: 7px;
+}
+
+h3{
+	margin-top: 0;
+}
+
+.vcenter {
+	display: flex;
+	align-items: center;
+}

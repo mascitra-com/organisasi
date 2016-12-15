@@ -1,3 +1,15 @@
+$(document).ready(function(){
+    $("").click(function(){
+        $.post("url",
+        {
+          data: "".
+        },
+        function(data,status){
+            alert("Data: " + data + "\nStatus: " + status);
+        });
+    });
+});
+
 function coba() {
     alert('Fvck');
 }

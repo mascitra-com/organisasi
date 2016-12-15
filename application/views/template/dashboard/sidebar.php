@@ -17,15 +17,30 @@
 			</a>
 			<ul class="collapse collapseable" id="collapse-post">
 				<li>
-					<a href="#">
-						<i class="fa fa-pencil"></i>
-						<span class="nav-label">submenu</span>
+					<a href="<?=site_url('news/create')?>">
+						<i class="fa fa-fw fa-pencil"></i>
+						<span class="nav-label">Tulis Berita</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<i class="fa fa-pencil"></i>
-						<span class="nav-label">submenu</span>
+					<a href="<?=site_url('news')?>">
+						<i class="fa fa-fw fa-newspaper-o"></i>
+						<span class="nav-label">Daftar Berita</span>
+						<span class="nav-label pull-right"><span class="label label-success">10</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="<?=site_url('news/draft')?>">
+						<i class="fa fa-fw fa-clone"></i>
+						<span class="nav-label">Draft</span>
+						<span class="nav-label pull-right"><span class="label label-warning">02</span></span>
+					</a>
+				</li>
+				<li>
+					<a href="<?=site_url('news/archive')?>">
+						<i class="fa fa-fw fa-archive"></i>
+						<span class="nav-label">Berkas</span>
+						<span class="nav-label pull-right"><span class="label label-danger">15</span></span>
 					</a>
 				</li>
 			</ul>

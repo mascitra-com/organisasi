@@ -4,7 +4,14 @@
 <!-- Load BOOTSRAP -->
 <script src="<?=base_url('assets/plugins/bootstrap/js/bootstrap.min.js')?>"></script>
 
+
 <!-- Load CUSTOM JAVASCRIPT -->
 <?php if(isset($_view['js']) && !empty($_view['js'])): ?>
+
+<!-- Load Tiny MCE -->
+<?php if (in_array($_view['js'], array('news'))): ?>
+<script src="<?=base_url('assets/plugins/tinymce/tinymce.min.js')?>"></script>
+<?php endif ?>
+
 <script src="<?=base_url('assets/js/'.$_view['js'].'.js')?>"></script>
 <?php endif; ?>

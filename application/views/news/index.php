@@ -1,24 +1,33 @@
-<a href="<?=site_url('news/create')?>">Tambah Berita Baru</a>
-<table class="table">
-    <thead>
-    <th>No.</th>
-    <th>Nama Berita</th>
-    <th>Isi Berita</th>
-    <th>Aksi</th>
-    </thead>
-    <tbody>
-    <?php if(!empty($newses)): $no=1; foreach ($newses as $news): ?>
-        <tr>
-            <td><?=$no++?></td>
-            <td><?=$news->name?></td>
-            <td><?=$news->body?></td>
-            <td><?=$news->news_date?></td>
-            <td>
-                <a href="<?=site_url('news/show/'.$news->id)?>">Detail</a>
-                <a href="<?=site_url('news/edit/'.$news->id)?>">Edit</a>
-                <a href="<?=site_url('news/destroy/'.$news->id)?>" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
-            </td>
-        </tr>
-    <?php endforeach; endif; ?>
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title pull-left">Daftar Berita Aktif</h3>
+                <a href="<?=site_url('news/create')?>" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Berita Baru</a>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table table-hover table-striped">
+                    <tbody>
+                        <?php for($i=0;$i<3;$i++): ?>
+                        <tr>
+                            <td><img src="<?=base_url('assets/img/default.png')?>" alt="thumbnail" class="img-thumb"></td>
+                            <td>
+                                <h3>Judul Berita</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam molestias debitis labore similique voluptatibus quibusdam nostrum, aspernatur necessitatibus sapiente numquam. Adipisci sunt, dolor laudantium perferendis.</p>
+                                <span class="label label-default">18-12-2016</span>
+                                <span class="label label-default">admin abc</span>
+                            </td>
+                            <td class="text-nowrap vcenter">
+                                <a href="#" class="btn btn-xs btn-primary">aktif</a>
+                                <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                                <a href="#" class="btn btn-xs btn-default"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    <?php endfor; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

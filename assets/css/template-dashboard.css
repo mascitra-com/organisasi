@@ -85,6 +85,10 @@ html,body{
 	vertical-align: middle;
 }
 
+#side-nav .nav-label .label{
+	margin-right: 15px;
+}
+
 #top-nav{
 	/*background-color:#ededed;*/
 	padding: 13px 15px;
@@ -136,6 +140,11 @@ html,body{
 
 .top{
 	vertical-align: top;
+}
+
+img.img-thumb{
+	width: 120px;
+	object-fit: cover;
 }
 
 @media (max-width: 767px) {

@@ -13,6 +13,7 @@ class News extends MY_Controller
     {
         parent::__construct();
         $this->_view['template'] = 'template/dashboard/index';
+        $this->_view['js']       = 'news';
         $this->load->model('news_model');
     }
 
@@ -20,6 +21,22 @@ class News extends MY_Controller
     {
         $this->_view['title'] = 'Berita';
         $this->_view['page'] = 'news/index';
+        $this->_data['news'] = $this->news_model->with_user('fields:first_name,last_name')->get_all();
+        $this->init();
+    }
+
+    public function draft()
+    {
+        $this->_view['title'] = 'Berita';
+        $this->_view['page'] = 'news/draft';
+        $this->_data['news'] = $this->news_model->with_user('fields:first_name,last_name')->get_all();
+        $this->init();
+    }
+
+    public function archive()
+    {
+        $this->_view['title'] = 'Berita';
+        $this->_view['page'] = 'news/archive';
         $this->_data['news'] = $this->news_model->with_user('fields:first_name,last_name')->get_all();
         $this->init();
     }
@@ -78,6 +95,6 @@ class News extends MY_Controller
         } else {
             $this->message('<strong>Gagal</strong> menghapus Berita', 'danger');
         }
-        redirect('profile');
+        redirect('news');
     }
 }

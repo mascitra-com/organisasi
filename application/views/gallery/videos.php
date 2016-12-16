@@ -16,17 +16,24 @@
                 } ?>
                 <div class="col-xs-12 col-sm-6">
                     <div class="thumbnail">
-                        <iframe width="480" height="315" style="margin-left: 5pt;margin-top: 5pt"
-                                src="https://www.youtube.com/embed/<?= $video->link ?>?controls=1">
-                        </iframe>
+                        <?php if (!strpos($video->link, '.')) { ?>
+                            <iframe width="480" height="315" style="margin-left: 5pt;margin-top: 5pt"
+                                    src="https://www.youtube.com/embed/<?= $video->link ?>?controls=1">
+                            </iframe>
+                        <?php } else { ?>
+                            <video src="<?= $video->link ?>" controls width="480" height="315"
+                                   style="margin-left: 5pt;margin-top: 5pt">
+                                Sorry, your browser doesn't support embedded videos,
+                                but don't worry, you can <a href="<?= $video->link ?>">Download It</a>
+                                and watch it with your favorite video player!
+                            </video>
+                        <?php } ?>
                         <div class="caption">
                             <h3 class="title"><?= $video->name ?> </h3>
-                            <p><?= substr($video->description, 0, 30) ?>...</p>
-                            <p>
-                                <a href="#" class="btn btn-default">Detail</a>
-                                <a href="#" class="btn btn-primary">Edit</a>
-                                <a href="<?= site_url('gallery/destroy/video/' . $video->id) ?>" class="btn btn-danger">Hapus</a>
-                            </p>
+                            <hr>
+<!--                                <a href="#" class="btn btn-default">Detail</a>-->
+<!--                                <a href="#" class="btn btn-primary">Edit</a>-->
+                                <a href="<?= site_url('gallery/destroy/video/' . $video->id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
                         </div>
                     </div>
                 </div>

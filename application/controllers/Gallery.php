@@ -18,10 +18,10 @@ class Gallery extends MY_Controller
 
     public function photos()
     {
-        if(!$photos = $this->gallery_model->get_all(array('type_id' => '1'))){
+        if (!$photos = $this->gallery_model->get_all(array('type_id' => '1'))) {
             $photos = 'Tidak Ditemukan Foto';
         }
-        $this->_data['photos'] =  $photos;
+        $this->_data['photos'] = $photos;
         $this->_view['title'] = 'Galeri Foto';
         $this->_view['page'] = 'gallery/photos';
         $this->init();
@@ -29,7 +29,7 @@ class Gallery extends MY_Controller
 
     public function videos()
     {
-        if(!$videos = $this->gallery_model->get_all(array('type_id' => '2'))){
+        if (!$videos = $this->gallery_model->get_all(array('type_id' => '2'))) {
             $videos = 'Tidak Ditemukan Video';
         }
         $this->_data['videos'] = $videos;
@@ -77,9 +77,9 @@ class Gallery extends MY_Controller
     {
         $type = ($type_id == 1) ? 'photos' : 'videos';
         $config['file_name'] = $type . '-' . date('dmYHis');
-        $config['upload_path'] = './assets/img/' . $type . '/';
+        $config['upload_path'] = './assets/' . $type . '/';
         $config['allowed_types'] = 'gif|jpg|png|mp4|mpg|3gp|flv';
-        $config['max_size'] = 10000;
+        $config['max_size'] = 50000;
 
         $this->load->library('upload', $config);
 
@@ -88,12 +88,14 @@ class Gallery extends MY_Controller
             $this->go('gallery/create/' . $type_id);
         }
         $data = $this->upload->data();
-        return base_url('assets/img/photos/'. $data['file_name']);
+        return base_url('assets/' . $type . '/' . $data['file_name']);
     }
 
-    public function show($id = NULL)
+    public function show()
     {
-
+        $id = $this->input->get('id');
+        $data = $this->gallery_model->get(array('id' => $id));
+        echo json_encode($data);
     }
 
     public function edit($id = NULL)
@@ -115,6 +117,6 @@ class Gallery extends MY_Controller
         } else {
             $this->message('<strong>Gagal</strong> menghapus ' . $type, 'danger');
         }
-        redirect('gallery/'.$redirect);
+        redirect('gallery/' . $redirect);
     }
 }

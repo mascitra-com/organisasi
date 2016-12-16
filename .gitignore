@@ -25,5 +25,5 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-/assets/img/videos/
-/assets/img/photos/
+/assets/videos/*
+/assets/photos/*

@@ -21,9 +21,10 @@
                             <h3 class="title"><?= $photo->name ?> </h3>
                             <p><?= substr($photo->description, 0, 30) ?>...</p>
                             <p>
-                                <a href="#" class="btn btn-default">Detail</a>
-                                <a href="#" class="btn btn-primary">Edit</a>
-                                <a href="<?= site_url('gallery/destroy/photo/' . $photo->id) ?>" class="btn btn-danger">Hapus</a>
+                                <button class="btn btn-default" onclick="detail(<?= $photo->id ?>)"><i class="fa fa-info-circle"></i> Detail</button>
+                                <!--                                <a href="#" class="btn btn-primary">Edit</a>-->
+                                <a href="<?= site_url('gallery/destroy/photo/' . $photo->id) ?>" class="btn btn-danger"><i
+                                            class="fa fa-trash"></i> Hapus</a>
                             </p>
                         </div>
                     </div>
@@ -38,3 +39,36 @@
         <?php } ?>
     </div>
 </div>
+<div id="detailModal" class="modal fade" role='dialog' data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title" id="name"></h3>
+            </div>
+            <div style="margin: 1em">
+                <img src="" id="image" class="img-responsive"><br/>
+                <p id="desc"></p>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function detail(id) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "<?=site_url('gallery/show?id=')?>" + id,
+            success: function (data) {
+                console.log(data)
+                $("#name").html(data.name);
+                $('#image').attr('src', data.link);
+                $("#desc").html(data.description);
+                $("#detailModal").modal();
+            }
+        });
+    }
+</script>

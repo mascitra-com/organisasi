@@ -105,12 +105,12 @@
 				</li>
 			</ul>
 		</li>
-		<li class="link">
-			<a href="#">
-				<i class="fa fa-cog fa-fw"></i>
-				<span class="nav-label">Pengaturan</span>
-			</a>
-		</li>
+<!--		<li class="link">-->
+<!--			<a href="#">-->
+<!--				<i class="fa fa-cog fa-fw"></i>-->
+<!--				<span class="nav-label">Pengaturan</span>-->
+<!--			</a>-->
+<!--		</li>-->
 		<li class="link">
 			<a href="<?=site_url('auth/logout')?>">
 				<i class="fa fa-cog fa-lock fa-fw"></i>

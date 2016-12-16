@@ -18,7 +18,10 @@ class Gallery extends MY_Controller
 
     public function photos()
     {
-        $this->_data['photos'] = $this->gallery_model->get_all(array('type_id' => '1'));
+        if(!$photos = $this->gallery_model->get_all(array('type_id' => '1'))){
+            $photos = 'Tidak Ditemukan Foto';
+        }
+        $this->_data['photos'] =  $photos;
         $this->_view['title'] = 'Galeri Foto';
         $this->_view['page'] = 'gallery/photos';
         $this->init();
@@ -26,7 +29,10 @@ class Gallery extends MY_Controller
 
     public function videos()
     {
-        $this->_data['videos'] = $this->gallery_model->get_all(array('type_id' => '2'));
+        if(!$videos = $this->gallery_model->get_all(array('type_id' => '2'))){
+            $videos = 'Tidak Ditemukan Video';
+        }
+        $this->_data['videos'] = $videos;
         $this->_view['title'] = 'Galeri Video';
         $this->_view['page'] = 'gallery/videos';
         $this->init();
@@ -63,7 +69,8 @@ class Gallery extends MY_Controller
         } else {
             $this->message('Gagal! menyimpan foto', 'danger');
         }
-        $this->go('gallery/create/' . $data['type_id']);
+        $type = ($data['type_id'] == 1) ? 'photos' : 'videos';
+        $this->go('gallery/' . $type);
     }
 
     public function do_upload($type_id)
@@ -81,7 +88,7 @@ class Gallery extends MY_Controller
             $this->go('gallery/create/' . $type_id);
         }
         $data = $this->upload->data();
-        return $data['full_path'];
+        return base_url('assets/img/photos/'. $data['file_name']);
     }
 
     public function show($id = NULL)
@@ -99,8 +106,14 @@ class Gallery extends MY_Controller
 
     }
 
-    public function destroy($id = NULL)
+    public function destroy($type = 'photo', $id = NULL)
     {
-
+        $type = ($type == 'photo') ? 'Foto' : 'Video';
+        if ($this->gallery_model->delete($id)) {
+            $this->message('<strong>Berhasil</strong> menghapus ' . $type, 'success');
+        } else {
+            $this->message('<strong>Gagal</strong> menghapus ' . $type, 'danger');
+        }
+        redirect('gallery');
     }
 }

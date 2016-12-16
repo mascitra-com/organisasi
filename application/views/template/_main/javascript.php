@@ -4,6 +4,8 @@
 <!-- Load BOOTSRAP -->
 <script src="<?=base_url('assets/plugins/bootstrap/js/bootstrap.min.js')?>"></script>
 
+<!-- Load jQuery UI -->
+<script src="<?=base_url('assets/plugins/jquery-ui/jquery-ui.min.js')?>"></script>
 
 <!-- Load CUSTOM JAVASCRIPT -->
 <?php if(isset($_view['js']) && !empty($_view['js'])): ?>
@@ -15,3 +17,7 @@
 
 <script src="<?=base_url('assets/js/'.$_view['js'].'.js')?>"></script>
 <?php endif; ?>
+
+<script type="text/javascript">
+	$("input[type='date']").datepicker();
+</script>

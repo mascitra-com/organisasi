@@ -6,8 +6,8 @@
 		for ($i=0; $i<count($url)-1; $i++)
 		{
 			$link .= '/'.$url[$i];
-			echo "<li><a href='".site_url($link)."'>$url[$i]</a></li>";
+			echo "<li><a href='".site_url($link)."'>".ucfirst($url[$i])."</a></li>";
 		}
-		echo "<li class='active'>$url[$i]</li>";
+		echo "<li class='active'>".ucfirst($url[$i])."</li>";
 	?>
 </ol>

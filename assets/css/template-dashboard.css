@@ -139,10 +139,6 @@ html,body{
 	vertical-align: top;
 }
 
-img.img-thumb{
-	width: 120px;
-}
-
 .title{
 	font-family: 'open-sans', sans-serif;
 	font-weight: 700;
@@ -155,6 +151,10 @@ img{
 @media (max-width: 767px) {
 	#side-nav{
 		width: 60px;
+	}
+
+	button span, a span{
+		display: none;!important
 	}
 
 	#side-nav .link a .nav-label{

@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-success">
-			<div class="panel-body" style="padding: 30px;">
+			<div class="panel-body" style="padding: 25px;">
 				<img src="<?=base_url('assets/img/bg-login.jpg')?>" class="img-fit" width="100%" height="280px" alt="thumbnail">
 				<h1 class="title">INI ADALAH JUDUL BERITA PADA HALAMAN DETAIL<br>INI JUDUL PADA BARIS KE DUA</h1>
 				<span class="label label-default"><i class="fa fa-calendar"></i> 12 Desember 2016</span>
@@ -28,9 +28,10 @@
 				dignissimos ipsam asperiores, laborum libero. Veritatis labore voluptatem illo fuga nulla accusamus quod esse, dicta 
 				eveniet placeat quos porro id reiciendis vel magni facilis. Dolorum maiores possimus sint, ratione deleniti, 
 				laboriosam accusamus, error eius mollitia dignissimos, cupiditate aliquam. Dignissimos, blanditiis.</p>
+				<br>
 				<div class="form-group">
-					<button class="btn btn-default">Edit Berita</button>
-					<button class="btn btn-default">Kembali</button>
+					<button class="btn btn-default"><i class="fa fa-pencil"></i> Edit Berita</button>
+					<button class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</button>
 				</div>
 			</div>
 		</div>

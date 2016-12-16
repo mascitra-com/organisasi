@@ -3,7 +3,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title pull-left">Profil</h3>
-                <a class="btn btn-default pull-right" href="<?=site_url('profile/create')?>"><i class="fa fa-plus-square fa-fw"></i> data profil</a>
+                <a class="btn btn-default pull-right" href="<?=site_url('profile/create')?>"><i class="fa fa-plus-square fa-fw"></i><span> data profil</span></a>
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">

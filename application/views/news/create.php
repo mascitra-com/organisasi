@@ -23,9 +23,9 @@
 						<textarea name="content" class="form-control tinymce" rows="10"></textarea>
 					</div>
 					<div class="form-group">
-						<button class="btn btn-default"><i class="fa fa-paper-plane"></i> Publish</button>
-						<button class="btn btn-default"><i class="fa fa-save"></i> Simpan ke draft</button>
-						<button class="btn btn-default"><i class="fa fa-refresh"></i> Batal</button>
+						<button class="btn btn-default"><i class="fa fa-paper-plane"></i><span> Publish</span></button>
+						<button class="btn btn-default"><i class="fa fa-save"></i><span> Simpan ke draft</span></button>
+						<button class="btn btn-default"><i class="fa fa-refresh"></i><span> Batal</span></button>
 					</div>
 				</form>
 			</div>

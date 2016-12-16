@@ -108,12 +108,13 @@ class Gallery extends MY_Controller
 
     public function destroy($type = 'photo', $id = NULL)
     {
+        $redirect = ($type == 'photo') ? 'photos' : 'videos';
         $type = ($type == 'photo') ? 'Foto' : 'Video';
         if ($this->gallery_model->delete($id)) {
             $this->message('<strong>Berhasil</strong> menghapus ' . $type, 'success');
         } else {
             $this->message('<strong>Gagal</strong> menghapus ' . $type, 'danger');
         }
-        redirect('gallery');
+        redirect('gallery/'.$redirect);
     }
 }

@@ -1,7 +1,7 @@
 <div class="row card">
-  <div class="col-md-5">
+  <div class="col-xs-10 col-md-3">
     <div class="row">
-      <div class="col-md-6" id="left">
+      <div class="col-md-12" id="left">
         <h1>LOGIN</h1>
         <form action="<?=site_url('auth/login')?>" method="post" accept-charset="utf-8">
           <div class="form-group">
@@ -29,12 +29,6 @@
           </div>
         </form>
           <a href="<?= site_url('auth/forgot_password') ?>">Lupa password?</a>
-      </div>
-      <div class="col-md-6" id="right">
-        <h1>LOREM IPSUM</h1>
-        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, unde?</p>
-        <a href="" class="btn btn-success">Daftar disini</a>
       </div>
     </div>
   </div>

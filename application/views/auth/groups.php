@@ -23,7 +23,7 @@
 							<td class="text-center"><?=$group->id?></td>
 							<td class="text-xs-left"><?=$group->name?></td>
 							<td class="text-xs-left"><?=$group->description?></td>
-							<td class="text-center"><a href="#" class="btn btn-default btn-xs">hak akses</a></td>
+							<td class="text-center"><a href="<?= site_url('privilege/kelola/'. $group->id) ?>" class="btn btn-default btn-xs">hak akses</a></td>
 							<td class="text-center">
 								<a href="<?=site_url('auth/edit_group/'.$group->id)?>" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>
 								<a href="#" class="btn btn-default btn-xs"><i class="fa fa-trash"></i></a>

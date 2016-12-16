@@ -16,16 +16,17 @@ class privilege extends MY_Controller {
 	}
 
 	public function index() {
-		$this->_view['title'] = 'privilege';
-		$this->_view['page'] = 'privilege/index';
-		$this->_data['privileges'] = $this->privilege_model->get_all();
-		$this->init();
+		$this->go('auth/groups');
 	}
 
 	public function kelola($id = NULL)
 	{
 		if ($id != NULL) {
 			if ($this->ion_auth->group($id)->row()) {
+				$this->load->model('privilege_model');
+				$available_menus = $this->privilege_model->where('id_groups', $id)->get();
+				// dump($available_menus);
+
 				$this->load->model('menu_model');
 				$this->_data['group'] = $this->ion_auth->group($id)->row();		
 				$this->_data['menus'] = $this->menu_model->get_all();
@@ -34,11 +35,11 @@ class privilege extends MY_Controller {
 				$this->init();
 			}else{
 				$this->message('<strong>Gagal</strong>. Privilege tidak ditemukan', 'warning');
-				$this->go('privilege');
+				$this->go('auth/groups');
 			}
 		}
 		else{
-			$this->go('privilege');
+			$this->go('auth/groups');
 		}
 	}
 
@@ -52,6 +53,26 @@ class privilege extends MY_Controller {
 		$data = $this->input->post();
 		$this->privilege_model->insert($data);
 		echo json_encode(array("status" => TRUE));
+	}
+
+	public function cek_privilege()
+	{
+		$data = $this->input->post();
+		$privilege_available = $this->privilege_model->where('id_groups', $data['id_groups'])->where('id_menu', $data['id_menu'])->get();
+		if ($privilege_available) {
+			echo json_encode(array("status" => TRUE));
+		}else{
+			echo json_encode(array("status" => FALSE));
+		}
+	}
+
+	public function destroy() {
+		$data = $this->input->post();
+		if ($this->privilege_model->delete(array('id_groups' => $data['id_groups'],'id_menu' => $data['id_menu']))) {
+			echo json_encode(array("status" => TRUE));
+		} else {
+			echo json_encode(array("status" => FALSE));
+		}
 	}
 
 	public function show($id = NULL) {
@@ -100,14 +121,5 @@ class privilege extends MY_Controller {
             $this->_view['page'] = 'privilege/edit';
             $this->init();
 		}
-	}
-
-	public function destroy($id) {
-		if ($this->privilege_model->delete($id)) {
-			$this->message('<strong>Berhasil</strong> menghapus Data privilege', 'success');
-		} else {
-			$this->message('<strong>Gagal</strong> menghapus Data privilege', 'danger');
-		}
-		redirect('privilege');
 	}
 }

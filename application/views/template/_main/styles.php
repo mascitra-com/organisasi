@@ -4,6 +4,9 @@
 <!-- Load FONTAWESOME -->
 <link rel="stylesheet" href="<?=base_url('assets/plugins/fontawesome/css/font-awesome.min.css')?>">
 
+<!-- Load jQuery UI -->
+<link rel="stylesheet" href="<?=base_url('assets/plugins/jquery-ui/jquery-ui.min.css')?>">
+
 <!-- Load CUSTOM CSS -->
 <?php if(isset($_view['css']) && !empty($_view['css'])): ?>
 <link rel="stylesheet" href="<?=base_url('assets/css/'.$_view['css'].'.css')?>">

@@ -24,8 +24,8 @@
                         <?php echo form_error('link'); ?>
                         <textarea class="form-control" name="deskripsi_menu" id="deskripsi_menu" placeholder="Deskripsi Menu" required><?= (isset($menu['deskripsi_menu'])) ? $menu['deskripsi_menu'] : ''; ?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                    <button type="reset" class="btn btn-default">Batal</button>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="reset" class="btn btn-default"><i class="fa fa-refresh"></i> Batal</button>
                 </form>
             </div>
         </div>

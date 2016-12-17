@@ -3,7 +3,7 @@
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title pull-left">Daftar Berita Aktif</h3>
-                <a href="<?=site_url('news/create')?>" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Berita Baru</a>
+                <a href="<?=site_url('news/create')?>" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> Berita Baru</a>
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">

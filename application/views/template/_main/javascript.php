@@ -11,7 +11,7 @@
 <?php if(isset($_view['js']) && !empty($_view['js'])): ?>
 
 <!-- Load Tiny MCE -->
-<?php if (in_array($_view['js'], array('news'))): ?>
+<?php if (in_array($_view['js'], array('news', 'gallery'))): ?>
 <script src="<?=base_url('assets/plugins/tinymce/tinymce.min.js')?>"></script>
 <?php endif ?>
 

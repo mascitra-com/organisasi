@@ -64,13 +64,19 @@
 				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
 			</a>
 			<ul class="collapse collapseable" id="collapse-gallery">
-				<li class="<?=(strpos($_view['page'], 'gallery/photos')!==FALSE)?'active':''?>">
+				<li>
+					<a href="<?=site_url('category')?>">
+						<i class="fa fa-tags fa-fw"></i>
+						<span class="nav-label">Kategori</span>
+					</a>
+				</li>
+                <li>
 					<a href="<?=site_url('gallery/photos')?>">
 						<i class="fa fa-file-image-o fa-fw"></i>
 						<span class="nav-label">Foto</span>
 					</a>
 				</li>
-				<li class="<?=(strpos($_view['page'], 'gallery/videos')!==FALSE)?'active':''?>">
+				<li>
 					<a href="<?=site_url('gallery/videos')?>">
 						<i class="fa fa-file-video-o fa-fw"></i>
 						<span class="nav-label">Video</span>

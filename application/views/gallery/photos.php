@@ -16,15 +16,18 @@
                 } ?>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                     <div class="thumbnail">
-                        <img src="<?= $photo->link ?>" alt="Foto" class="news-thumbnail">
+                        <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive">
                         <div class="caption">
                             <h3 class="title"><?= $photo->name ?> </h3>
-                            <p><?= substr($photo->description, 0, 30) ?>...</p>
+                            <p><?= (!empty($photo->description)) ? substr($photo->description, 0, 30) : 'Tidak ada Deskripsi' ?></p>
                             <p>
-                                <button class="btn btn-default" onclick="detail(<?= $photo->id ?>)"><i class="fa fa-info-circle"></i> Detail</button>
-                                <!--                                <a href="#" class="btn btn-primary">Edit</a>-->
+                                <button class="btn btn-default" onclick="detail(<?= $photo->id ?>)"><i
+                                            class="fa fa-info-circle"></i>
+                                </button>
+                                <a href="<?=site_url('gallery/edit/photo/'.$photo->id)?>" class="btn btn-primary"><i
+                                            class="fa fa-pencil"></i></a>
                                 <a href="<?= site_url('gallery/destroy/photo/' . $photo->id) ?>" class="btn btn-danger"><i
-                                            class="fa fa-trash"></i> Hapus</a>
+                                            class="fa fa-trash"></i></a>
                             </p>
                         </div>
                     </div>
@@ -63,7 +66,7 @@
             dataType: "json",
             url: "<?=site_url('gallery/show?id=')?>" + id,
             success: function (data) {
-                console.log(data)
+                console.log(data);
                 $("#name").html(data.name);
                 $('#image').attr('src', data.link);
                 $("#desc").html(data.description);

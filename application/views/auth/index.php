@@ -2,12 +2,12 @@
 	<div class="panel-heading">
 		<h3 class="panel-title pull-left"><?=lang('index_heading')?></h3>
 		<div class="btn-group pull-right" role="group">
-			<a href="<?=site_url('auth/create_user')?>" class="btn btn-default"><i class="fa fa-plus fa-fw"></i><i class="fa fa-user fa-fw"></i></a>
-			<a href="<?=site_url('auth/create_group')?>" class="btn btn-default"><i class="fa fa-plus fa-fw"></i><i class="fa fa-users fa-fw"></i></a>
+			<a href="<?=site_url('auth/create_user')?>" class="btn btn-default btn-sm"><i class="fa fa-plus fa-fw"></i><i class="fa fa-user fa-fw"></i></a>
+			<a href="<?=site_url('auth/create_group')?>" class="btn btn-default btn-sm"><i class="fa fa-plus fa-fw"></i><i class="fa fa-users fa-fw"></i></a>
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	<div class="panel-body table-responsive table-full-width">
+	<div class="panel-body table-responsive">
 		<table class="table table-hover table-striped">
 			<thead>
 				<tr>
@@ -41,8 +41,8 @@
 					</td>
 					<td class="text-center"><a href="<?=site_url('auth/edit_user/' . $user->id)?>" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a></td>
 				</tr>
-			<?php endforeach;?>
-		</tbody>
-	</table>
-</div>
+				<?php endforeach;?>
+			</tbody>
+		</table>
+	</div>
 </div>

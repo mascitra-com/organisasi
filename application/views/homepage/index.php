@@ -6,48 +6,44 @@
 	</div>
 </div>
 <div class="container-fluid" id="news">
-	<div class="page-header">
-		<h3>Berita terbaru</h3>
-	</div>
-	<div class="row section">
+	<div class="row">
 		<?php for($i=0; $i<4; $i++): ?>
 			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-				<div class="thumbnail">
-					<img src="https://s3.amazonaws.com/eb-blog-bloguk/wp-content/uploads/shutterstock_193539209-1.jpg" alt="gambar" class="news-thumbnail">
-					<div class="caption">
-						<span class="date"><span class="glyphicon glyphicon-bookmark"></span> <?=date('l, d M Y')?></span>
-						<h3 class="title">Judul Berita</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, nulla ullam laborum ipsa?</p>
-						<p><a href="#" role="button">Selengkapnya...</a></p>
-					</div>
-				</div>
+				
 			</div>
 		<?php endfor;?>
 	</div>
 </div>
 <div class="container-fluid">
-	<div class="row section">
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<div class="thumbnail">
-				<img src="https://s3.amazonaws.com/eb-blog-bloguk/wp-content/uploads/shutterstock_193539209-1.jpg" alt="gambar" class="news-thumbnail">
-				<div class="caption">
-					<span class="date"><span class="glyphicon glyphicon-bookmark"></span> <?=date('l, d M Y')?></span>
-					<h3 class="title">Judul Berita</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, nulla ullam laborum ipsa?</p>
-					<p><a href="#" role="button">Selengkapnya...</a></p>
-				</div>
-			</div>
+	<div class="row">
+		<div class="col-md-3">
+			
 		</div>
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<div class="thumbnail">
-				<img src="https://s3.amazonaws.com/eb-blog-bloguk/wp-content/uploads/shutterstock_193539209-1.jpg" alt="gambar" class="news-thumbnail">
-				<div class="caption">
-					<span class="date"><span class="glyphicon glyphicon-bookmark"></span> <?=date('l, d M Y')?></span>
-					<h3 class="title">Judul Berita</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, nulla ullam laborum ipsa?</p>
-					<p><a href="#" role="button">Selengkapnya...</a></p>
-				</div>
-			</div>
+		<div class="col-md-3">
+			
+		</div>
+		<div class="col-md-3">
+			
+		</div>
+		<div class="col-md-3">
+			
+		</div>
+	</div>
+</div>
+<div class="container-fluid section section-full">
+	<div class="row">
+		<div class="col-md-12">
+			<img src="http://history.ky.gov/wp-content/uploads/2015/09/Facebook-Scout_Gov-Event-Banner-Image-05.png" alt="banner" width="100%">
+		</div>
+	</div>
+</div>
+<div class="container-fluid section">
+	<div class="row">
+		<div class="col-md-6">
+			<img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/3e1fc236513839.560646e56afab.jpg" alt="banner" width="100%" height="250px">
+		</div>
+		<div class="col-md-6">
+			<img src="https://d13yacurqjgara.cloudfront.net/users/6241/screenshots/2273012/community-content-commerce-event-banner_1x.png" alt="banner" width="100%" height="250px">
 		</div>
 	</div>
 </div>

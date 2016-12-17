@@ -24,8 +24,8 @@
                         <?php echo form_error('deskripsi_menu'); ?>
                         <textarea class="form-control" name="deskripsi_menu" id="deskripsi_menu" placeholder="Deskripsi Menu" required><?= (isset($menu->deskripsi_menu)) ? $menu->deskripsi_menu : ''; ?></textarea>
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                    <a href="<?=site_url('menu')?>" class="btn btn-default">Kembali</a>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-save"></i> Simpan</button>
+                    <a href="<?=site_url('menu')?>" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
                 </form>
             </div>
         </div>

@@ -1,3 +1,12 @@
+.section, .section > .row > [class*=col-]{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.section-full > .row > [class*=col-]{
+	padding: 0;
+}
+
 .jumbotron{
 	margin: 0;
 	min-height: 400px;
@@ -17,46 +26,4 @@
 
 .navbar{
 	margin-bottom: 0;
-}
-
-.container-fluid .section{
-	padding: 15px 10px;
-	background-color: #FFF;
-}
-
-.container-fluid .section > div{
-	padding: 15px;
-}
-
-.container-fluid .section .title{
-	margin-top:0;
-}
-
-#sejarah .section p{
-	font-size: 12pt;
-	font-weight: lighter;
-}
-
-.container-fluid .section img{
-	height: 200px;
-	width: 100%;
-	background-color: grey;
-}
-
-#news img.news-thumbnail{
-	height: 180px;
-	background-color: grey;
-}
-
-#news .caption .title{
-	margin-top: 0px;
-	font-weight: bolder;
-}
-
-#news .caption .date{
-	display: block;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font-size: small;
-	color: rgba(0,0,0,.5);
 }

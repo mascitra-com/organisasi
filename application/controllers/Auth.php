@@ -62,7 +62,6 @@ class Auth extends MY_Controller {
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
 				//if the login is successful
 				//redirect them back to the home page
-				$this->session->set_flashdata('message', array($this->ion_auth->messages(), 'success'));
 				redirect('dashboard', 'refresh');
 			} else {
 				// if the login was un-successful

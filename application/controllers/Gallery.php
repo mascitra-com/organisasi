@@ -8,6 +8,7 @@ class Gallery extends MY_Controller
     {
         parent::__construct();
         $this->_view['template'] = 'template/dashboard/index';
+        $this->_view['js']       = 'gallery';
         $this->load->model('gallery_model');
     }
 
@@ -41,7 +42,9 @@ class Gallery extends MY_Controller
     public function create($type = 1)
     {
         $this->_data['type'] = $type;
-        $this->_view['title'] = 'Upload File';
+        $type_name = ($type == 1) ? 'Tambah Foto' : 'Tambah Video';
+        $this->_data['title'] = $type_name;
+        $this->_view['title'] = $type_name;
         $this->_view['page'] = 'gallery/create';
         $this->init();
     }
@@ -98,14 +101,28 @@ class Gallery extends MY_Controller
         echo json_encode($data);
     }
 
-    public function edit($id = NULL)
+    public function edit($type = 1, $id = NULL)
     {
-
+        $this->_data['type'] = $type;
+        $type_name = ($type == 1) ? 'Edit Foto' : 'Edit Video';
+        $this->_data['title'] = $type_name;
+        $this->_data['data']  = $this->gallery_model->get(array('id' => $id));
+        $this->_view['title'] = $type_name;
+        $this->_view['page'] = 'gallery/create';
+        $this->init();
     }
 
-    public function update($id = NULL)
+    public function update()
     {
-
+        $update_data = $this->input->post();
+        $update_id = $update_data['id'];
+        unset($update_data['id']);
+        if ($this->gallery_model->update($update_data, $update_id)) {
+            $this->message('<strong>Berhasil</strong> mengedit Galeri', 'success');
+        } else {
+            $this->message('<strong>Gagal</strong> mengedit Galeri', 'danger');
+        }
+        redirect('news');
     }
 
     public function destroy($type = 'photo', $id = NULL)

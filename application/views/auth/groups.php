@@ -3,7 +3,7 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">
 				<h3 class="panel-title pull-left">Grup</h3>
-				<a href="<?=site_url('auth/create_group')?>" class="btn btn-default pull-right"><i class="fa fa-plus"></i> grup</a>
+				<a href="<?=site_url('auth/create_group')?>" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> grup</a>
 				<div class="clearfix"></div>
 			</div>
 			<div class="panel-body table-responsive">

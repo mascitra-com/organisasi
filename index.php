@@ -53,7 +53,15 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+
+    switch ($_SERVER["HTTP_HOST"]) {
+        case "organisasi.mascitra.com":
+            define('ENVIRONMENT', 'production');
+            break;
+        default:
+            define('ENVIRONMENT', 'development');
+            break;
+    }
 
 /*
  *---------------------------------------------------------------

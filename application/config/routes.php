@@ -50,6 +50,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'homepage';
-$route['gallery'] = 'gallery/photos';
+$route['gallery'] = 'photos';
+$route['gallery/photos'] = 'photos';
+$route['gallery/videos'] = 'videos';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

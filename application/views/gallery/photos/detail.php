@@ -6,7 +6,7 @@
                 <span class="label label-default"><i class="fa fa-calendar"></i> 12 Desember 2016</span>
                 <span class="label label-default"><i class="fa fa-user"></i> Oleh Admin</span><br/>
                 <div style="margin: 1em 0em">
-                    <a class="btn btn-success" href="<?= site_url('gallery/photos/add/' . $galleries->id) ?>"><i
+                    <a class="btn btn-success" href="<?= site_url('photos/add/' . $galleries->id) ?>"><i
                                 class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
                     <div style="margin-top: 1em">
                         <?php if (isset($photos) && !empty($photos)) {
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <a href="<?= site_url('gallery/photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
+                    <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
                         Kembali</a>
                 </div>
             </div>
@@ -60,7 +60,7 @@
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "<?=site_url('gallery/photos/show_image?id=')?>" + id,
+            url: "<?=site_url('photos/show_image?id=')?>" + id,
             success: function (data) {
                 console.log(data);
                 $("#image").attr('src'.data.link);

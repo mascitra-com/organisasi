@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
         <span style="color: red">*</span> Harus di isi! <span style="color: red">**</span> Pilih Salah Satu!
-        <form action="<?= site_url('gallery/photos/' . $action) ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?= site_url('videos/' . $action) ?>" method="POST" enctype="multipart/form-data">
             <input class="form-control" type="hidden" name="type_id" value="1"><br>
             <input class="form-control" type="hidden" name="id" value="<?= isset($data->id) ? $data->id : '' ?>"><br>
             <label for="">Nama</label> <span style="color: red">*</span>

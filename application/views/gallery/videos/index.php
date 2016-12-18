@@ -1,7 +1,7 @@
 <div class="panel panel-success">
     <div class="panel-heading">
         <h3 class="panel-title pull-left">Galeri Video</h3>
-        <a class="btn btn-default pull-right" href="<?= site_url('gallery/videos/create') ?>"><i
+        <a class="btn btn-default pull-right" href="<?= site_url('videos/create') ?>"><i
                     class="fa fa-plus-square fa-fw"></i> Tambah Video</a>
         <div class="clearfix"></div>
     </div>
@@ -33,7 +33,7 @@
                             <hr>
 <!--                                <a href="#" class="btn btn-default">Detail</a>-->
 <!--                                <a href="#" class="btn btn-primary">Edit</a>-->
-                                <a href="<?= site_url('gallery/videos/destroy' . $video->id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                <a href="<?= site_url('videos/destroy' . $video->id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
                         </div>
                     </div>
                 </div>

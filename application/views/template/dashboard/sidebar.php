@@ -1,7 +1,7 @@
 <?php if(!isset($_view['page'])){$_view['page']='dashboard';}?>
 
 <div class="col-sm-1 col-md-2 display-table-cell hidden-xs" id="side-nav">
-	<h4 class="title hidden-xs hidden-sm"><i class="fa fa-adjust fa-2x fa-spin"></i>AdminPanel</h4>
+	<h4 class="title hidden-xs hidden-sm"><i class="fa fa-adjust fa-2x fa-spin"></i>Ortala</h4>
 	<ul>
 		<li class="link <?=(strpos($_view['page'], 'dashboard')!==FALSE)?'active':''?>">
 			<a href="<?=site_url('dashboard')?>">
@@ -64,12 +64,6 @@
 				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
 			</a>
 			<ul class="collapse collapseable" id="collapse-gallery">
-				<li>
-					<a href="<?=site_url('category')?>">
-						<i class="fa fa-tags fa-fw"></i>
-						<span class="nav-label">Kategori</span>
-					</a>
-				</li>
                 <li>
 					<a href="<?=site_url('gallery/photos')?>">
 						<i class="fa fa-file-image-o fa-fw"></i>

@@ -33,7 +33,7 @@
                             <hr>
 <!--                                <a href="#" class="btn btn-default">Detail</a>-->
 <!--                                <a href="#" class="btn btn-primary">Edit</a>-->
-                                <a href="<?= site_url('gallery/destroy/video/' . $video->id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                <a href="<?= site_url('gallery/videos/destroy' . $video->id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
                         </div>
                     </div>
                 </div>

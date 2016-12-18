@@ -16,6 +16,7 @@ class Dashboard extends MY_Controller {
 	public function index()
 	{
 		$this->_view['title'] = 'Halaman Dashboard';
+		$this->_view['page'] = '';
 		$this->init();
 	}
 }

@@ -51,9 +51,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'homepage';
 $route['gallery'] = 'gallery/photos';
-$route['gallery/photos/create'] = 'gallery/create/1';
-$route['gallery/videos/create'] = 'gallery/create/2';
-$route['gallery/photos/edit/(:num)'] = 'gallery/edit/1/$1';
-$route['gallery/videos/edit/(:num)'] = 'gallery/edit/2/$1';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

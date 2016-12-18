@@ -3,37 +3,48 @@
         <div class="panel panel-success">
             <div class="panel-body" style="padding: 25px;">
                 <h1 class="title"><?= $galleries->name ?></h1>
-                <span class="label label-default"><i class="fa fa-calendar"></i> 12 Desember 2016</span>
+                <p><?= $galleries->description ?></p>
+                <span class="label label-default"><i
+                            class="fa fa-calendar"></i> <?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $galleries->created_at))) ?></span>
                 <span class="label label-default"><i class="fa fa-user"></i> Oleh Admin</span><br/>
-                <div style="margin: 1em 0em">
-                    <a class="btn btn-success" href="<?= site_url('photos/add/' . $galleries->id) ?>"><i
-                                class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
-                    <div style="margin-top: 1em">
-                        <?php if (isset($photos) && !empty($photos)) {
-                            $i = 4;
-                            $j = 7;
-                            $k = count($photos); ?>
-                            <?php foreach ($photos as $photo): ?>
-                                <?php if ($i % 4 == 0) {
-                                    echo '<div class="row section">';
-                                } ?>
-                                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                                    <button class="thumbnail" onclick="detail(<?= $photo->id ?>)">
-                                        <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive">
-                                    </button>
-                                </div>
-                                <?php if ($i == $j || $i == ($k + 3)) {
-                                    echo '</div>';
-                                    $j += 4;
-                                } ?>
-                                <?php $i++; endforeach; ?>
-                        <?php } ?>
+                <form action="<?=site_url('photos/remove_multiple')?>" method="POST">
+                    <input name="category_id" value="<?=$this->uri->segment(3,0)?>" hidden/>
+                    <div style="margin: 1em 0em">
+                        <div style="margin-top: 1em">
+                            <?php if (isset($photos) && !empty($photos)) {
+                                $i = 4;
+                                $j = 7;
+                                $k = count($photos); ?>
+                                <?php foreach ($photos as $photo): ?>
+                                    <?php if ($i % 4 == 0) {
+                                        echo '<div class="row section">';
+                                    } ?>
+                                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                                        <div class="thumb">
+                                            <button class="thumbnail"
+                                                    onclick="detail(<?= $photo->id ?>, <?= $photo->category_id ?>)">
+                                                <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive">
+                                            </button>
+                                            <input type="checkbox" class="checkbox" name="check_list[]" value="<?= $photo->id ?>"/>
+                                        </div>
+                                    </div>
+                                    <?php if ($i == $j || $i == ($k + 3)) {
+                                        echo '</div>';
+                                        $j += 4;
+                                    } ?>
+                                    <?php $i++; endforeach; ?>
+                            <?php } ?>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
-                        Kembali</a>
-                </div>
+                    <div class="form-group">
+                        <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
+                            Kembali</a>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</button>
+                        <small>( Gunakan Checkbox di pojok kiri atas pada tiap foto )</span>
+                        <a class="btn btn-success pull-right" href="<?= site_url('photos/add/' . $galleries->id) ?>"><i
+                                    class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -46,25 +57,96 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 class="modal-title" id="name"></h3>
             </div>
-            <div style="margin: 1em">
-                <img src="" class="img-responsive" id="image">
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">Tutup</button>
+            <div class="modal-body carousel slide" id="myCarousel" data-ride="carousel">
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <a href="" class="photo_link" target="_blank" id="link"><img src="" alt="Foto" id="photo"
+                                                                                     class="img-responsive center-block"></a>
+                    </div>
                 </div>
+                <a class="left carousel-control" onclick="prev()" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" onclick="next()" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger pull-left" onclick="remove()" id="remove">Hapus</button>
+                <a href="" class="btn btn-info photo_link pull-left" download>Download</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    function detail(id) {
+    var id_photo;
+    var id_category;
+    var photo_link;
+    function detail(id, category) {
+        id_photo = id;
+        id_category = category;
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "<?=site_url('photos/show_image?id=')?>" + id,
+            url: "<?=site_url('photos/show_image?id=')?>" + id_photo + "&category_id=" + id_category,
             success: function (data) {
                 console.log(data);
-                $("#image").attr('src'.data.link);
-                $("#detailModal").modal();
+                $("#photo").attr('src', data.link);
+                $(".photo_link").attr('href', data.link);
+            }
+        });
+        $("#detailModal").modal();
+    }
+
+    function next() {
+        id_photo++;
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "<?=site_url('photos/show_image?id=')?>" + id_photo + "&category_id=" + id_category,
+            success: function (data) {
+                if (data === false) {
+                    id_photo--;
+                } else {
+                    $("#photo").attr('src', data.link);
+                    $(".photo_link").attr('href', data.link);
+                }
+            }
+        });
+    }
+
+    function prev() {
+        id_photo--;
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "<?=site_url('photos/show_image?id=')?>" + id_photo + "&category_id=" + id_category,
+            success: function (data) {
+                if (data === false) {
+                    id_photo++;
+                } else {
+                    $("#photo").attr('src', data.link);
+                    $(".photo_link").attr('href', data.link);
+                }
+            }
+        });
+    }
+
+    function remove() {
+        photo_link = $('#link').attr('href');
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "<?= site_url('photos/remove_image?link=') ?>" + photo_link,
+            success: function (data) {
+                if (data === false) {
+                    alert('Tidak dapat menghapus Foto')
+                } else {
+                    window.location = "<?=current_url();?>"
+                }
             }
         });
     }

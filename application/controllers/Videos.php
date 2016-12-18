@@ -29,12 +29,9 @@ class Videos extends MY_Controller
         $this->init();
     }
 
-    public function create($type = 1)
+    public function create()
     {
-        $this->_data['type'] = $type;
-        $type_name = ($type == 1) ? 'Tambah Foto' : 'Tambah Video';
-        $this->_data['title'] = $type_name;
-        $this->_view['title'] = $type_name;
+        $this->_data['action'] = 'store';
         $this->_view['page'] = 'gallery/videos/create';
         $this->init();
     }
@@ -42,15 +39,19 @@ class Videos extends MY_Controller
     public function store()
     {
         $data = $this->input->post();
+        if(empty($data)){
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('videos');
+        }
         $upload = FALSE;
-
         if (isset($_FILES['files']['name']) && !empty($_FILES['files']['name'])) {
-            $data['link'] = $this->do_upload($data['type_id']);
+            $data['link'] = $this->do_upload();
             $upload = TRUE;
         }
 
         if ($data['link'] != FALSE) {
             unset($data['links'], $data['files']);
+            $data['type_id'] = 2;
             if ($this->gallery_model->insert($data)) {
                 $this->message('Berhasil! menyimpan foto', 'success');
             } else {
@@ -65,21 +66,21 @@ class Videos extends MY_Controller
         $this->go('gallery/photos');
     }
 
-    public function do_upload($type_id)
+    private function do_upload()
     {
-        $config['file_name'] = $type . '-' . date('dmYHis');
-        $config['upload_path'] = './assets/photos/';
-        $config['allowed_types'] = 'gif|jpg|png';
+        $config['file_name'] = 'video-' . date('dmYHis');
+        $config['upload_path'] = './assets/videos/';
+        $config['allowed_types'] = 'flv|mpg|mp4|3gp';
         $config['max_size'] = 50000;
 
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('files')) {
             $this->message($this->upload->display_errors(), 'danger');
-            $this->go('gallery/create/photos');
+            $this->go('gallery/create/videos');
         }
         $data = $this->upload->data();
-        return base_url('assets/photos/' . $data['file_name']);
+        return base_url('assets/videos/' . $data['file_name']);
     }
 
     public function show()
@@ -91,6 +92,10 @@ class Videos extends MY_Controller
 
     public function edit($id = NULL)
     {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         $this->_data['title'] = $type_name;
         $this->_data['data']  = $this->gallery_model->get(array('id' => $id));
         $this->_view['title'] = $type_name;
@@ -102,6 +107,10 @@ class Videos extends MY_Controller
     {
         $update_data = $this->input->post();
         $update_id = $update_data['id'];
+        if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         unset($update_data['id']);
         if ($this->gallery_model->update($update_data, $update_id)) {
             $this->message('<strong>Berhasil</strong> mengedit Galeri', 'success');
@@ -113,6 +122,10 @@ class Videos extends MY_Controller
 
     public function destroy($id = NULL)
     {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         if ($this->gallery_model->delete($id)) {
             $this->message('<strong>Berhasil</strong> menghapus Foto', 'success');
         } else {

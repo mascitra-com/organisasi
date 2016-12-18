@@ -1,7 +1,7 @@
 <?php
 /**
  * Rizki Herdatullah
- * Web Developer, Front-End Designer, and Project Manager 
+ * Web Developer, Front-End Designer, and Project Manager
  */
 
 /**
@@ -18,6 +18,7 @@ class Photos extends MY_Controller
     {
         parent::__construct();
         $this->_view['template'] = 'template/dashboard/index';
+        $this->_view['css'] = 'gallery';
         $this->_view['js'] = 'gallery';
         $this->load->model(array('gallery_model', 'category_model'));
     }
@@ -43,6 +44,10 @@ class Photos extends MY_Controller
 
     public function add($id = NULL)
     {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         $this->_view['title'] = 'Tambah Foto';
         $this->_view['page'] = 'gallery/photos/add';
         $this->_data['category_id'] = $id;
@@ -52,6 +57,10 @@ class Photos extends MY_Controller
     public function store()
     {
         $data = $this->input->post();
+        if (empty($data)) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         if ($this->category_model->insert($data)) {
             $this->message('Berhasil! membuat Galeri Foto', 'success');
         } else {
@@ -81,11 +90,18 @@ class Photos extends MY_Controller
                 'type_id' => 1
             ];
             $this->gallery_model->insert($data);
+        } else {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
         }
     }
 
     public function show($id = NULL)
     {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         $data = $this->category_model->get(array('id' => $id));
         $galleries = $this->category_model->get(array('id' => $id));
         $this->_data['galleries'] = $galleries;
@@ -97,6 +113,10 @@ class Photos extends MY_Controller
 
     public function edit($id = NULL)
     {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         $this->_data['action'] = 'update';
         $this->_data['data'] = $this->category_model->get(array('id' => $id));
         $this->_view['title'] = 'Edit Foto';
@@ -108,7 +128,15 @@ class Photos extends MY_Controller
     {
         $update_data = $this->input->post();
         $update_id = $update_data['id'];
+        if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         unset($update_data['id']);
+        if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
+            $this->message('<strong>Gagal</strong> Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         if ($this->category_model->update($update_data, $update_id)) {
             $this->message('<strong>Berhasil</strong> mengedit Galeri', 'success');
         } else {
@@ -119,14 +147,23 @@ class Photos extends MY_Controller
 
     public function destroy($id = NULL)
     {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         $this->load->helper("file");
         $status = FALSE;
         $photos = $this->gallery_model->get_all(array('category_id' => $id));
+        if (empty($photos)) {
+            $status = TRUE;
+        }
         foreach ($photos as $photo) {
             $file = str_replace(base_url(), '', $photo->link);
             if (file_exists($file)) {
-                if (unlink($file))
-                    $status = TRUE;
+                if (unlink($file)) {
+                    if ($this->gallery_model->delete($photo->id))
+                        $status = TRUE;
+                }
             }
         }
         if ($status && $this->category_model->delete($id)) {
@@ -137,10 +174,54 @@ class Photos extends MY_Controller
         $this->go('photos');
     }
 
-    public function show_image($id)
+    public function show_image()
     {
         $id = $this->input->get('id');
-        $data = $this->gallery_model->get(array('id' => $id));
+        $category = $this->input->get('category_id');
+        $data = $this->gallery_model->get(array('id' => $id, 'category_id' => $category));
         echo json_encode($data);
+    }
+
+    public function remove_image()
+    {
+        $file = $this->input->get('link');
+        $file_path = str_replace(base_url(), '', $file);
+        $status = FALSE;
+        if (file_exists($file_path)) {
+            if (unlink($file_path)) {
+                if ($this->gallery_model->delete(array('link' => $file)))
+                    $status = TRUE;
+            }
+        }
+        echo $status;
+    }
+
+    public function remove_multiple()
+    {
+
+        $status = FALSE;
+        $category_id = $this->input->post('category_id');
+        if (!empty($_POST['check_list'])) {
+            foreach ($_POST['check_list'] as $id) {
+                $photo = $this->gallery_model->get($id);
+                $file = $photo->link;
+                $file_path = str_replace(base_url(), '', $file);
+                if (file_exists($file_path)) {
+                    if (unlink($file_path)) {
+                        if ($this->gallery_model->delete($id))
+                            $status = TRUE;
+                    }
+                }
+            }
+        } else {
+            $this->message('Anda tidak memilih foto apapun', 'danger');
+            $this->go('photos/show/' . $category_id);
+        }
+        if ($status) {
+            $this->message('<strong>Berhasil</strong> menghapus Foto', 'success');
+        } else {
+            $this->message('<strong>Gagal</strong> menghapus Foto', 'danger');
+        }
+        $this->go('photos/show/' . $category_id);
     }
 }

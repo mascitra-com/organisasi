@@ -30,10 +30,10 @@
                         <?php } ?>
                         <div class="caption">
                             <h3 class="title"><?= $video->name ?> </h3>
+                            <p><?= (strlen($video->description) > 100) ? substr($video->description, 0, 100).'...' :  $video->description?></p>
                             <hr>
-<!--                                <a href="#" class="btn btn-default">Detail</a>-->
-<!--                                <a href="#" class="btn btn-primary">Edit</a>-->
-                                <a href="<?= site_url('videos/destroy' . $video->id) ?>" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</a>
+                                <button class="btn btn-info" onclick="detail(<?=$video->id?>)"><i class="fa fa-info-circle"></i> Detail</button>
+                            <a href="<?= site_url('videos/destroy/' . $video->id) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash" ></i> Hapus</a>
                         </div>
                     </div>
                 </div>
@@ -47,3 +47,34 @@
         <?php } ?>
     </div>
 </div>
+<div id="detailModal" class="modal fade" role='dialog' data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 class="modal-title" id="name"></h3>
+            </div>
+            <div class="modal-body">
+                <p id="desc"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function detail(id) {
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: "<?=site_url('videos/show?id=')?>" + id,
+            success: function (data) {
+                console.log(data);
+                $("#name").text(data.name);
+                $("#desc").text(data.description);
+            }
+        });
+        $("#detailModal").modal();
+    }
+</script>

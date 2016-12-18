@@ -1,0 +1,31 @@
+.carousel-control {
+    color: #999999;
+}
+
+.carousel-control.left {
+    background-image: none;
+}
+
+.carousel-control.right {
+    right: 0;
+    left: auto;
+    background-image: none;
+}
+
+.thumb {
+    position: relative;
+    float: left;
+    margin-left: 10px;
+}
+
+.checkbox {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+}
+input[type=checkbox]{
+    -ms-transform: scale(1.5); /* IE */
+    -moz-transform: scale(1.5); /* FF */
+    -webkit-transform: scale(1.5); /* Safari and Chrome */
+    -o-transform: scale(1.5); /* Opera */
+}

@@ -64,7 +64,7 @@
 				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
 			</a>
 			<ul class="collapse collapseable" id="collapse-gallery">
-                <li>
+				<li>
 					<a href="<?=site_url('gallery/photos')?>">
 						<i class="fa fa-file-image-o fa-fw"></i>
 						<span class="nav-label">Foto</span>
@@ -105,12 +105,27 @@
 				</li>
 			</ul>
 		</li>
-<!--		<li class="link">-->
-<!--			<a href="#">-->
-<!--				<i class="fa fa-cog fa-fw"></i>-->
-<!--				<span class="nav-label">Pengaturan</span>-->
-<!--			</a>-->
-<!--		</li>-->
+		<li class="link">
+			<a href="#collapse-setting" data-toggle="collapse" aria-controls="collapse-setting">
+				<i class="fa fa-cog fa-fw"></i>
+				<span class="nav-label">Pengaturan</span>
+				<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
+			</a>
+			<ul class="collapse collapseable" id="collapse-setting">
+				<li>
+					<a href=#">
+						<i class="fa fa-file-info fa-fw"></i>
+						<span class="nav-label">Info</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-file-video-o fa-fw"></i>
+						<span class="nav-label">Banner</span>
+					</a>
+				</li>
+			</ul>
+		</li>
 		<li class="link">
 			<a href="<?=site_url('auth/logout')?>">
 				<i class="fa fa-cog fa-lock fa-fw"></i>

@@ -5,10 +5,6 @@
 				<h3 class="panel-title">Hak Akses <?=$group->description?></h3>
 			</div>
 			<div class="panel-body table-responsive">
-				<div id="privilege-msg">
-					a
-				</div>
-				
 				<table class="table table-hover table-bordered table-striped">
 					<thead>
 						<tr>

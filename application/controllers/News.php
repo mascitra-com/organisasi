@@ -52,12 +52,22 @@ class News extends MY_Controller
     public function store()
     {
         $data = $this->input->post();
+
+        $data['img_name'] = 'test';
+
+        $data['slug'] = url_title($data['name'], 'dash', TRUE);
+        
+        if (empty($data['type'])) {
+            $data['type'] = 'active';
+        }
+
         if ($this->news_model->insert($data)) {
             $this->message('<strong>Berhasil</strong> menyimpan Berita Baru', 'success');
         } else {
             $this->message('<strong>Gagal</strong> menyimpan Berita Baru', 'danger');
         }
         redirect('news');
+        // dump($data);
     }
 
     public function show($id = 1)

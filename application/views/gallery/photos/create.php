@@ -9,7 +9,7 @@
             <input class="form-control" type="hidden" name="id" value="<?= isset($data->id) ? $data->id : '' ?>"><br>
             <label for="">Nama</label> <span style="color: red">*</span>
             <input class="form-control" type="text" name="name"
-                   value="<?= isset($data->name) ? $data->name : '' ?>"><br>
+                   value="<?= isset($data->name) ? $data->name : '' ?>" required><br>
             <label for="">Deskripsi</label>
             <textarea name="description" class="form-control tinymce"
                       rows="5"><?= isset($data->description) ? $data->description : '' ?></textarea><br>

@@ -38,32 +38,41 @@ class Videos extends MY_Controller
 
     public function store()
     {
-        $data = $this->input->post();
-        if(empty($data)){
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('videos');
-        }
+        $data = $this->input->post(NULL, TRUE);
+        $this->is_not_empty($data);
         $upload = FALSE;
         if (isset($_FILES['files']['name']) && !empty($_FILES['files']['name'])) {
             $data['link'] = $this->do_upload();
             $upload = TRUE;
         }
 
-        if ($data['link'] != FALSE) {
+        if (!empty($data['link'])) {
             unset($data['links'], $data['files']);
+            if (strpos($data['link'], 'youtube')) {
+                $data['link'] = str_replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/', $data['link']);
+            }
             $data['type_id'] = 2;
             if ($this->gallery_model->insert($data)) {
-                $this->message('Berhasil! menyimpan foto', 'success');
+                $this->message('Berhasil! menyimpan video', 'success');
+                $this->go('videos');
             } else {
                 if ($upload) {
-                    unlink($data['link']);
+                    $file_path = str_replace(base_url(), '', $data['link']);
+                    unlink($file_path);
                 }
-                $this->message('Gagal! menyimpan foto', 'danger');
+                $this->message('Gagal! menyimpan video', 'danger');
+                $this->_data['action'] = 'store';
+                $this->_data['data'] = (object) $data;
+                $this->_view['page'] = 'gallery/videos/create';
+                $this->init();
             }
         } else {
-            $this->message('Gagal! menyimpan foto', 'danger');
+            $this->message('Gagal! Video belum di pilih atau link sedang kosong', 'danger');
+            $this->_data['action'] = 'store';
+            $this->_data['data'] = (object) $data;
+            $this->_view['page'] = 'gallery/videos/create';
+            $this->init();
         }
-        $this->go('gallery/photos');
     }
 
     private function do_upload()
@@ -77,7 +86,7 @@ class Videos extends MY_Controller
 
         if (!$this->upload->do_upload('files')) {
             $this->message($this->upload->display_errors(), 'danger');
-            $this->go('gallery/create/videos');
+            $this->go('videos/create');
         }
         $data = $this->upload->data();
         return base_url('assets/videos/' . $data['file_name']);
@@ -85,27 +94,26 @@ class Videos extends MY_Controller
 
     public function show()
     {
-        $id = $this->input->get('id');
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
         $data = $this->gallery_model->get(array('id' => $id));
         echo json_encode($data);
     }
 
-    public function edit($id = NULL)
+    public function edit()
     {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
-        $this->_data['title'] = $type_name;
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
+        $this->_data['action'] = 'update';
         $this->_data['data']  = $this->gallery_model->get(array('id' => $id));
-        $this->_view['title'] = $type_name;
+        $this->_view['title'] = 'Edit Video';
         $this->_view['page'] = 'gallery/videos/create';
         $this->init();
     }
 
     public function update()
     {
-        $update_data = $this->input->post();
+        $update_data = $this->input->post(NULL, TRUE);
         $update_id = $update_data['id'];
         if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
             $this->message('Terjadi Kesalahan Sistem', 'danger');
@@ -120,17 +128,26 @@ class Videos extends MY_Controller
         $this->go('gallery/videos');
     }
 
-    public function destroy($id = NULL)
+    public function destroy()
     {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
         if ($this->gallery_model->delete($id)) {
             $this->message('<strong>Berhasil</strong> menghapus Foto', 'success');
         } else {
             $this->message('<strong>Gagal</strong> menghapus Foto', 'danger');
         }
         $this->go('gallery/videos');
+    }
+
+    /**
+     * @param $id
+     */
+    private function is_not_empty($id)
+    {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('videos');
+        }
     }
 }

@@ -16,9 +16,9 @@
                 } ?>
                 <div class="col-xs-12 col-sm-6">
                     <div class="thumbnail">
-                        <?php if (!strpos($video->link, '.')) { ?>
+                        <?php if (strpos($video->link, 'youtube')) { ?>
                             <iframe width="480" height="315" style="margin-left: 5pt;margin-top: 5pt"
-                                    src="https://www.youtube.com/embed/<?= $video->link ?>?controls=1">
+                                    src="<?= $video->link ?>?controls=1">
                             </iframe>
                         <?php } else { ?>
                             <video src="<?= $video->link ?>" controls width="480" height="315"
@@ -33,7 +33,8 @@
                             <p><?= (strlen($video->description) > 100) ? substr($video->description, 0, 100).'...' :  $video->description?></p>
                             <hr>
                                 <button class="btn btn-info" onclick="detail(<?=$video->id?>)"><i class="fa fa-info-circle"></i> Detail</button>
-                            <a href="<?= site_url('videos/destroy/' . $video->id) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash" ></i> Hapus</a>
+                            <a href="<?= site_url('videos/edit?id=' . $video->id) ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="<?= site_url('videos/destroy?id=' . $video->id) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash" ></i> Hapus</a>
                         </div>
                     </div>
                 </div>

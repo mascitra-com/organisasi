@@ -8,7 +8,7 @@
                             class="fa fa-calendar"></i> <?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $galleries->created_at))) ?></span>
                 <span class="label label-default"><i class="fa fa-user"></i> Oleh Admin</span><br/>
                 <form action="<?=site_url('photos/remove_multiple')?>" method="POST">
-                    <input name="category_id" value="<?=$this->uri->segment(3,0)?>" hidden/>
+                    <input name="category_id" value="<?=$galleries->id?>" hidden/>
                     <div style="margin: 1em 0em">
                         <div style="margin-top: 1em">
                             <?php if (isset($photos) && !empty($photos)) {
@@ -21,10 +21,10 @@
                                     } ?>
                                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                         <div class="thumb">
-                                            <button class="thumbnail"
+                                            <a class="thumbnail" href="#"
                                                     onclick="detail(<?= $photo->id ?>, <?= $photo->category_id ?>)">
                                                 <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive">
-                                            </button>
+                                            </a>
                                             <input type="checkbox" class="checkbox" name="check_list[]" value="<?= $photo->id ?>"/>
                                         </div>
                                     </div>
@@ -41,7 +41,7 @@
                             Kembali</a>
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</button>
                         <small>( Gunakan Checkbox di pojok kiri atas pada tiap foto )</span>
-                        <a class="btn btn-success pull-right" href="<?= site_url('photos/add/' . $galleries->id) ?>"><i
+                        <a class="btn btn-success pull-right" href="<?= site_url('photos/add?id=' . $galleries->id) ?>"><i
                                     class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
                     </div>
                 </form>
@@ -74,7 +74,7 @@
                 </a>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-danger pull-left" onclick="remove()" id="remove">Hapus</button>
+                <a href="#" class="btn btn-danger pull-left" onclick="remove()" id="remove">Hapus</a>
                 <a href="" class="btn btn-info photo_link pull-left" download>Download</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -93,7 +93,6 @@
             dataType: "json",
             url: "<?=site_url('photos/show_image?id=')?>" + id_photo + "&category_id=" + id_category,
             success: function (data) {
-                console.log(data);
                 $("#photo").attr('src', data.link);
                 $(".photo_link").attr('href', data.link);
             }
@@ -145,7 +144,7 @@
                 if (data === false) {
                     alert('Tidak dapat menghapus Foto')
                 } else {
-                    window.location = "<?=current_url();?>"
+                    window.location = '<?=current_url();?>?id=<?=$galleries->id?>';
                 }
             }
         });

@@ -42,12 +42,10 @@ class Photos extends MY_Controller
         $this->init();
     }
 
-    public function add($id = NULL)
+    public function add()
     {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
         $this->_view['title'] = 'Tambah Foto';
         $this->_view['page'] = 'gallery/photos/add';
         $this->_data['category_id'] = $id;
@@ -69,8 +67,13 @@ class Photos extends MY_Controller
         $this->go('photos');
     }
 
-    public function do_upload($category_id)
+    public function do_upload()
     {
+        $category_id = $this->input->get('category_id', TRUE);
+        if ($category_id == NULL || $category_id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         if (!empty($_FILES)) {
             $config['file_name'] = $_FILES['file']['name'];
             $config['upload_path'] = './assets/photos/';
@@ -96,13 +99,10 @@ class Photos extends MY_Controller
         }
     }
 
-    public function show($id = NULL)
+    public function show()
     {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
-        $data = $this->category_model->get(array('id' => $id));
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
         $galleries = $this->category_model->get(array('id' => $id));
         $this->_data['galleries'] = $galleries;
         $this->_data['photos'] = $this->gallery_model->get_all(array('category_id' => $galleries->id));
@@ -111,12 +111,10 @@ class Photos extends MY_Controller
         $this->init();
     }
 
-    public function edit($id = NULL)
+    public function edit()
     {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
         $this->_data['action'] = 'update';
         $this->_data['data'] = $this->category_model->get(array('id' => $id));
         $this->_view['title'] = 'Edit Foto';
@@ -126,17 +124,13 @@ class Photos extends MY_Controller
 
     public function update()
     {
-        $update_data = $this->input->post();
+        $update_data = $this->input->post(NULL, TRUE);
         $update_id = $update_data['id'];
         if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
             $this->message('Terjadi Kesalahan Sistem', 'danger');
             $this->go('photos');
         }
         unset($update_data['id']);
-        if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
-            $this->message('<strong>Gagal</strong> Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
         if ($this->category_model->update($update_data, $update_id)) {
             $this->message('<strong>Berhasil</strong> mengedit Galeri', 'success');
         } else {
@@ -145,12 +139,10 @@ class Photos extends MY_Controller
         $this->go('photos');
     }
 
-    public function destroy($id = NULL)
+    public function destroy()
     {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
+        $id = $this->input->get('id', TRUE);
+        $this->is_not_empty($id);
         $this->load->helper("file");
         $status = FALSE;
         $photos = $this->gallery_model->get_all(array('category_id' => $id));
@@ -176,15 +168,20 @@ class Photos extends MY_Controller
 
     public function show_image()
     {
-        $id = $this->input->get('id');
-        $category = $this->input->get('category_id');
+        $id = $this->input->get('id', TRUE);
+        $category = $this->input->get('category_id', TRUE);
+        if ($id == NULL || $id == 0 || $category == NULL || $category == 0 ) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
         $data = $this->gallery_model->get(array('id' => $id, 'category_id' => $category));
         echo json_encode($data);
     }
 
     public function remove_image()
     {
-        $file = $this->input->get('link');
+        $file = $this->input->get('link', TRUE);
+        $this->is_not_empty($file);
         $file_path = str_replace(base_url(), '', $file);
         $status = FALSE;
         if (file_exists($file_path)) {
@@ -193,14 +190,15 @@ class Photos extends MY_Controller
                     $status = TRUE;
             }
         }
+        $this->is_true($status);
         echo $status;
     }
 
     public function remove_multiple()
     {
-
         $status = FALSE;
-        $category_id = $this->input->post('category_id');
+        $category_id = $this->input->post('category_id', TRUE);
+        $this->is_not_empty($category_id);
         if (!empty($_POST['check_list'])) {
             foreach ($_POST['check_list'] as $id) {
                 $photo = $this->gallery_model->get($id);
@@ -215,13 +213,32 @@ class Photos extends MY_Controller
             }
         } else {
             $this->message('Anda tidak memilih foto apapun', 'danger');
-            $this->go('photos/show/' . $category_id);
+            $this->go('photos/show?id=' . $category_id);
         }
+        $this->is_true($status);
+        $this->go('photos/show?id=' . $category_id);
+    }
+
+    /**
+     * @param $id
+     */
+    private function is_not_empty($id)
+    {
+        if ($id == NULL || $id == 0) {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
+        }
+    }
+
+    /**
+     * @param $status
+     */
+    private function is_true($status)
+    {
         if ($status) {
             $this->message('<strong>Berhasil</strong> menghapus Foto', 'success');
         } else {
             $this->message('<strong>Gagal</strong> menghapus Foto', 'danger');
         }
-        $this->go('photos/show/' . $category_id);
     }
 }

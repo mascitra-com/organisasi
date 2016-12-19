@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 19 Des 2016 pada 10.51
+-- Generation Time: 19 Des 2016 pada 10.58
 -- Versi Server: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -33,7 +33,7 @@ CREATE TABLE `news` (
   `slug` varchar(255) NOT NULL,
   `img_name` varchar(100) NOT NULL,
   `img_link` text NOT NULL,
-  `type` enum('active','draft','archive') NOT NULL,
+  `type` enum('active','draft','archive','unactive') NOT NULL,
   `published_at` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` int(11) NOT NULL,

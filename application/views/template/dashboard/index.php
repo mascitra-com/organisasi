@@ -11,7 +11,6 @@
 	<div class="container-fluid display-table">
 		<div class="row display-table-row">
 			<!-- LOAD SIDEBAR -->
-			
 			<?php $this->load->view('template/dashboard/sidebar'); ?>			
 			<!-- MAIN CONTENT -->
 			<div class="col-sm-11 col-md-10 display-table-cell top">
@@ -22,7 +21,7 @@
 					<?php $this->load->view('template/dashboard/breadcrump') ?>
 					<!-- LOAD PAGE -->
 					<?php 
-					if(isset($_view['page'])):
+					if(isset($_view['page']) && !empty($_view['page'])):
 						$this->load->view($_view['page']);
 					endif;
 					?>

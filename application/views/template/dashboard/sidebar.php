@@ -58,7 +58,7 @@
 			</a>
 		</li>
 		<li class="link <?=(strpos($_view['page'], 'regulation')!==FALSE)?'active':''?>">
-			<a href="#?>">
+			<a href="<?=site_url('regulation')?>">
 				<i class="fa fa-legal fa-fw"></i>
 				<span class="nav-label">Regulasi</span>
 			</a>

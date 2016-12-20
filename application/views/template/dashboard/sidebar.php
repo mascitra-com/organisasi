@@ -48,7 +48,7 @@
 		<li class="link <?=(strpos($_view['page'], 'profile')!==FALSE)?'active':''?>">
 			<a href="<?=site_url('profile')?>">
 				<i class="fa fa-bank fa-fw"></i>
-				<span class="nav-label">Organisasi</span>
+				<span class="nav-label">Profil Organisasi</span>
 			</a>
 		</li>
 		<li class="link <?=(strpos($_view['page'], 'agenda')!==FALSE)?'active':''?>">

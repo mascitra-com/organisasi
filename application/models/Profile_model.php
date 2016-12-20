@@ -41,6 +41,19 @@ class Profile_model extends MY_Model {
 
 	public function __construct() {
 		parent::__construct();
-		$this->soft_deletes = TRUE;
 	}
+
+    public function fetch_data($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Tidak ditemukan data Profil Organisasi';
+    }
 }

@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label for="body">Isi Profil</label>
                         <?php echo form_error('body'); ?>
-                        <textarea class="form-control" id="body" name="body"><?=$profile->body?></textarea>
+                        <textarea class="form-control tinymce" id="body" name="body"><?=$profile->body?></textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-default">Submit</button>

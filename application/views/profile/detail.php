@@ -5,7 +5,7 @@
     <div class="panel-body">
         <table class="table ">
             <tr>
-                <th>Nama Profil</th>
+                <th width="10%">Nama Profil</th>
                 <td><?= $profile->name ?></td>
             </tr>
             <tr>

@@ -71,13 +71,13 @@
 			</a>
 			<ul class="collapse collapseable" id="collapse-gallery">
 				<li>
-					<a href="<?=site_url('gallery/photos')?>">
+					<a href="<?=site_url('photos')?>">
 						<i class="fa fa-file-image-o fa-fw"></i>
 						<span class="nav-label">Foto</span>
 					</a>
 				</li>
 				<li>
-					<a href="<?=site_url('gallery/videos')?>">
+					<a href="<?=site_url('videos')?>">
 						<i class="fa fa-file-video-o fa-fw"></i>
 						<span class="nav-label">Video</span>
 					</a>

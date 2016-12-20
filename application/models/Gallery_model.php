@@ -24,4 +24,19 @@ class Gallery_model extends MY_Model
         }
         return 'Tidak Ditemukan Foto Pada Galeri Ini';
     }
+
+    public function fetch_videos($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $this->db->where('type_id', 2);
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Tidak Ditemukan Video';
+    }
 }

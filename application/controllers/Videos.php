@@ -20,16 +20,40 @@ class Videos extends MY_Controller
 
     public function index()
     {
-        if (!$videos = $this->gallery_model->get_all(array('type_id' => '2'))) {
-            $videos = 'Tidak Ditemukan Video';
-        }
-        $this->_data['videos'] = $videos;
+        $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
+        $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 4;
+        $this->page();
+        $this->_data['i'] = 2;
+        $this->_data['j'] = 3;
+        $this->_data['k'] = count($this->_data['videos']);
         $this->_view['title'] = 'Galeri Video';
         $this->_view['page'] = 'gallery/videos/index';
         $this->init();
     }
 
-    public function create()
+    private function page()
+    {
+        //pagination settings
+        $config['base_url'] = site_url('videos/index?per_page=' . $this->_data['per_page']);
+        $config['page_query_string'] = TRUE;
+        $config['query_string_segment'] = 'number';
+        $config['per_page'] = $this->_data['per_page'];
+        $config['total_rows'] = $this->gallery_model->count_rows(array('type_id' => 2));
+        $config["uri_segment"] = 3;
+        $config["num_links"] = 5;
+
+        //config for bootstrap pagination class integration
+        $config = $this->config_for_bootstrap_pagination($config);
+
+        $this->pagination->initialize($config);
+        $this->data['page'] = $this->_data['number'];
+
+        //call the model function to get the department data
+        $this->_data['videos'] = $this->gallery_model->fetch_videos($config["per_page"], $this->data['page']);
+        $this->_data['pagination'] = $this->pagination->create_links();
+    }
+
+        public function create()
     {
         $this->_data['action'] = 'store';
         $this->_view['page'] = 'gallery/videos/create';
@@ -149,5 +173,33 @@ class Videos extends MY_Controller
             $this->message('Terjadi Kesalahan Sistem', 'danger');
             $this->go('videos');
         }
+    }
+
+    /**
+     * @param $config
+     *
+     * @return mixed
+     */
+    private function config_for_bootstrap_pagination($config)
+    {
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = $this->lang->line('pagination_first_link');
+        $config['last_link'] = $this->lang->line('pagination_last_link');
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = $this->lang->line('pagination_prev_link');
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = $this->lang->line('pagination_next_link');
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        return $config;
     }
 }

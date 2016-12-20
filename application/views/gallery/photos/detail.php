@@ -7,11 +7,11 @@
                 <span class="label label-default"><i
                             class="fa fa-calendar"></i> <?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $galleries->created_at))) ?></span>
                 <span class="label label-default"><i class="fa fa-user"></i> Oleh Admin</span><br/>
-                <form action="<?=site_url('photos/remove_multiple')?>" method="POST">
-                    <input name="category_id" value="<?=$galleries->id?>" hidden/>
+                <form action="<?= site_url('photos/remove_multiple') ?>" method="POST">
+                    <input name="category_id" value="<?= $galleries->id ?>" hidden/>
                     <div style="margin: 1em 0em">
                         <div style="margin-top: 1em">
-                            <?php if (isset($photos) && !empty($photos)) {
+                            <?php if (is_array($photos)) {
                                 $i = 4;
                                 $j = 7;
                                 $k = count($photos); ?>
@@ -22,10 +22,11 @@
                                     <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
                                         <div class="thumb">
                                             <a class="thumbnail" href="#"
-                                                    onclick="detail(<?= $photo->id ?>, <?= $photo->category_id ?>)">
-                                                <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive">
+                                               onclick="detail(<?= $photo->id ?>, <?= $photo->category_id ?>)">
+                                                <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive" height="158"/>
                                             </a>
-                                            <input type="checkbox" class="checkbox" name="check_list[]" value="<?= $photo->id ?>"/>
+                                            <input type="checkbox" class="checkbox" name="check_list[]"
+                                                   value="<?= $photo->id ?>"/>
                                         </div>
                                     </div>
                                     <?php if ($i == $j || $i == ($k + 3)) {
@@ -33,21 +34,42 @@
                                         $j += 4;
                                     } ?>
                                     <?php $i++; endforeach; ?>
-                            <?php } ?>
+                            <?php } else {
+                                echo $photos;
+                            } ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center col-md-10">
+                            <?= $pagination ?>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Foto Per Halaman</label>
+                            <select name="page" id="page" class="form-control">
+                                <option value="10" <?= ($per_page == 8) ? 'selected' : '' ?>>8 Foto</option>
+                                <option value="12" <?= ($per_page == 12) ? 'selected' : '' ?>>12 Foto</option>
+                                <option value="24" <?= ($per_page == 24) ? 'selected' : '' ?>>24 Foto</option>
+                                <option value="48" <?= ($per_page == 48) ? 'selected' : '' ?>>48 Foto</option>
+                                <option value="60" <?= ($per_page == 60) ? 'selected' : '' ?>>60 Foto</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
                             Kembali</a>
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i> Hapus</button>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i
+                                    class="fa fa-trash"></i> Hapus
+                        </button>
                         <small>( Gunakan Checkbox di pojok kiri atas pada tiap foto )</span>
-                        <a class="btn btn-success pull-right" href="<?= site_url('photos/add?id=' . $galleries->id) ?>"><i
-                                    class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
+                            <a class="btn btn-success pull-right"
+                               href="<?= site_url('photos/add?id=' . $galleries->id) ?>"><i
+                                        class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div id="detailModal" class="modal fade" role='dialog' data-backdrop="true">

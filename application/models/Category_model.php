@@ -15,8 +15,17 @@ class Category_model extends MY_Model
         parent::__construct();
     }
 
-    public function index()
+    public function fetch_data($limit, $start)
     {
-        
+        $this->db->limit($limit, $start);
+        $query = $this->db->get($this->table);
+
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Tidak ditemukan Galeri Foto';
     }
 }

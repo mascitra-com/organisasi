@@ -135,6 +135,10 @@ html,body{
 	border-top: 1px #CCC solid;
 }
 
+.btn > span{
+	margin-left: 5px;
+} 
+
 .top{
 	vertical-align: top;
 }
@@ -153,10 +157,7 @@ img{
 		width: 60px;
 	}
 
-	button span, a span{
-		display: none;!important
-	}
-
+	.btn > span,
 	#side-nav .link a .nav-label{
 		display: none;!important
 	}

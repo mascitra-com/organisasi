@@ -57,6 +57,12 @@
 				<span class="nav-label">Agenda</span>
 			</a>
 		</li>
+		<li class="link <?=(strpos($_view['page'], 'regulation')!==FALSE)?'active':''?>">
+			<a href="#?>">
+				<i class="fa fa-legal fa-fw"></i>
+				<span class="nav-label">Regulasi</span>
+			</a>
+		</li>
 		<li class="link">
 			<a href="#collapse-gallery" data-toggle="collapse" aria-controls="collapse-gallery">
 				<i class="fa fa-picture-o fa-fw"></i>
@@ -113,14 +119,20 @@
 			</a>
 			<ul class="collapse collapseable" id="collapse-setting">
 				<li>
-					<a href=#">
-						<i class="fa fa-file-info fa-fw"></i>
+					<a href="<?=site_url('setting/info')?>">
+						<i class="fa fa-info fa-fw"></i>
 						<span class="nav-label">Info</span>
 					</a>
 				</li>
 				<li>
-					<a href="#">
-						<i class="fa fa-file-video-o fa-fw"></i>
+					<a href="<?=site_url('setting/headline')?>">
+						<i class="fa fa-tasks fa-fw"></i>
+						<span class="nav-label">Headline</span>
+					</a>
+				</li>
+				<li>
+					<a href="<?=site_url('setting/banner')?>">
+						<i class="fa fa-image fa-fw"></i>
 						<span class="nav-label">Banner</span>
 					</a>
 				</li>

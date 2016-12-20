@@ -10,7 +10,9 @@ Dropzone.options.dropzone = {
 
 $('#page').change(function (e) {
     var total = $("#page").val();
+    var number = 0;
     link = replace_link(/per_page=[0-9]{1,}/i, 'per_page=' + total);
+    link = replace_link(/number=[0-9]{1,}/i, 'number=' + number);
     window.location = link;
 })
 

@@ -25,8 +25,7 @@ class Photos extends MY_Controller
 
     public function index()
     {
-        $this->_data['number'] = $this->input->get('page') != NULL ? $this->input->get('page') * 10 : 0;
-        $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 10;
+        $this->input_get_for_pagination(10);
         $this->page();
         $this->_view['title'] = 'Galeri Foto';
         $this->_view['page'] = 'gallery/photos/index';
@@ -35,40 +34,19 @@ class Photos extends MY_Controller
 
     private function page()
     {
-        //pagination settings
-        $config['base_url'] = site_url('photos/index');
+        $config['base_url'] = site_url('photos/index?per_page='.$this->_data['per_page']);
         $config['page_query_string'] = TRUE;
-        $config['use_page_numbers'] = TRUE;
-        $config['query_string_segment'] = 'page';
+        $config['query_string_segment'] = 'number';
         $config['per_page'] = $this->_data['per_page'];
-        $config['suffix'] = '&per_page=' . $this->_data['per_page'];
         $config['total_rows'] = $this->category_model->count_rows();
         $config["uri_segment"] = 3;
-        $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = 5;
 
         //config for bootstrap pagination class integration
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = $this->lang->line('pagination_first_link');
-        $config['last_link'] = $this->lang->line('pagination_last_link');
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link'] = $this->lang->line('pagination_prev_link');
-        $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link'] = $this->lang->line('pagination_next_link');
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
+        $config = $this->config_for_bootstrap_pagination($config);
 
         $this->pagination->initialize($config);
-        $this->data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $this->data['page'] = $this->_data['number'];
 
         //call the model function to get the department data
         $this->_data['galleries'] = $this->category_model->fetch_data($config["per_page"], $this->data['page']);
@@ -153,12 +131,14 @@ class Photos extends MY_Controller
 
     public function show()
     {
-        $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
-        $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 8;
+        $this->input_get_for_pagination(8);
         $this->_data['id'] = $this->input->get('id', TRUE);
         $this->is_not_empty($this->_data['id']);
         $this->_data['galleries'] = $this->category_model->get(array('id' => $this->_data['id']));
         $this->pages();
+        $this->_data['i'] = 4;
+        $this->_data['j'] = 7;
+        $this->_data['k'] = count($this->_data['photos']);
         $this->_view['title'] = 'Isi Galeri';
         $this->_view['page'] = 'gallery/photos/detail';
         $this->init();
@@ -173,28 +153,10 @@ class Photos extends MY_Controller
         $config['per_page'] = $this->_data['per_page'];
         $config['total_rows'] = $this->gallery_model->count_rows(array('category_id' => $this->_data['id']));
         $config["uri_segment"] = 3;
-        $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = 5;
 
         //config for bootstrap pagination class integration
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = $this->lang->line('pagination_first_link');
-        $config['last_link'] = $this->lang->line('pagination_last_link');
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link'] = $this->lang->line('pagination_prev_link');
-        $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link'] = $this->lang->line('pagination_next_link');
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
+        $config = $this->config_for_bootstrap_pagination($config);
 
         $this->pagination->initialize($config);
         $this->data['page'] = $this->_data['number'];
@@ -322,5 +284,39 @@ class Photos extends MY_Controller
         }
         $this->is_true($status);
         $this->go('photos/show?id=' . $category_id);
+    }
+
+    /**
+     * @param $config
+     *
+     * @return mixed
+     */
+    private function config_for_bootstrap_pagination($config)
+    {
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = $this->lang->line('pagination_first_link');
+        $config['last_link'] = $this->lang->line('pagination_last_link');
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = $this->lang->line('pagination_prev_link');
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = $this->lang->line('pagination_next_link');
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        return $config;
+    }
+
+    private function input_get_for_pagination($default_per_page)
+    {
+        $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
+        $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : $default_per_page;
     }
 }

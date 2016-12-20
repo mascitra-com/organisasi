@@ -168,3 +168,18 @@ img{
 		display: none;!important
 	}
 }
+
+.pagination > li > a {
+	color: #1abc9c;
+}
+
+.pagination > li.active > a {
+	background: #1abc9c;
+    border: 1px solid #16a085;
+	color: #fff;
+}
+
+.pagination > li.active > a:hover {
+	background: #16a085;
+	color: #fff;
+}

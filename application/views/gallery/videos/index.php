@@ -6,10 +6,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
-        <?php if (is_array($videos)) {
-            $i = 2;
-            $j = 3;
-            $k = count($videos); ?>
+        <?php if (is_array($videos)) { ?>
             <?php foreach ($videos as $video): ?>
                 <?php if ($i % 2 == 0) {
                     echo '<div class="row section">';
@@ -43,6 +40,23 @@
                     $j += 2;
                 } ?>
                 <?php $i++; endforeach; ?>
+            <?php if (!empty($pagination)): ?>
+                <div class="row">
+                <div class="text-center col-md-10">
+                    <?= $pagination ?>
+                </div>
+                <div class="col-md-2">
+                    <label>Galeri Per Halaman</label>
+                    <select name="page" id="page" class="form-control">
+                        <option value="4" <?= ($per_page == 4) ? 'selected' : '' ?>>4</option>
+                        <option value="8" <?= ($per_page == 8) ? 'selected' : '' ?>>8</option>
+                        <option value="12" <?= ($per_page == 12) ? 'selected' : '' ?>>12</option>
+                        <option value="16" <?= ($per_page == 16) ? 'selected' : '' ?>>16</option>
+                        <option value="20" <?= ($per_page == 20) ? 'selected' : '' ?>>20</option>
+                    </select>
+                </div>
+            </div>
+                <?php endif; ?>
         <?php } else { ?>
             <?= $videos ?>
         <?php } ?>

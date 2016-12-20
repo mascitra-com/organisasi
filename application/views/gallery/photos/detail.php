@@ -11,10 +11,7 @@
                     <input name="category_id" value="<?= $galleries->id ?>" hidden/>
                     <div style="margin: 1em 0em">
                         <div style="margin-top: 1em">
-                            <?php if (is_array($photos)) {
-                                $i = 4;
-                                $j = 7;
-                                $k = count($photos); ?>
+                            <?php if (is_array($photos)) { ?>
                                 <?php foreach ($photos as $photo): ?>
                                     <?php if ($i % 4 == 0) {
                                         echo '<div class="row section">';
@@ -23,7 +20,8 @@
                                         <div class="thumb">
                                             <a class="thumbnail" href="#"
                                                onclick="detail(<?= $photo->id ?>, <?= $photo->category_id ?>)">
-                                                <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive" height="158"/>
+                                                <img src="<?= $photo->link ?>" alt="Foto" class="img-responsive"
+                                                     height="158"/>
                                             </a>
                                             <input type="checkbox" class="checkbox" name="check_list[]"
                                                    value="<?= $photo->id ?>"/>
@@ -35,32 +33,36 @@
                                     } ?>
                                     <?php $i++; endforeach; ?>
                             <?php } else {
-                                echo $photos;
+                                echo "<h3 class='text-center'>$photos</h3>";
                             } ?>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="text-center col-md-10">
-                            <?= $pagination ?>
+                    <?php if (!empty($pagination)): ?>
+                        <div class="row">
+                            <div class="text-center col-md-10">
+                                <?= $pagination ?>
+                            </div>
+                            <div class="col-md-2">
+                                <label>Foto Per Halaman</label>
+                                <select name="page" id="page" class="form-control">
+                                    <option value="8" <?= ($per_page == 8) ? 'selected' : '' ?>>8 Foto</option>
+                                    <option value="16" <?= ($per_page == 16) ? 'selected' : '' ?>>16 Foto</option>
+                                    <option value="32" <?= ($per_page == 32) ? 'selected' : '' ?>>32 Foto</option>
+                                    <option value="48" <?= ($per_page == 48) ? 'selected' : '' ?>>48 Foto</option>
+                                    <option value="64" <?= ($per_page == 64) ? 'selected' : '' ?>>64 Foto</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            <label>Foto Per Halaman</label>
-                            <select name="page" id="page" class="form-control">
-                                <option value="10" <?= ($per_page == 8) ? 'selected' : '' ?>>8 Foto</option>
-                                <option value="12" <?= ($per_page == 12) ? 'selected' : '' ?>>12 Foto</option>
-                                <option value="24" <?= ($per_page == 24) ? 'selected' : '' ?>>24 Foto</option>
-                                <option value="48" <?= ($per_page == 48) ? 'selected' : '' ?>>48 Foto</option>
-                                <option value="60" <?= ($per_page == 60) ? 'selected' : '' ?>>60 Foto</option>
-                            </select>
-                        </div>
-                    </div>
+                    <?php endif; ?>
                     <div class="form-group">
                         <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
                             Kembali</a>
+                        <?php if (is_array($photos)) : ?>
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i
                                     class="fa fa-trash"></i> Hapus
                         </button>
                         <small>( Gunakan Checkbox di pojok kiri atas pada tiap foto )</span>
+                            <?php endif; ?>
                             <a class="btn btn-success pull-right"
                                href="<?= site_url('photos/add?id=' . $galleries->id) ?>"><i
                                         class="fa fa-plus-square fa-fw"></i> Tambah Foto</a>
@@ -117,9 +119,9 @@
             success: function (data) {
                 $("#photo").attr('src', data.link);
                 $(".photo_link").attr('href', data.link);
+                $("#detailModal").modal();
             }
         });
-        $("#detailModal").modal();
     }
 
     function next() {

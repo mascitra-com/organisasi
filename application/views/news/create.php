@@ -5,7 +5,7 @@
 				<h3 class="panel-title">Tulis Berita</h3>
 			</div>
 			<div class="panel-body">
-				<form action="<?=site_url('news/store')?>" method="POST">
+				<form action="<?=site_url('news/store')?>" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="">Judul</label>
 						<input type="text" class="form-control" name="name" placeholder="Judul berita" required>
@@ -20,7 +20,7 @@
 
 					<div class="form-group">
 						<label for="">Gambar Thumbnail</label>
-						<input type="file" name="img_name" accept="image/*">
+						<input type="file" name="img" accept="image/*">
 					</div>
 					<div class="form-group">
 						<label for="">Isi Berita</label>

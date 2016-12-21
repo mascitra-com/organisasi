@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class News_model extends MY_Model
 {
 	public $primary_key = 'id';
-    public $fillable = array('name','body','slug','img_name','img_link','type');
+    public $fillable = array('name','body','slug','img_name','img_link','type','published_at');
     public $protected = array('id');
 
 	// public $rules = array(

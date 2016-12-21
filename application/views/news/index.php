@@ -7,28 +7,28 @@
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">
-                <?php for($i=0;$i<3;$i++): ?>
+                <?php if(!empty($articles)){ foreach ($articles as $article): ?>
                     <div class="row">
                         <div class="col-md-2">
-                            <img src="<?=base_url('assets/img/default.png')?>" alt="thumbnail" width="100%">
+                            <img src="<?=$article->img_link?>" alt="thumbnail" width="100%">
                         </div>
                         <div class="col-md-8">
-                            <h3>Judul Berita</h3>
+                            <h3><?=$article->name ?></h3>
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam molestias debitis labore 
                                 similique voluptatibus quibusdam nostrum, aspernatur necessitatibus sapiente numquam. Adipisci sunt, dolor laudantium perferendis.
-                                <br><a href="<?=site_url('news/show')?>">selengkapnya...</a>
+                                <br><a href="<?=site_url('news/show/'.$article->slug)?>">selengkapnya...</a>
                             </p>
-                            <span class="label label-default">18-12-2016</span>
-                            <span class="label label-default">admin abc</span>
+                            <span class="label label-default"><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $article->published_at))) ?></span>
+                            <span class="label label-default"><?=$article->user->first_name.' '.$article->user->last_name ?></span>
                         </div>
                         <div class="col-md-2">
                             <a href="#" class="btn btn-xs btn-primary">aktif</a>
                             <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                            <a href="#" class="btn btn-xs btn-default"><i class="fa fa-trash"></i></a>
+                            <a class="btn btn-xs btn-default" href="<?=site_url('news/move_to_archive?slug='.$article->slug)?>" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
                         </div>
                     </div>
-                <?php endfor; ?>
+                <?php endforeach; } else { echo '<div class="col-md-12">Tidak ada berita</div>'; } ?>
             </div>
         </div>
     </div>

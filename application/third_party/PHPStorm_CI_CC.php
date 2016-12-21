@@ -76,6 +76,7 @@
  * @property CI_Javascript       $javascript           Javascript Class
  ***************** YOUR LIBRARIES *****************
  * @property Ion_auth            $ion_auth             Layout Class
+ * @property Slug                $slug
  ***************** YOUR MODELS *****************
  * @property ion_auth_model      $ion_auth_model
  * @property category_model       $category_model

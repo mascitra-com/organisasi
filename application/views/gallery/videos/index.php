@@ -1,11 +1,31 @@
 <div class="panel panel-success">
     <div class="panel-heading">
-        <h3 class="panel-title pull-left">Galeri Video</h3>
+        <h3 class="panel-title pull-left">Galeri Video <?=isset($search) ? '- Hasil Pencarian' : ''?></h3>
         <a class="btn btn-default pull-right" href="<?= site_url('videos/create') ?>"><i
                     class="fa fa-plus-square fa-fw"></i> Tambah Video</a>
         <div class="clearfix"></div>
     </div>
     <div class="panel-body">
+        <table class="table table-hover table-striped">
+            <tbody>
+            <tr>
+                <form action="<?=site_url('videos/search')?>" method="POST">
+                    <td class="text-center">
+                        <a href="<?=site_url('videos/refresh')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+                    </td>
+                    <td class="form-group" width="25%">
+                        <input type="text" name="name" class="form-control" placeholder="Nama Video" value="<?= isset($search->name) ?$search->name : '' ?>">
+                    </td>
+                    <td class="form-group" width="65%">
+                        <input type="text" name="description" class="form-control" placeholder="Deskripsi Video" value="<?= isset($search->description) ?$search->description : '' ?>">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
         <?php if (is_array($videos)) { ?>
             <?php foreach ($videos as $video): ?>
                 <?php if ($i % 2 == 0) {
@@ -40,23 +60,7 @@
                     $j += 2;
                 } ?>
                 <?php $i++; endforeach; ?>
-            <?php if (!empty($pagination)): ?>
-                <div class="row">
-                <div class="text-center col-md-10">
-                    <?= $pagination ?>
-                </div>
-                <div class="col-md-2">
-                    <label>Galeri Per Halaman</label>
-                    <select name="page" id="page" class="form-control">
-                        <option value="4" <?= ($per_page == 4) ? 'selected' : '' ?>>4</option>
-                        <option value="8" <?= ($per_page == 8) ? 'selected' : '' ?>>8</option>
-                        <option value="12" <?= ($per_page == 12) ? 'selected' : '' ?>>12</option>
-                        <option value="16" <?= ($per_page == 16) ? 'selected' : '' ?>>16</option>
-                        <option value="20" <?= ($per_page == 20) ? 'selected' : '' ?>>20</option>
-                    </select>
-                </div>
-            </div>
-                <?php endif; ?>
+            <?php $this->load->view('template/dashboard/pagination'); ?>
         <?php } else { ?>
             <?= $videos ?>
         <?php } ?>

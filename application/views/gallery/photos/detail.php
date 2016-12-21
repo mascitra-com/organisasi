@@ -25,6 +25,7 @@
                                             </a>
                                             <input type="checkbox" class="checkbox" name="check_list[]"
                                                    value="<?= $photo->id ?>"/>
+                                            <p class="text-center"><?= $photo->name ?></p>
                                         </div>
                                     </div>
                                     <?php if ($i == $j || $i == ($k + 3)) {
@@ -37,23 +38,7 @@
                             } ?>
                         </div>
                     </div>
-                    <?php if (!empty($pagination)): ?>
-                        <div class="row">
-                            <div class="text-center col-md-10">
-                                <?= $pagination ?>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Foto Per Halaman</label>
-                                <select name="page" id="page" class="form-control">
-                                    <option value="8" <?= ($per_page == 8) ? 'selected' : '' ?>>8 Foto</option>
-                                    <option value="16" <?= ($per_page == 16) ? 'selected' : '' ?>>16 Foto</option>
-                                    <option value="32" <?= ($per_page == 32) ? 'selected' : '' ?>>32 Foto</option>
-                                    <option value="48" <?= ($per_page == 48) ? 'selected' : '' ?>>48 Foto</option>
-                                    <option value="64" <?= ($per_page == 64) ? 'selected' : '' ?>>64 Foto</option>
-                                </select>
-                            </div>
-                        </div>
-                    <?php endif; ?>
+                    <?php $this->load->view('template/dashboard/pagination'); ?>
                     <div class="form-group">
                         <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
                             Kembali</a>
@@ -98,7 +83,6 @@
                 </a>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-danger pull-left" onclick="remove()" id="remove">Hapus</a>
                 <a href="" class="btn btn-info photo_link pull-left" download>Download</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -117,6 +101,7 @@
             dataType: "json",
             url: "<?=site_url('photos/show_image?id=')?>" + id_photo + "&category_id=" + id_category,
             success: function (data) {
+                $("#name").text(data.name);
                 $("#photo").attr('src', data.link);
                 $(".photo_link").attr('href', data.link);
                 $("#detailModal").modal();
@@ -134,6 +119,7 @@
                 if (data === false) {
                     id_photo--;
                 } else {
+                    $("#name").text(data.name);
                     $("#photo").attr('src', data.link);
                     $(".photo_link").attr('href', data.link);
                 }
@@ -151,24 +137,9 @@
                 if (data === false) {
                     id_photo++;
                 } else {
+                    $("#name").text(data.name);
                     $("#photo").attr('src', data.link);
                     $(".photo_link").attr('href', data.link);
-                }
-            }
-        });
-    }
-
-    function remove() {
-        photo_link = $('#link').attr('href');
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "<?= site_url('photos/remove_image?link=') ?>" + photo_link,
-            success: function (data) {
-                if (data === false) {
-                    alert('Tidak dapat menghapus Foto')
-                } else {
-                    window.location = '<?=current_url();?>?id=<?=$galleries->id?>';
                 }
             }
         });

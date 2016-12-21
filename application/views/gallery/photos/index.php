@@ -1,6 +1,6 @@
 <div class="panel panel-success">
     <div class="panel-heading">
-        <h3 class="panel-title pull-left">Galeri Foto</h3>
+        <h3 class="panel-title pull-left">Galeri Foto <?=isset($search) ? '- Hasil Pencarian' : ''?></h3>
         <a class="btn btn-default pull-right" href="<?= site_url('photos/create') ?>"><i
                     class="fa fa-plus-square fa-fw"></i> Tambah Galeri</a>
         <div class="clearfix"></div>
@@ -9,17 +9,33 @@
         <table class="table table-hover table-striped">
             <thead>
             <tr>
-                <td>No.</td>
+                <td class="text-center">No.</td>
                 <td width="20%">Nama Galeri</td>
                 <td>Deskripsi Galeri</td>
                 <td>Aksi</td>
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <form action="<?=site_url('photos/search')?>" method="POST">
+                    <td class="text-center">
+                        <a href="<?=site_url('photos/refresh')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+                    </td>
+                    <td class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Nama Galeri" value="<?= isset($search->name) ?$search->name : '' ?>">
+                    </td>
+                    <td class="form-group">
+                        <input type="text" name="description" class="form-control" placeholder="Deskripsi Galeri" value="<?= isset($search->description) ?$search->description : '' ?>">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                    </td>
+                </form>
+            </tr>
             <?php if (is_array($galleries)){ $no = 1 + $number;
                 foreach ($galleries as $gallery): ?>
                     <tr>
-                        <td><?= $no++ ?></td>
+                        <td class="text-center"><?= $no++ ?></td>
                         <td><?= (strlen($gallery->name) > 50) ? substr($gallery->name, 0, 50).'...' :  $gallery->name?></td>
                         <td><?= (strlen($gallery->description) > 200) ? substr($gallery->description, 0, 200).'...' :  $gallery->description?></td>
                         <td class="text-nowrap">
@@ -31,27 +47,6 @@
                 <?php endforeach; } else { echo '<td colspan="4">Tidak ditemukan Galeri Foto<td>'; } ?>
             </tbody>
         </table>
-        <div class="row">
-            <div class="text-center col-md-10">
-                <?= $pagination ?>
-            </div>
-            <div class="col-md-2">
-                <label>Galeri Per Halaman</label>
-                <select name="page" id="page" class="form-control">
-                    <option value="10" <?= ($per_page == 10) ? 'selected' : '' ?>>10</option>
-                    <option value="25" <?= ($per_page == 25) ? 'selected' : '' ?>>25</option>
-                    <option value="50" <?= ($per_page == 50) ? 'selected' : '' ?>>50</option>
-                    <option value="100" <?= ($per_page == 100) ? 'selected' : '' ?>>100</option>
-                    <option value="200" <?= ($per_page == 200) ? 'selected' : '' ?>>200</option>
-                </select>
-            </div>
-        </div>
+        <?php $this->load->view('template/dashboard/pagination'); ?>
     </div>
 </div>
-
-<script>
-    $('#page').change(function (e) {
-        var total = $("#page").val();
-        window.location = '<?=site_url('photos/index?per_page=')?>'+total;
-    })
-</script>

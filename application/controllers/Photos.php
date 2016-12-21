@@ -23,22 +23,41 @@ class Photos extends MY_Controller
         $this->load->model(array('gallery_model', 'category_model'));
     }
 
-    public function index()
-    {
+    public function index($search_status = FALSE) {
+        if($search_status == FALSE){
+            $this->session->unset_userdata('search_gallery');
+        }
         $this->input_get_for_pagination(10);
+        $this->_data['per_page_name'] = 'Galeri';
+        $this->_data['per_page_options'] = array(10, 25, 50, 75, 100);
         $this->page();
         $this->_view['title'] = 'Galeri Foto';
         $this->_view['page'] = 'gallery/photos/index';
         $this->init();
     }
 
+    public function search()
+    {
+        $this->session->unset_userdata('search_gallery');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_gallery', $this->_data['search']);
+        $this->index(TRUE);
+    }
+
+    public function refresh()
+    {
+        $this->session->unset_userdata('search_gallery');
+        $this->go('photos');
+    }
+
     private function page()
     {
+        $this->_data['search'] = $this->session->userdata('search_gallery');
         $config['base_url'] = site_url('photos/index?per_page='.$this->_data['per_page']);
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'number';
         $config['per_page'] = $this->_data['per_page'];
-        $config['total_rows'] = $this->category_model->count_rows();
+        $config['total_rows'] = $this->category_model->count_data($this->_data['search']);
         $config["uri_segment"] = 3;
         $config["num_links"] = 5;
 
@@ -49,7 +68,7 @@ class Photos extends MY_Controller
         $this->data['page'] = $this->_data['number'];
 
         //call the model function to get the department data
-        $this->_data['galleries'] = $this->category_model->fetch_data($config["per_page"], $this->data['page']);
+        $this->_data['galleries'] = $this->category_model->fetch_data($config["per_page"], $this->data['page'], $this->_data['search']);
         $this->_data['pagination'] = $this->pagination->create_links();
     }
 
@@ -118,6 +137,7 @@ class Photos extends MY_Controller
             $file_date = $this->upload->data();
             $link = base_url('assets/photos/' . $file_date['file_name']);
             $data = [
+                'name' => $_FILES['file']['name'],
                 'link' => $link,
                 'category_id' => $category_id,
                 'type_id' => 1
@@ -135,6 +155,8 @@ class Photos extends MY_Controller
         $this->_data['id'] = $this->input->get('id', TRUE);
         $this->is_not_empty($this->_data['id']);
         $this->_data['galleries'] = $this->category_model->get(array('id' => $this->_data['id']));
+        $this->_data['per_page_name'] = 'Foto';
+        $this->_data['per_page_options'] = array(8, 16, 32, 48, 60);
         $this->pages();
         $this->_data['i'] = 4;
         $this->_data['j'] = 7;

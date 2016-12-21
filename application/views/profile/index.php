@@ -2,7 +2,7 @@
     <div class="col-md-12 table-responsive table-full-width">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title pull-left">Profil</h3>
+                <h3 class="panel-title pull-left">Profil <?=isset($search) ? '- Hasil Pencarian' : ''?></h3>
                 <a class="btn btn-default btn-sm pull-right" href="<?=site_url('profile/create')?>"><i class="fa fa-plus-square fa-fw"></i><span> Tambah Profil</span></a>
                 <div class="clearfix"></div>
             </div>
@@ -10,7 +10,7 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <td>No.</td>
+                            <td class="text text-center">No.</td>
                             <td width="15%">Nama</td>
                             <td width="20%">Judul</td>
                             <td>Isi</td>
@@ -18,9 +18,28 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        <form action="<?=site_url('profile/search')?>" method="POST">
+                        <td>
+                            <a href="<?=site_url('profile/refresh')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+                        </td>
+                        <td class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Nama" value="<?= isset($search->name) ?$search->name : '' ?>">
+                        </td>
+                        <td class="form-group">
+                            <input type="text" name="headline" class="form-control" placeholder="Judul" value="<?= isset($search->headline) ?$search->headline : '' ?>">
+                        </td>
+                        <td class="form-group">
+                            <input type="text" name="body" class="form-control" placeholder="Isi" value="<?= isset($search->body) ?$search->body : '' ?>">
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                        </td>
+                        </form>
+                    </tr>
                         <?php if(is_array($profiles)){ $no=1; foreach ($profiles as $profile): ?>
                             <tr>
-                                <td><?=$no++?></td>
+                                <td class="text text-center"><?=$no++?></td>
                                 <td><?=$profile->name?></td>
                                 <td><?=$profile->headline?></td>
                                 <td><?= (strlen($profile->body) > 200) ? substr($profile->body, 0, 200).'...' :  $profile->body?></td>
@@ -33,23 +52,7 @@
                         <?php endforeach; } else { echo "<td colspan='5'>$profiles<td>"; } ?>
                     </tbody>
                 </table>
-                <?php if (!empty($pagination)): ?>
-                    <div class="row">
-                        <div class="text-center col-md-10">
-                            <?= $pagination ?>
-                        </div>
-                        <div class="col-md-2">
-                            <label>Foto Per Halaman</label>
-                            <select name="page" id="page" class="form-control">
-                                <option value="10" <?= ($per_page == 10) ? 'selected' : '' ?>>10</option>
-                                <option value="25" <?= ($per_page == 25) ? 'selected' : '' ?>>25</option>
-                                <option value="50" <?= ($per_page == 50) ? 'selected' : '' ?>>50</option>
-                                <option value="75" <?= ($per_page == 75) ? 'selected' : '' ?>>75</option>
-                                <option value="100" <?= ($per_page == 100) ? 'selected' : '' ?>>100</option>
-                            </select>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                <?php $this->load->view('template/dashboard/pagination'); ?>
             </div>
         </div>
     </div>

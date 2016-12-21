@@ -15,22 +15,42 @@ class Profile extends MY_Controller {
         $this->load->model('profile_model');
 	}
 
-	public function index() {
+	public function index($search_status = FALSE) {
+	    if($search_status == FALSE){
+            $this->session->unset_userdata('search_profiles');
+        }
         $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
         $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 10;
+		$this->_data['per_page_name'] = 'Profil';
+		$this->_data['per_page_options'] = array(10, 25, 50, 75, 100);
         $this->page();
 		$this->_view['title'] = 'Profil';
 		$this->_view['page'] = 'profile/index';
 		$this->init();
 	}
 
+    public function search()
+    {
+        $this->session->unset_userdata('search_profiles');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_profiles', $this->_data['search']);
+        $this->index(TRUE);
+	}
+
+    public function refresh()
+    {
+        $this->session->unset_userdata('search_profiles');
+        $this->go('profile');
+	}
+
     private function page()
     {
+        $this->_data['search'] = $this->session->userdata('search_profiles');
         $config['base_url'] = site_url('profile/index?per_page='.$this->_data['per_page']);
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'number';
         $config['per_page'] = $this->_data['per_page'];
-        $config['total_rows'] = $this->profile_model->count_rows();
+        $config['total_rows'] = $this->profile_model->count_data($this->_data['search']);
         $config["uri_segment"] = 3;
         $config["num_links"] = 5;
 
@@ -41,7 +61,7 @@ class Profile extends MY_Controller {
         $this->data['page'] = $this->_data['number'];
 
         //call the model function to get the department data
-        $this->_data['profiles'] = $this->profile_model->fetch_data($config["per_page"], $this->data['page']);
+        $this->_data['profiles'] = $this->profile_model->fetch_data($config["per_page"], $this->data['page'], $this->_data['search']);
         $this->_data['pagination'] = $this->pagination->create_links();
     }
 

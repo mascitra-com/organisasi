@@ -18,10 +18,14 @@ class Videos extends MY_Controller
     }
 
 
-    public function index()
-    {
+    public function index($search_status = FALSE) {
+        if($search_status == FALSE){
+            $this->session->unset_userdata('search_video');
+        }
         $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
         $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 4;
+        $this->_data['per_page_name'] = 'Video';
+        $this->_data['per_page_options'] = array(4, 8, 12, 16, 20);
         $this->page();
         $this->_data['i'] = 2;
         $this->_data['j'] = 3;
@@ -31,14 +35,28 @@ class Videos extends MY_Controller
         $this->init();
     }
 
+    public function search()
+    {
+        $this->session->unset_userdata('search_video');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_video', $this->_data['search']);
+        $this->index(TRUE);
+    }
+
+    public function refresh()
+    {
+        $this->session->unset_userdata('search_video');
+        $this->go('videos');
+    }
+
     private function page()
     {
-        //pagination settings
+        $this->_data['search'] = $this->session->userdata('search_video');
         $config['base_url'] = site_url('videos/index?per_page=' . $this->_data['per_page']);
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'number';
         $config['per_page'] = $this->_data['per_page'];
-        $config['total_rows'] = $this->gallery_model->count_rows(array('type_id' => 2));
+        $config['total_rows'] = $this->gallery_model->count_videos($this->_data['search']);
         $config["uri_segment"] = 3;
         $config["num_links"] = 5;
 
@@ -49,7 +67,7 @@ class Videos extends MY_Controller
         $this->data['page'] = $this->_data['number'];
 
         //call the model function to get the department data
-        $this->_data['videos'] = $this->gallery_model->fetch_videos($config["per_page"], $this->data['page']);
+        $this->_data['videos'] = $this->gallery_model->fetch_videos($config["per_page"], $this->data['page'], $this->_data['search']);
         $this->_data['pagination'] = $this->pagination->create_links();
     }
 

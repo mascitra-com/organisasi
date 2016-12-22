@@ -16,11 +16,11 @@
                     <td class="form-group" width="25%">
                         <input type="text" name="name" class="form-control" placeholder="Nama Video" value="<?= isset($search->name) ?$search->name : '' ?>">
                     </td>
-                    <td class="form-group" width="65%">
+                    <td class="form-group" width="60%">
                         <input type="text" name="description" class="form-control" placeholder="Deskripsi Video" value="<?= isset($search->description) ?$search->description : '' ?>">
                     </td>
-                    <td>
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                    <td width="10%">
+                        <button type="submit" class="btn btn-default btn-block"><i class="fa fa-search"></i> Search</button>
                     </td>
                 </form>
             </tr>
@@ -49,9 +49,9 @@
                             <h3 class="title"><?= $video->name ?> </h3>
                             <p><?= (strlen($video->description) > 100) ? substr($video->description, 0, 100).'...' :  $video->description?></p>
                             <hr>
-                                <button class="btn btn-info" onclick="detail(<?=$video->id?>)"><i class="fa fa-info-circle"></i> Detail</button>
-                            <a href="<?= site_url('videos/edit?id=' . $video->id) ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                            <a href="<?= site_url('videos/destroy?id=' . $video->id) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash" ></i> Hapus</a>
+                                <button class="btn btn-info" onclick="detail_video('<?=strtolower(str_replace(' ', '-', $video->name))?>')"><i class="fa fa-info-circle"></i> Detail</button>
+                            <a href="<?= site_url('videos/edit/' . strtolower(str_replace(' ', '-', $video->name))) ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="<?= site_url('videos/destroy/' . strtolower(str_replace(' ', '-', $video->name))) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash" ></i> Hapus</a>
                         </div>
                     </div>
                 </div>
@@ -83,11 +83,11 @@
     </div>
 </div>
 <script>
-    function detail(id) {
+    function detail_video(name) {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "<?=site_url('videos/show?id=')?>" + id,
+            url: "<?=site_url('videos/show/')?>" + name,
             success: function (data) {
                 console.log(data);
                 $("#name").text(data.name);

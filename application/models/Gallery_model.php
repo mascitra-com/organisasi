@@ -7,6 +7,7 @@ class Gallery_model extends MY_Model
 
     public function __construct()
     {
+        $this->has_one['category'] = array('category_model','id','category_id');
         parent::__construct();
     }
 

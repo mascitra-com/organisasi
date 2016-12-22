@@ -71,7 +71,7 @@ class Videos extends MY_Controller
         $this->_data['pagination'] = $this->pagination->create_links();
     }
 
-        public function create()
+    public function create()
     {
         $this->_data['action'] = 'store';
         $this->_view['page'] = 'gallery/videos/create';
@@ -134,20 +134,18 @@ class Videos extends MY_Controller
         return base_url('assets/videos/' . $data['file_name']);
     }
 
-    public function show()
+    public function show($name = NULL)
     {
-        $id = $this->input->get('id', TRUE);
-        $this->is_not_empty($id);
-        $data = $this->gallery_model->get(array('id' => $id));
+        $name = str_replace('-', ' ', $name);
+        $data = $this->gallery_model->get(array('name' => $name));
         echo json_encode($data);
     }
 
-    public function edit()
+    public function edit($name)
     {
-        $id = $this->input->get('id', TRUE);
-        $this->is_not_empty($id);
+        $name = str_replace('-', ' ', $name);
         $this->_data['action'] = 'update';
-        $this->_data['data']  = $this->gallery_model->get(array('id' => $id));
+        $this->_data['data']  = $this->gallery_model->get(array('name' => $name));
         $this->_view['title'] = 'Edit Video';
         $this->_view['page'] = 'gallery/videos/create';
         $this->init();
@@ -167,30 +165,14 @@ class Videos extends MY_Controller
         } else {
             $this->message('<strong>Gagal</strong> mengedit Galeri', 'danger');
         }
-        $this->go('gallery/videos');
+        $this->go('videos');
     }
 
-    public function destroy()
+    public function destroy($name)
     {
-        $id = $this->input->get('id', TRUE);
-        $this->is_not_empty($id);
-        if ($this->gallery_model->delete($id)) {
-            $this->message('<strong>Berhasil</strong> menghapus Foto', 'success');
-        } else {
-            $this->message('<strong>Gagal</strong> menghapus Foto', 'danger');
-        }
-        $this->go('gallery/videos');
-    }
-
-    /**
-     * @param $id
-     */
-    private function is_not_empty($id)
-    {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('videos');
-        }
+        $name = str_replace('-', ' ', $name);
+        $this->is_worked($this->gallery_model->delete(array('name' => $name)), 'menghapus', 'Video');
+        $this->go('videos');
     }
 
     /**

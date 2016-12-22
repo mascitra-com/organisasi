@@ -9,39 +9,33 @@
         <table class="table table-hover table-striped">
             <thead>
             <tr>
-                <td class="text-center">No.</td>
-                <td width="20%">Nama Galeri</td>
-                <td>Deskripsi Galeri</td>
-                <td>Aksi</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
                 <form action="<?=site_url('photos/search')?>" method="POST">
                     <td class="text-center">
                         <a href="<?=site_url('photos/refresh')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
                     </td>
-                    <td class="form-group">
+                    <td width="25%" class="form-group">
                         <input type="text" name="name" class="form-control" placeholder="Nama Galeri" value="<?= isset($search->name) ?$search->name : '' ?>">
                     </td>
-                    <td class="form-group">
+                    <td width="60%" class="form-group">
                         <input type="text" name="description" class="form-control" placeholder="Deskripsi Galeri" value="<?= isset($search->description) ?$search->description : '' ?>">
                     </td>
-                    <td>
-                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                    <td width="10%">
+                        <button type="submit" class="btn btn-default btn-block"><i class="fa fa-search"></i> Search</button>
                     </td>
                 </form>
             </tr>
+            </thead>
+            <tbody>
             <?php if (is_array($galleries)){ $no = 1 + $number;
                 foreach ($galleries as $gallery): ?>
                     <tr>
                         <td class="text-center"><?= $no++ ?></td>
-                        <td><?= (strlen($gallery->name) > 50) ? substr($gallery->name, 0, 50).'...' :  $gallery->name?></td>
+                        <td><?= (strlen($gallery->name) > 50) ? substr($gallery->name, 0, 50).'...' :  $gallery->name ?></td>
                         <td><?= (strlen($gallery->description) > 200) ? substr($gallery->description, 0, 200).'...' :  $gallery->description?></td>
                         <td class="text-nowrap">
-                            <a href="<?= site_url('photos/show?id=' . $gallery->id) ?>" class="btn btn-default"><i class="fa fa-info-circle"></i></a>
-                            <a href="<?= site_url('photos/edit?id=' . $gallery->id) ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                            <a href="<?= site_url('photos/destroy?id=' . $gallery->id) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
+                            <a href="<?= site_url('photos/show/' . $gallery->slug) ?>" class="btn btn-default"><i class="fa fa-info-circle"></i></a>
+                            <a href="<?= site_url('photos/edit/' . $gallery->slug) ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                            <a href="<?= site_url('photos/destroy/' . $gallery->slug) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php endforeach; } else { echo '<td colspan="4">Tidak ditemukan Galeri Foto<td>'; } ?>

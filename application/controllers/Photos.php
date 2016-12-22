@@ -14,6 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Photos extends MY_Controller
 {
 
+    /**
+     * Photos constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -21,10 +24,11 @@ class Photos extends MY_Controller
         $this->_view['css'] = 'gallery';
         $this->_view['js'] = 'gallery';
         $this->load->model(array('gallery_model', 'category_model'));
+        $this->slug_config($this->category_model->table, 'name');
     }
 
     public function index($search_status = FALSE) {
-        if($search_status == FALSE){
+        if($search_status === FALSE){
             $this->session->unset_userdata('search_gallery');
         }
         $this->input_get_for_pagination(10);
@@ -39,36 +43,37 @@ class Photos extends MY_Controller
     public function search()
     {
         $this->session->unset_userdata('search_gallery');
-        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->_data['search'] = $this->input->post() !== NULL ? (object) $this->input->post() : '';
         $this->session->set_userdata('search_gallery', $this->_data['search']);
         $this->index(TRUE);
     }
 
+    /**
+     *  Unset Search Data from Session
+     */
     public function refresh()
     {
         $this->session->unset_userdata('search_gallery');
         $this->go('photos');
     }
 
+    /**
+     * For Pagination Configuration
+     */
     private function page()
     {
         $this->_data['search'] = $this->session->userdata('search_gallery');
-        $config['base_url'] = site_url('photos/index?per_page='.$this->_data['per_page']);
+        $config['base_url'] = site_url('photos/index');
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'number';
         $config['per_page'] = $this->_data['per_page'];
         $config['total_rows'] = $this->category_model->count_data($this->_data['search']);
-        $config["uri_segment"] = 3;
-        $config["num_links"] = 5;
-
-        //config for bootstrap pagination class integration
+        $config['uri_segment'] = 3;
+        $config['num_links'] = 5;
         $config = $this->config_for_bootstrap_pagination($config);
-
         $this->pagination->initialize($config);
-        $this->data['page'] = $this->_data['number'];
 
-        //call the model function to get the department data
-        $this->_data['galleries'] = $this->category_model->fetch_data($config["per_page"], $this->data['page'], $this->_data['search']);
+        $this->_data['galleries'] = $this->category_model->fetch_data($config['per_page'], $this->_data['number'], $this->_data['search']);
         $this->_data['pagination'] = $this->pagination->create_links();
     }
 
@@ -80,49 +85,26 @@ class Photos extends MY_Controller
         $this->init();
     }
 
-    public function add()
+    public function add($slug = NULL)
     {
-        $id = $this->input->get('id', TRUE);
-        $this->is_not_empty($id);
+        $this->might_make_errors($slug);
         $this->_view['title'] = 'Tambah Foto';
         $this->_view['page'] = 'gallery/photos/add';
-        $this->_data['category_id'] = $id;
+        $this->_data['slug'] = $slug;
         $this->init();
-    }
-
-    /**
-     * @param $id
-     */
-    private function is_not_empty($id)
-    {
-        if ($id == NULL || $id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
     }
 
     public function store()
     {
         $data = $this->input->post();
-        if (empty($data)) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
-        if ($this->category_model->insert($data)) {
-            $this->message('Berhasil! membuat Galeri Foto', 'success');
-        } else {
-            $this->message('Gagal! membuat Galeri Foto', 'danger');
-        }
+        $data['slug'] = $this->slug->create_uri($data);
+        $this->is_worked($this->category_model->insert($data), 'membuat', 'Galeri Foto');
         $this->go('photos');
     }
 
-    public function do_upload()
+    public function do_upload($slug = NULL)
     {
-        $category_id = $this->input->get('category_id', TRUE);
-        if ($category_id == NULL || $category_id == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
+        $this->might_make_errors($category_id = $this->category_model->get(array('slug' => $slug))->id);
         if (!empty($_FILES)) {
             $config['file_name'] = $_FILES['file']['name'];
             $config['upload_path'] = './assets/photos/';
@@ -134,10 +116,10 @@ class Photos extends MY_Controller
             if (!$this->upload->do_upload('file')) {
                 $this->message($this->upload->display_errors(), 'danger');
             }
-            $file_date = $this->upload->data();
-            $link = base_url('assets/photos/' . $file_date['file_name']);
+            $file_data = $this->upload->data();
+            $link = base_url('assets/photos/' . $file_data['file_name']);
             $data = [
-                'name' => $_FILES['file']['name'],
+                'name' => $file_data['file_name'],
                 'link' => $link,
                 'category_id' => $category_id,
                 'type_id' => 1
@@ -149,12 +131,11 @@ class Photos extends MY_Controller
         }
     }
 
-    public function show()
+    public function show($slug = NULL)
     {
+        $this->_data['slug'] = $slug;
         $this->input_get_for_pagination(8);
-        $this->_data['id'] = $this->input->get('id', TRUE);
-        $this->is_not_empty($this->_data['id']);
-        $this->_data['galleries'] = $this->category_model->get(array('id' => $this->_data['id']));
+        $this->might_make_errors($this->_data['galleries'] = $this->category_model->get(array('slug' => $this->_data['slug'])));
         $this->_data['per_page_name'] = 'Foto';
         $this->_data['per_page_options'] = array(8, 16, 32, 48, 60);
         $this->pages();
@@ -168,34 +149,26 @@ class Photos extends MY_Controller
 
     private function pages()
     {
-        //pagination settings
-        $config['base_url'] = site_url('photos/show?id='.$this->_data['id'].'&per_page='.$this->_data['per_page']);
+        $config['base_url'] = site_url('photos/show/'.$this->_data['slug'].'&per_page='.$this->_data['per_page']);
         $config['page_query_string'] = TRUE;
         $config['query_string_segment'] = 'number';
         $config['per_page'] = $this->_data['per_page'];
-        $config['total_rows'] = $this->gallery_model->count_rows(array('category_id' => $this->_data['id']));
-        $config["uri_segment"] = 3;
-        $config["num_links"] = 5;
-
-        //config for bootstrap pagination class integration
+        $config['total_rows'] = $this->gallery_model->count_rows(array('category_id' => $this->_data['galleries']->id));
+        $config['uri_segment'] = 3;
+        $config['num_links'] = 5;
         $config = $this->config_for_bootstrap_pagination($config);
-
         $this->pagination->initialize($config);
-        $this->data['page'] = $this->_data['number'];
 
-        //call the model function to get the department data
-        $this->_data['photos'] = $this->gallery_model->fetch_data($config["per_page"], $this->data['page'], $this->_data['id']);
+        $this->_data['photos'] = $this->gallery_model->fetch_data($config['per_page'], $this->_data['number'], $this->_data['galleries']->id);
         $this->_data['pagination'] = $this->pagination->create_links();
     }
 
-    public function edit()
+    public function edit($slug = NULL)
     {
-        $id = $this->input->get('id', TRUE);
-        $this->is_not_empty($id);
-        $this->_data['action'] = 'update';
-        $this->_data['data'] = $this->category_model->get(array('id' => $id));
+        $this->might_make_errors($this->_data['data'] = $this->category_model->get(array('slug' => $slug)));
         $this->_view['title'] = 'Edit Foto';
         $this->_view['page'] = 'gallery/photos/create';
+        $this->_data['action'] = 'update';
         $this->init();
     }
 
@@ -203,109 +176,56 @@ class Photos extends MY_Controller
     {
         $update_data = $this->input->post(NULL, TRUE);
         $update_id = $update_data['id'];
-        if ($update_id == NULL || $update_id == 0 || empty($update_data)) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
+        $update_data['slug'] = $this->slug->create_uri($update_data, $update_id);
         unset($update_data['id']);
-        if ($this->category_model->update($update_data, $update_id)) {
-            $this->message('<strong>Berhasil</strong> mengedit Galeri', 'success');
-        } else {
-            $this->message('<strong>Gagal</strong> mengedit Galeri', 'danger');
-        }
+        $this->is_worked($this->category_model->update($update_data, $update_id), 'mengedit', 'Galeri');
         $this->go('photos');
-    }
-
-    public function destroy()
-    {
-        $id = $this->input->get('id', TRUE);
-        $this->is_not_empty($id);
-        $this->load->helper("file");
-        $status = FALSE;
-        $photos = $this->gallery_model->get_all(array('category_id' => $id));
-        if (empty($photos)) {
-            $status = TRUE;
-        }
-        foreach ($photos as $photo) {
-            $file = str_replace(base_url(), '', $photo->link);
-            if (file_exists($file)) {
-                if (unlink($file)) {
-                    if ($this->gallery_model->delete($photo->id))
-                        $status = TRUE;
-                }
-            }
-        }
-        if ($status && $this->category_model->delete($id)) {
-            $this->message('<strong>Berhasil</strong> menghapus Galeri Foto', 'success');
-        } else {
-            $this->message('<strong>Gagal</strong> menghapus Galeri Foto', 'danger');
-        }
-        $this->go('photos');
-    }
-
-    public function show_image()
-    {
-        $id = $this->input->get('id', TRUE);
-        $category = $this->input->get('category_id', TRUE);
-        if ($id == NULL || $id == 0 || $category == NULL || $category == 0) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
-        }
-        $data = $this->gallery_model->get(array('id' => $id, 'category_id' => $category));
-        echo json_encode($data);
-    }
-
-    public function remove_image()
-    {
-        $file = $this->input->get('link', TRUE);
-        $this->is_not_empty($file);
-        $file_path = str_replace(base_url(), '', $file);
-        $status = FALSE;
-        if (file_exists($file_path)) {
-            if (unlink($file_path)) {
-                if ($this->gallery_model->delete(array('link' => $file)))
-                    $status = TRUE;
-            }
-        }
-        $this->is_true($status);
-        echo $status;
     }
 
     /**
-     * @param $status
+     * @param $slug
      */
-    private function is_true($status)
+    public function destroy($slug = NULL)
     {
-        if ($status) {
-            $this->message('<strong>Berhasil</strong> menghapus Foto', 'success');
-        } else {
-            $this->message('<strong>Gagal</strong> menghapus Foto', 'danger');
+        $this->might_make_errors($slug);
+        $status = FALSE;
+        if(!$category_id = $this->category_model->get(array('slug' => $slug))->id){
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('photos');
         }
+        if(!$photos = $this->gallery_model->get_all(array('category_id' => $category_id))){
+            $status = TRUE;
+        }
+        $this->load->helper('file');
+        foreach ($photos as $photo) {
+            $file = str_replace(base_url(), '', $photo->link);
+            if (file_exists($file) && unlink($file) && $this->gallery_model->delete($photo->id)) {
+                $status = TRUE;
+            }
+        }
+        $this->is_worked($status && $this->category_model->delete($category_id), 'menghapus', 'Galeri Foto');
+        $this->go('photos');
     }
 
-    public function remove_multiple()
+    public function remove_multiple($slug = NULL)
     {
+        $this->might_make_errors($slug);
         $status = FALSE;
-        $category_id = $this->input->post('category_id', TRUE);
-        $this->is_not_empty($category_id);
         if (!empty($_POST['check_list'])) {
-            foreach ($_POST['check_list'] as $id) {
-                $photo = $this->gallery_model->get($id);
+            foreach ($_POST['check_list'] as $name) {
+                $photo = $this->gallery_model->get(array('name' => $name));
                 $file = $photo->link;
                 $file_path = str_replace(base_url(), '', $file);
-                if (file_exists($file_path)) {
-                    if (unlink($file_path)) {
-                        if ($this->gallery_model->delete($id))
-                            $status = TRUE;
-                    }
+                if (file_exists($file_path) && unlink($file_path) && $this->gallery_model->delete(array('name' => $name))) {
+                    $status = TRUE;
                 }
             }
         } else {
             $this->message('Anda tidak memilih foto apapun', 'danger');
-            $this->go('photos/show?id=' . $category_id);
+            $this->go('photos/show/' . $slug);
         }
-        $this->is_true($status);
-        $this->go('photos/show?id=' . $category_id);
+        $this->is_worked($status, 'menghapus', 'Foto yang Anda Pilih');
+        $this->go('photos/show/' . $slug);
     }
 
     /**
@@ -336,9 +256,13 @@ class Photos extends MY_Controller
         return $config;
     }
 
+    /**
+     * Pagination Setting
+     * @param $default_per_page - as default number of rows will appear on a page at first time
+     */
     private function input_get_for_pagination($default_per_page)
     {
-        $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
-        $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : $default_per_page;
+        $this->_data['number'] = $this->input->get('number') !== NULL ? $this->input->get('number') : 0;
+        $this->_data['per_page'] = $this->input->get('per_page') !== NULL ? $this->input->get('per_page') : $default_per_page;
     }
 }

@@ -17,7 +17,7 @@
                         <input type="text" class="form-control" id="body" name="body" value="<?= $agenda->body ?>">
                     </div>
                     <div class="form-group">
-                        <label for="agenda_date">Isi Profil</label>
+                        <label for="agenda_date">Tanggal Agenda</label>
                         <?php echo form_error('agenda_date'); ?>
                         <input type="date" class="form-control" id="agenda_date" name="agenda_date" value="<?= date('Y-m-d', strtotime($agenda->agenda_date)) ?>">
                     </div>

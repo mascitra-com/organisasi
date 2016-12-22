@@ -11,7 +11,15 @@
 				<br>
 				<div class="form-group">
 					<button class="btn btn-default"><i class="fa fa-pencil"></i> Edit Berita</button>
-					<a href="<?=site_url('news') ?>"><button class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</button></a>
+					<a href="<?php
+					if ($article->type == 'draft') {
+						echo site_url('news/draft');
+					}elseif ($article->type == 'archive') {
+						echo site_url('news/archive');
+					}else{
+						echo site_url('news');
+					}
+					?>"><button class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</button></a>
 				</div>
 			</div>
 		</div>

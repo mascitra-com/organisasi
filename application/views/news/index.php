@@ -24,8 +24,8 @@
                         </div>
                         <div class="col-md-2">
                             <a href="#" class="btn btn-xs btn-primary">aktif</a>
-                            <a href="#" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                            <a class="btn btn-xs btn-default" href="<?=site_url('news/move_to_archive?slug='.$article->slug)?>" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
+                            <a href="<?=site_url('news/edit?slug='.$article->slug)?>" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                            <a class="btn btn-xs btn-default" href="<?=site_url('news/move_to_archive?slug='.$article->slug)?>" onclick="return confirm('Pindah berita ke arsip?')"><i class="fa fa-trash"></i></a>
                         </div>
                     </div>
                 <?php endforeach; } else { echo '<div class="col-md-12">Tidak ada berita</div>'; } ?>

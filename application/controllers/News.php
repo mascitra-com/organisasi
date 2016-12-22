@@ -70,7 +70,7 @@ class News extends MY_Controller
 
         $data['slug'] = url_title($data['name'], 'dash', TRUE);
 
-        if (!empty($_FILES)) {
+        if (!empty($data['img'])) {
             $config['file_name'] = $_FILES['img']['name'];
             $config['upload_path'] = './assets/img/news_img/';
             $config['allowed_types'] = 'jpg|jpeg|png';
@@ -86,14 +86,13 @@ class News extends MY_Controller
                 $data['img_link'] = $link;
             }
         } else {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('news');
+            $data['img_link'] = base_url('assets/img/default.png');
         }
 
         if ($this->news_model->insert($data)) {
             if ($data['type'] == 'draft') {
                 $this->message('<strong>Berhasil</strong> Berita Disimpan di Draft', 'success');
-                redirect('news');
+                redirect('news/draft');
             }else{
                 $this->message('<strong>Berhasil</strong> menyimpan Berita Baru', 'success');
                 redirect('news');
@@ -114,42 +113,98 @@ class News extends MY_Controller
             }
             else{
                 $this->message('<strong>Gagal</strong>. Agenda tidak ditemukan', 'warning');
-                $this->go('agenda');
+                $this->go('news');
             }
         }else{
-            $this->go('agenda');
+            $this->go('news');
         }
     }
 
-    public function edit($id = 1)
+    public function edit()
     {
-        $this->_data['news'] = $this->news_model->with_user('fields:first_name,last_name')->get(array('id' => $id));
-        $this->_view['title'] = 'Edit Berita';
-        $this->_view['page'] = 'news/edit';
-        $this->init();
+        $slug = $this->input->get('slug', TRUE);
+        if ($slug != NULL)
+        {
+            $article = $this->news_model->get(array('slug' => $slug));
+            if ($article) 
+            {
+                $this->_data['article'] = $this->news_model->with_user('fields:first_name,last_name')->get(array('slug' => $slug));
+                $this->_view['title'] = 'Edit Berita';
+                $this->_view['page'] = 'news/edit';
+                $this->init();
+            }
+            else
+            {
+                $this->message('<strong>Gagal</strong>. Berita tidak ditemukan', 'warning');
+                $this->go('news');
+            }
+        }
+        else
+        {
+            $this->message('Terjadi Kesalahan Sistem', 'danger');
+            $this->go('news');
+        }
     }
 
     public function update($id = NULL)
     {
-        $update_data = $this->input->post();
-        $update_id = $update_data['id'];
-        unset($update_data['id']);
-        if ($this->news_model->update($update_data, $update_id)) {
-            $this->message('<strong>Berhasil</strong> mengedit Berita', 'success');
-        } else {
-            $this->message('<strong>Gagal</strong> mengedit Berita', 'danger');
+        if ($id != NULL) {
+            $update_data = $this->input->post();
+            $former_news_type = $this->news_model->fields('type')->where('id', $id)->get();
+            $today = date('Y-m-d');
+
+            $update_data['published_at'] = date('Y-m-d', strtotime($update_data['published_at']));
+
+            if ($update_data['type'] != 'draft') {
+                if ($update_data['published_at'] > $today) {
+                    $update_data['type'] = 'unactive';
+                }elseif ($update_data['published_at'] == $today) {
+                    $update_data['type'] = 'active';
+                }
+                else{
+                    $this->message('Tanggal kadaluarsa', 'danger');
+                    $this->news_check_redirect_previous($update_data);
+                }
+            }
+            
+            $update_data['slug'] = url_title($update_data['name'], 'dash', TRUE);
+            if ($this->news_model->update($update_data, $id)) {
+                $this->message('<strong>Berhasil</strong> mengedit Berita', 'success');
+                $this->news_check_redirect_previous($former_news_type);
+            } else {
+                $this->message('<strong>Gagal</strong> mengedit Berita', 'danger');
+                $this->news_check_redirect_previous($former_news_type);
+            }
+        }else{
+            $this->message('<strong>Gagal</strong> Berita tidak ditemukan', 'danger');
+            $this->news_check_redirect_previous($former_news_type);
         }
-        redirect('news');
     }
 
     public function move_to_archive()
     {
         $slug = $this->input->get('slug', TRUE);
+        $former_news_type = $this->news_model->fields('type')->where('slug', $slug)->get();
         if ($this->news_model->update(array('type' => 'archive'), array('slug' => $slug))) {
             $this->message('<strong>Berhasil</strong> Berita telah dipindah di Arsip', 'success');
-            redirect('news/archive');
+            $this->news_check_redirect_previous($former_news_type);
         } else {
-            $this->message('<strong>Gagal</strong> mengedit Berita', 'danger');
+            $this->news_check_redirect_previous($former_news_type);
+            $this->message('<strong>Gagal</strong> mengarsipkan Berita', 'danger');
+        }
+    }
+
+    /*
+     */
+    
+    private function news_check_redirect_previous($data)
+    {
+        if ($data->type == "draft") {
+            $this->go("news/draft");
+        }elseif($data->type == "archive"){
+            $this->go('news/archive');
+        }else{
+            $this->go('news');
         }
     }
 }

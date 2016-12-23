@@ -8,7 +8,7 @@
 				<form action="<?=site_url('news/update/'.$article->id)?>" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="">Judul</label>
-						<input type="text" class="form-control" name="name" placeholder="Judul berita" value="<?=$article->name?>" required>
+						<input type="text" class="form-control" name="name" placeholder="Judul berita" value="<?=$article->name?>" required minlength="3" maxlength="100">
 					</div>
 
 					<!-- <div class="form-group">
@@ -16,12 +16,12 @@
 						<input type="date" class="form-control" name="published_at" placeholder="Tanggal Publish" id="published_at" required>
 					</div> -->
 
-					<input type="date" name="published_at" value="<?=$article->published_at?>">
+					<input type="date" name="published_at" value="<?=($article->published_at)?>" min="<?=date('Y-m-d');?>">
 
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label for="">Gambar Thumbnail</label>
 						<input type="file" name="img" accept="image/*">
-					</div> -->
+					</div>
 					<div class="form-group">
 						<label for="">Isi Berita</label>
 						<textarea name="body" class="form-control tinymce" rows="10"><?=$article->body?></textarea>

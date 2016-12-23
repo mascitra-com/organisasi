@@ -12,28 +12,20 @@ class News_model extends MY_Model
     public $fillable = array('name','body','slug','img_name','img_link','type','published_at');
     public $protected = array('id');
 
-	// public $rules = array(
- //        'insert' => array(
- //            'name' => array(
- //                'field' => 'name',
- //                'label' => 'Nama Agenda',
- //                'rules' => 'trim|required|min_length[3]|max_length[100]'),
- //            'body' => array(
- //                'field' => 'body',
- //                'label' => 'Isi Agenda',
- //                'rules' => 'trim|required')
- //        ),
- //        'update' => array(
- //            'name' => array(
- //                'field' => 'name',
- //                'label' => 'Nama Agenda',
- //                'rules' => 'trim|required|min_length[3]|max_length[100]'),
- //            'body' => array(
- //                'field' => 'body',
- //                'label' => 'Isi Agenda',
- //                'rules' => 'trim|required')
- //        )
- //    );
+    public $rules = array(
+    	'insert' => array(
+    		'name' => array(
+    			'field' => 'name',
+    			'label' => 'Judul',
+    			'rules' => 'trim|required|min_length[3]|max_length[100]'),
+    		),
+    	'update' => array(
+    		'name' => array(
+    			'field' => 'name',
+    			'label' => 'Judul',
+    			'rules' => 'trim|required|min_length[3]|max_length[100]'),
+    		)
+    	);
 
     public function __construct()
     {
@@ -41,4 +33,100 @@ class News_model extends MY_Model
         parent::__construct();
     }
 
-}
+    public function fetch_data_index($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->where_in('type', array('active', 'unactive'));
+        $this->db->order_by('published_at','desc');
+        $this->db->limit($limit, $start);
+        $this->search($search);
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Berita tidak ditemukan'; 
+    }
+
+    public function fetch_data_draft($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->from('news');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->where('type', 'draft');
+        $this->db->order_by('published_at','desc');
+        $this->db->limit($limit, $start);
+        $this->search($search);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Berita tidak ditemukan';
+    }
+
+    public function fetch_data_archive($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->from('news');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->where('type', 'archive');
+        $this->db->order_by('published_at','desc');
+        $this->db->limit($limit, $start);
+        $this->search($search);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Berita tidak ditemukan';
+    }
+
+    public function count_data_index($search)
+    {
+        $this->db->select('id');
+        $this->db->where('type', 'active');
+        $this->db->or_where('type', 'unactive');
+        $this->search($search);
+        return $this->db->get($this->table)->num_rows();
+    }
+
+    public function count_data_draft($search)
+    {
+        $this->db->select('id');
+        $this->db->where('type', 'draft');
+        $this->search($search);
+        return $this->db->get($this->table)->num_rows();
+    }
+
+    public function count_data_archive($search)
+    {
+        $this->db->select('id');
+        $this->db->where('type', 'archive');
+        $this->search($search);
+        return $this->db->get($this->table)->num_rows();
+    }
+
+    /**
+     * @param $search
+     */
+    private function search($search)
+    {
+        if (isset($search)) {
+            $col = $this->db->list_fields($this->table);
+            $i = 1;
+            foreach ($search as $val) {
+                if(!empty($val)){
+                    $this->db->like($col[$i], $val);}
+                    $i++;
+                }
+            }
+        }
+    }

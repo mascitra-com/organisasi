@@ -175,6 +175,7 @@ class Photos extends MY_Controller
     public function update()
     {
         $update_data = $this->input->post(NULL, TRUE);
+        // TODO Use slug instead
         $update_id = $update_data['id'];
         $update_data['slug'] = $this->slug->create_uri($update_data, $update_id);
         unset($update_data['id']);
@@ -226,34 +227,6 @@ class Photos extends MY_Controller
         }
         $this->is_worked($status, 'menghapus', 'Foto yang Anda Pilih');
         $this->go('photos/show/' . $slug);
-    }
-
-    /**
-     * @param $config
-     *
-     * @return mixed
-     */
-    private function config_for_bootstrap_pagination($config)
-    {
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = $this->lang->line('pagination_first_link');
-        $config['last_link'] = $this->lang->line('pagination_last_link');
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link'] = $this->lang->line('pagination_prev_link');
-        $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link'] = $this->lang->line('pagination_next_link');
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        return $config;
     }
 
     /**

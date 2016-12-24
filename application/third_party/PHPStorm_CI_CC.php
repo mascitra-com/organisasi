@@ -78,10 +78,16 @@
  * @property Ion_auth            $ion_auth             Layout Class
  * @property Slug                $slug
  ***************** YOUR MODELS *****************
- * @property ion_auth_model      $ion_auth_model
- * @property category_model       $category_model
+ * @property agenda_model        $agenda_model
+ * @property category_model      $category_model
  * @property gallery_model       $gallery_model
+ * @property ion_auth_model      $ion_auth_model
+ * @property menu_model          $menu_model
+ * @property news_model          $news_model
+ * @property privilege_model     $privilege_model
  * @property profile_model       $profile_model
+ * @property regulation_model    $regulation_model
+ * @property user_model          $user_model
  */
 class CI_Controller
 {

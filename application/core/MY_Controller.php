@@ -71,7 +71,7 @@ class MY_Controller extends CI_Controller {
 
     /**
      * This function use if you want to test the variable|array
-     * Will return FALSE if contains NULL
+     * Will redirect to index if return NULL|FALSE
      * @param $var
      */
     protected function might_make_errors($var)
@@ -96,4 +96,33 @@ class MY_Controller extends CI_Controller {
             $this->message('<strong>Gagal</strong> '.$status.' '.$type, 'danger');
         }
     }
+
+    /**
+     * @param $config
+     *
+     * @return mixed
+     */
+    protected function config_for_bootstrap_pagination($config)
+    {
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = $this->lang->line('pagination_first_link');
+        $config['last_link'] = $this->lang->line('pagination_last_link');
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = $this->lang->line('pagination_prev_link');
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = $this->lang->line('pagination_next_link');
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        return $config;
+    }
+
 }

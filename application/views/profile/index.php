@@ -11,20 +11,20 @@
                     <thead>
                     <tr>
                         <form action="<?=site_url('profile/search')?>" method="POST">
-                        <td>
+                        <td width="5%">
                             <a href="<?=site_url('profile/refresh')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
                         </td>
-                        <td width="15%" class="form-group">
+                        <td width="20%" class="form-group">
                             <input type="text" name="name" class="form-control" placeholder="Nama" value="<?= isset($search->name) ?$search->name : '' ?>">
                         </td>
                         <td width="25%" class="form-group">
                             <input type="text" name="headline" class="form-control" placeholder="Judul" value="<?= isset($search->headline) ?$search->headline : '' ?>">
                         </td>
-                        <td class="form-group">
+                        <td width="40%" class="form-group">
                             <input type="text" name="body" class="form-control" placeholder="Isi" value="<?= isset($search->body) ?$search->body : '' ?>">
                         </td>
                         <td>
-                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+                            <button type="submit" class="btn btn-default btn-block"><i class="fa fa-search"></i> Search</button>
                         </td>
                         </form>
                     </tr>
@@ -37,9 +37,9 @@
                                 <td><?=(strlen($profile->headline) > 100) ? substr($profile->headline, 0, 100).'...' :  $profile->headline?></td>
                                 <td><?= (strlen($profile->body) > 100) ? substr($profile->body, 0, 100).'...' :  $profile->body ?></td>
                                 <td class="text-nowrap">
-                                    <a class="btn btn-xs btn-default" href="<?=site_url('profile/show?id='.$profile->id)?>"><i class="fa fa-info-circle"></i></a>
-                                    <a class="btn btn-xs btn-success" href="<?=site_url('profile/edit?id='.$profile->id)?>"><i class="fa fa-pencil"></i></a>
-                                    <a class="btn btn-xs btn-danger" href="<?=site_url('profile/destroy?id='.$profile->id)?>" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
+                                    <a class="btn btn btn-default" href="<?=site_url('profile/show/'.$profile->slug)?>"><i class="fa fa-info-circle"></i></a>
+                                    <a class="btn btn btn-success" href="<?=site_url('profile/edit/'.$profile->slug)?>"><i class="fa fa-pencil"></i></a>
+                                    <a class="btn btn btn-danger" href="<?=site_url('profile/destroy/'.$profile->slug)?>" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; } else { echo "<td colspan='5'>$profiles<td>"; } ?>

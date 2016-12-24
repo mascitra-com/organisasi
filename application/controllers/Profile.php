@@ -13,6 +13,7 @@ class Profile extends MY_Controller {
 		$this->_view['template'] = 'template/dashboard/index';
         $this->_view['js'] = 'profile';
         $this->load->model('profile_model');
+        $this->slug_config($this->profile_model->table, 'name');
 	}
 
 	public function index($search_status = FALSE) {
@@ -73,7 +74,9 @@ class Profile extends MY_Controller {
 
 	public function store() {
 		$data = $this->input->post();
-		if ($this->profile_model->from_form()->insert()) {
+        if ($id = $this->profile_model->from_form()->insert()) {
+            $slug = $this->slug->create_uri($data);
+            $this->profile_model->update(array('slug' => $slug), $id);
 			$this->message('<strong>Berhasil</strong> menyimpan Data Profil', 'success');
 			redirect('profile');
 		} else {
@@ -84,9 +87,9 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function show() {
-	    $id = $this->input->get('id', TRUE);
-		if ($id != NULL) 
+	public function show($slug = NULL) {
+	    $id = $this->profile_model->get(array('slug' => $slug))->id;
+		if ($id !== NULL)
 		{
 			$profiles = $this->profile_model->get(array('id' => $id));
 				if ($profiles) 
@@ -109,11 +112,10 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function edit() {
-        $id = $this->input->get('id', TRUE);
-        if ($id != NULL)
+	public function edit($slug = NULL) {
+        if ($slug !== NULL)
 		{
-			$profiles = $this->profile_model->get(array('id' => $id));
+			$profiles = $this->profile_model->get(array('slug' => $slug));
 				if ($profiles) 
 				{
 					$this->_data['profile'] = $profiles;
@@ -134,13 +136,14 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function update($id = NULL) {
+	public function update() {
         $update_data = $this->input->post();
-		if ($this->profile_model->from_form(NULL, NULL, array('id'))->update()) {
-			$this->message('<strong>Berhasil</strong> mengedit Data Profil', 'success');
+        if ($id = $this->profile_model->from_form(NULL, NULL, array('slug'))->update()) {
+            $slug = $this->slug->create_uri($update_data['name'], $id);
+            $this->profile_model->update(array('slug' => $slug), $id);
+            $this->message('<strong>Berhasil</strong> mengedit Data Profil', 'success');
 			redirect('profile');
 		} else {
-            $update_data['id'] = $id;
 			$this->_data['profile'] = (object) $update_data;
 			$this->_view['title'] = 'Edit Profil';
 			$this->_view['page'] = 'profile/edit';
@@ -148,8 +151,8 @@ class Profile extends MY_Controller {
 		}
 	}
 
-	public function destroy() {
-        $id = $this->input->get('id', TRUE);
+	public function destroy($slug = NULL) {
+        $id = $this->profile_model->get(array('slug' => $slug))->id;
         if ($this->profile_model->delete($id)) {
 			$this->message('<strong>Berhasil</strong> menghapus Data Profil', 'success');
 		} else {
@@ -157,35 +160,6 @@ class Profile extends MY_Controller {
 		}
 		redirect('profile');
 	}
-
-    /**
-     * @param $config
-     *
-     * @return mixed
-     */
-    private function config_for_bootstrap_pagination($config)
-    {
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = $this->lang->line('pagination_first_link');
-        $config['last_link'] = $this->lang->line('pagination_last_link');
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link'] = $this->lang->line('pagination_prev_link');
-        $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link'] = $this->lang->line('pagination_next_link');
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        return $config;
-    }
-
 
     /**
      * @param $id

@@ -26,21 +26,21 @@
 					<a href="<?=site_url('news')?>">
 						<i class="fa fa-fw fa-newspaper-o"></i>
 						<span class="nav-label">Daftar Berita</span>
-						<span class="nav-label pull-right"><span class="label label-success">10</span></span>
+						<span class="nav-label pull-right"><span class="label label-success"><?=$news_total?></span></span>
 					</a>
 				</li>
 				<li>
 					<a href="<?=site_url('news/draft')?>">
 						<i class="fa fa-fw fa-clone"></i>
 						<span class="nav-label">Draft</span>
-						<span class="nav-label pull-right"><span class="label label-warning">02</span></span>
+						<span class="nav-label pull-right"><span class="label label-warning"><?=$draft_total?></span></span>
 					</a>
 				</li>
 				<li>
 					<a href="<?=site_url('news/archive')?>">
 						<i class="fa fa-fw fa-archive"></i>
 						<span class="nav-label">Berkas</span>
-						<span class="nav-label pull-right"><span class="label label-danger">15</span></span>
+						<span class="nav-label pull-right"><span class="label label-danger"><?=$archive_total?></span></span>
 					</a>
 				</li>
 			</ul>

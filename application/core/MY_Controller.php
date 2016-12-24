@@ -11,6 +11,10 @@ class MY_Controller extends CI_Controller {
 
 		# Set atribut _data
 		$this->_data = array();
+		$this->load->model('news_model');
+		$this->_data['news_total'] = $this->news_model->where('type','active')->where('type','=','unactive',TRUE)->as_array()->count_rows();
+        $this->_data['draft_total'] = $this->news_model->where('type','draft')->as_array()->count_rows();
+        $this->_data['archive_total'] = $this->news_model->where('type','archive')->as_array()->count_rows();
 	}
 
 	public function _remap($method, $param = array()) {

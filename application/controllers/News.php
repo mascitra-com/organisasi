@@ -33,20 +33,6 @@ class News extends MY_Controller{
         $this->init();
     }
 
-    public function search()
-    {
-        $this->session->unset_userdata('search_news');
-        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
-        $this->session->set_userdata('search_news', $this->_data['search']);
-        $this->index(TRUE);
-    }
-
-    public function refresh()
-    {
-        $this->session->unset_userdata('search_news');
-        $this->go('news');
-    }
-
     public function draft($search_status = FALSE)
     {
         if($search_status == FALSE){
@@ -75,6 +61,48 @@ class News extends MY_Controller{
         $this->_view['title'] = 'Berita';
         $this->_view['page'] = 'news/archive';
         $this->init();
+    }
+
+    public function search()
+    {
+        $this->session->unset_userdata('search_news');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_news', $this->_data['search']);
+        $this->index(TRUE);
+    }
+
+    public function search_draft()
+    {
+        $this->session->unset_userdata('search_news');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_news', $this->_data['search']);
+        $this->draft(TRUE);
+    }
+
+    public function search_archive()
+    {
+        $this->session->unset_userdata('search_news');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_news', $this->_data['search']);
+        $this->archive(TRUE);
+    }
+
+    public function refresh()
+    {
+        $this->session->unset_userdata('search_news');
+        $this->go('news');
+    }
+
+    public function refresh_draft()
+    {
+        $this->session->unset_userdata('search_news');
+        $this->go('news/draft');
+    }
+
+    public function refresh_archive()
+    {
+        $this->session->unset_userdata('search_news');
+        $this->go('news/archive');
     }
 
     private function page($page)

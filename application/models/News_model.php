@@ -37,8 +37,17 @@ class News_model extends MY_Model
     {
         $this->db->select('news.*, users.first_name, users.last_name');
         $this->db->join('users', 'users.id = news.created_by');
-        $this->db->where_in('type', array('active', 'unactive'));
-        $this->db->order_by('published_at','desc');
+        if (isset($search)) {
+            if ($search->type === "active") {
+                $this->db->where('type', 'active');
+            }elseif ($search->type === "unactive") {
+                $this->db->where('type', 'unactive');
+            }else{
+                $this->db->where_in('type', array('active', 'unactive'));
+            }
+        }else{
+            $this->db->where_in('type', array('active', 'unactive'));
+        }
         $this->db->limit($limit, $start);
         $this->search($search);
         $query = $this->db->get($this->table);
@@ -92,8 +101,17 @@ class News_model extends MY_Model
     public function count_data_index($search)
     {
         $this->db->select('id');
-        $this->db->where('type', 'active');
-        $this->db->or_where('type', 'unactive');
+        if (isset($search)) {
+            if ($search->type === "active") {
+                $this->db->where('type', 'active');
+            }elseif ($search->type === "unactive") {
+                $this->db->where('type', 'unactive');
+            }else{
+                $this->db->where_in('type', array('active', 'unactive'));
+            }
+        }else{
+            $this->db->where_in('type', array('active', 'unactive'));
+        }
         $this->search($search);
         return $this->db->get($this->table)->num_rows();
     }
@@ -120,13 +138,19 @@ class News_model extends MY_Model
     private function search($search)
     {
         if (isset($search)) {
-            $col = $this->db->list_fields($this->table);
-            $i = 1;
-            foreach ($search as $val) {
-                if(!empty($val)){
-                    $this->db->like($col[$i], $val);}
-                    $i++;
-                }
-            }
-        }
-    }
+            if ($search->published_at === "newest") {
+                $this->db->order_by('published_at','desc');
+            }else{
+              $this->db->order_by('published_at','asc');
+          }
+          $this->db->like('name', $search->name);
+            // $col = $this->db->list_fields($this->table);
+            // $i = 1;
+            // foreach ($search as $val) {
+            //     if(!empty($val)){
+            //         $this->db->like($col[$i], $val);}
+            //         $i++;
+            //     }
+      }
+  }
+}

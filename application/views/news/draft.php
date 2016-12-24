@@ -10,12 +10,18 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <form action="<?=site_url('news/search')?>" method="POST">
+                            <form action="<?=site_url('news/search_draft')?>" method="POST">
                                 <td>
-                                    <a href="<?=site_url('news/refresh')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+                                    <a href="<?=site_url('news/refresh_draft')?>" class="btn btn-default"><i class="fa fa-refresh"></i></a>
                                 </td>
                                 <td width="85%" class="form-group">
-                                    <input type="text" name="name" class="form-control" placeholder="Nama" value="<?= isset($search->name) ?$search->name : '' ?>">
+                                    <input type="text" name="name" class="form-control" placeholder="Judul Berita" value="<?= isset($search->name) ?$search->name : '' ?>">
+                                </td>
+                                <td width="15%" class="form-group">
+                                    <select class="form-control" name="published_at">
+                                        <option value="newest" <?= (isset($search->published_at) && $search->published_at === "newest") ? 'selected' : ''?>>Terbaru</option>
+                                        <option value="oldest" <?= (isset($search->published_at) && $search->published_at === "oldest") ? 'selected' : ''?>>Terlama</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
@@ -24,7 +30,7 @@
                         </tr>
                     </thead>
                 </table>
-                <?php if(!empty($articles)){ foreach ($articles as $article): ?>
+                <?php if(is_array($articles)){ foreach ($articles as $article): ?>
                     <div class="row">
                         <div class="col-md-2">
                             <img src="<?=$article->img_link?>" alt="thumbnail" width="100%">

@@ -10,7 +10,7 @@ class Agenda_model extends MY_Model
 {
     public $primary_key = 'id';
     public $fillable = array('name','body','agenda_date');
-    public $protected = array('id');
+    public $protected = array('no');
 
 	public $rules = array(
         'insert' => array(

@@ -5,58 +5,66 @@
 				<h3 class="panel-title">Info Website</h3>
 			</div>
 			<div class="panel-body">
-				<form action="#">
+				<form action="<?=site_url('setting/info_update')?>" method="POST" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-sm-6 col-md-6">
 							<div class="form-group">
-								<label for="">Nama Website</label>
-								<input type="text" class="form-control" placeholder="nama website">
+								<label for="website_name">Nama Website</label>
+								<?php echo form_error('website_name'); ?>
+								<input type="text" class="form-control" name="website_name" placeholder="nama website" value="<?= (isset($info['website_name'])) ? $info['website_name'] : ''; ?>">
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-6">
 							<div class="form-group">
-								<label for="">Akronim</label>
-								<input type="text" class="form-control" placeholder="akronim website">
+								<label for="acronym">Akronim</label>
+								<?php echo form_error('acronym'); ?>
+								<input type="text" class="form-control" name="acronym" placeholder="akronim website" value="<?= (isset($info['acronym'])) ? $info['acronym'] : ''; ?>">
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="">Deskripsi</label>
-						<textarea class="form-control" placeholder="deskripsi website"></textarea>
+						<label for="description">Deskripsi</label>
+						<?php echo form_error('description'); ?>
+						<textarea class="form-control" name="description" placeholder="deskripsi website"><?= (isset($info['description'])) ? $info['description'] : ''; ?></textarea>
 					</div>
 					<div class="form-group">
-						<label for="">Alamat</label>
-						<textarea class="form-control" placeholder="alamat kantor"></textarea>
+						<label for="office_address">Alamat</label>
+						<?php echo form_error('office_address'); ?>
+						<textarea class="form-control" name="office_address" placeholder="alamat kantor"><?= (isset($info['office_address'])) ? $info['office_address'] : ''; ?></textarea>
 					</div>
 					<div class="row">
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group">
-								<label for="">Telpon</label>
-								<input type="text" class="form-control" placeholder="telpon">
+								<label for="phone">Telpon</label>
+								<?php echo form_error('phone'); ?>
+								<input type="text" class="form-control" name="phone" placeholder="telpon" value="<?= (isset($info['phone'])) ? $info['phone'] : ''; ?>">
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group">
-								<label for="">Telpon (alternatif)</label>
-								<input type="text" class="form-control" placeholder="telpon alternatif">
+								<label for="phone_alt">Telpon (alternatif)</label>
+								<?php echo form_error('phone_alt'); ?>
+								<input type="text" class="form-control" name="phone_alt" placeholder="telpon alternatif" value="<?= (isset($info['phone_alt'])) ? $info['phone_alt'] : ''; ?>">
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group">
-								<label for="">Email</label>
-								<input type="text" class="form-control" placeholder="email">
+								<label for="email">Email</label>
+								<?php echo form_error('email'); ?>
+								<input type="text" class="form-control" name="email" placeholder="email" value="<?= (isset($info['email'])) ? $info['email'] : ''; ?>">
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group">
-								<label for="">Kode Pos</label>
-								<input type="text" class="form-control" placeholder="kode pos">
+								<label for="postal_code">Kode Pos</label>
+								<?php echo form_error('postal_code'); ?>
+								<input type="text" class="form-control" name="postal_code" placeholder="kode pos" value="<?= (isset($info['postal_code'])) ? $info['postal_code'] : ''; ?>">
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="">Logo</label>
-						<input type="file">
+						<label for="logo_link">Logo</label>
+						<input type="file" name="logo_link" accept="image/*">
 					</div>
 					<br>
 					<div class="form-group">

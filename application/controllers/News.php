@@ -272,8 +272,6 @@ class News extends MY_Controller{
                 }
             }
 
-            dump($update_data);
-
             if (!empty($_FILES['img']['name'])) {
                 $config['file_name'] = $_FILES['img']['name'];
                 $config['upload_path'] = './assets/img/news_img/';

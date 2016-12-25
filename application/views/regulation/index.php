@@ -11,27 +11,29 @@
 					<thead>
 						<tr>
 							<th class="text-center">#</th>
-							<th>Judul</th>
-							<th>Isi Regulasi</th>
-							<th class="text-center text-nowrap">Tanggal Dikeluarkan</th>
-							<th class="text-center text-nowrap">Dikeluarkan Oleh</th>
+							<th width="20%">Judul</th>
+							<th width="40%">Isi Regulasi</th>
+							<th class="text-center">Tanggal Dikeluarkan</th>
+							<th class="text-center">Dikeluarkan Oleh</th>
 							<th class="text-center">File</th>
 							<th class="text-center">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
+                    <?php if(!empty($regulations)){ $no = 1; foreach ($regulations as $regulation): ?>
 						<tr>
-							<td class="text-center">01</td>
-							<td class="text-nowrap">Judul Reg</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos beatae soluta suscipit enim voluptate officiis!</td>
-							<td class="text-center text-nowrap">12-12-2016</td>
-							<td class="text-center">Bupati</td>
-							<td class="text-center"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-file-word-o"></i></a></td>
+							<td class="text-center"><?=$no++?></td>
+							<td><?= (strlen($regulation->name) > 100) ? substr($regulation->name, 0, 100).'...' :  $regulation->name ?></td>
+							<td><?= (strlen($regulation->body) > 100) ? substr($regulation->body, 0, 100).'...' :  $regulation->body ?></td>
+							<td class="text-center"><?= mdate('%d-%m-%Y', strtotime(str_replace('-', '/', $regulation->issued_at))); ?></td>
+							<td class="text-center"><?=$regulation->issued_by?></td>
+							<td class="text-center"><a href="<?=$regulation->link?>" class="btn btn-default btn-sm" download><i class="fa fa-file-word-o"></i></a></td>
 							<td class="text-center text-nowrap">
-								<a href="#" class="btn btn-default btn-sm"><i class="fa fa-info"></i></a>
-								<a href="#" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></a>
+								<a href="<?=site_url('regulation/edit?id='.$regulation->id)?>" class="btn btn-default btn-sm"><i class="fa fa-info"></i></a>
+								<a href="<?=site_url('regulation/destroy?id='.$regulation->id)?>" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></a>
 							</td>
 						</tr>
+                    <?php endforeach; }?>
 					</tbody>
 				</table>
 			</div>

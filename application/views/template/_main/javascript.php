@@ -15,6 +15,12 @@
         <script src="<?= base_url('assets/plugins/tinymce/tinymce.min.js') ?>"></script>
     <?php endif ?>
 
+    <!-- Load Chart.js -->
+    <?php if (in_array($_view['js'], array('dashboard'))): ?>
+        <script src="<?= base_url('assets/plugins/chartjs/chart.js') ?>"></script>
+    <?php endif ?>
+	
+	<!-- Load Dropzone.js -->
     <?php if (in_array($_view['js'], array('gallery'))): ?>
         <script src="<?= base_url('assets/plugins/dropzone/dropzone.js') ?>"></script>
     <?php endif ?>

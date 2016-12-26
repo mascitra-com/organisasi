@@ -10,7 +10,7 @@ class Dashboard extends MY_Controller {
 		# Set data
 		$this->_view['template'] = 'template/dashboard/index';
 		$this->_view['css'] 	 = 'dashboard';
-		// $this->_view['js'] 		 = '';
+		$this->_view['js'] 		 = 'dashboard';
 	}
 
 	public function index()

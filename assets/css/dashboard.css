@@ -1,31 +1,57 @@
-#quickcount [class*=col-]{
+#quickcount{
+	margin-bottom: 25px;
+	padding: 0;
+}
+
+#quickcount [class*=col-] .block{
 	display: flex;
 	box-sizing: border-box;
 	border-radius: 4px;
-	border-bottom: 2px #CCC solid;
-	border-left: 2px #CCC solid;
+	border-bottom: 1px #CCC solid;
+	border-left: 1px #CCC solid;
+	margin-bottom: 10px;
 }
 
-#quickcount [class*=col-] .block-right,
-#quickcount [class*=col-] .block-left{
+#quickcount .block-right,
+#quickcount .block-left{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-#quickcount [class*=col-] .block-left{
+#quickcount .block-left{
 	font-size: 36px;
 	padding: 0 15px;
 }
 
-#quickcount [class*=col-] .block-right{
+#quickcount .block-right{
 	padding: 0 10px;
-	/*background-color: #FFF;*/
-	/*color: #222;*/
 }
 
-#quickcount [class*=col-] > i{
-	display: inline;
+#popular .panel .panel-body,
+#insight .panel .panel-body{
+	max-height: 270px;
+	overflow: hidden;
+}
+
+#popular .panel .panel-body{
+	overflow-y: scroll;
+}
+
+.panel{
+	box-shadow: none;
+	border-radius: 3px;
+	border-bottom: 1px #DDD solid;
+	border-left: 1px #DDD solid;
+
+}
+
+.panel-title .fa{
+	margin-right: 8px;
+}
+
+.panel-body .panel-title{
+	margin-bottom: 15px;
 }
 
 .green{
@@ -49,13 +75,13 @@
 }
 
 @media (max-width: 767px) {
-	#quickcount [class*=col-] .block-left{
+	.block-left{
 		display: none;
 	}
 }
 
 @media (max-width: 991px) {
-	#quickcount [class*=col-] .block-left{
+	.block-left{
 		display: none;
 	}
 }

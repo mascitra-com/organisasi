@@ -1,3 +1,7 @@
+body,html{
+	padding-top: 30px;
+}
+
 .panel-body .row{
 	padding: 10px 0px;
 }
@@ -6,11 +10,82 @@
 	margin-top: 7px;
 }
 
+.page-header{
+	border:none;
+}
+
 h3{
 	margin-top: 0;
+}
+
+.news-title{
+	text-transform: uppercase;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	font-size: 28pt;
+	letter-spacing: -.8pt;
+	margin-top: 30px;
+}
+
+.news-date, .news-author{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 15px;
+	font-weight: 700;
+	color:#777;
+	margin-right: 10px;
+}
+
+.news-date .fa, .news-author .fa{
+	margin-right: 3px;
+}
+
+.news-content{
+	margin-top: 25px;
+}
+
+.news-content p{
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: 400;
+	text-align: justify;
+	margin: 20px 0;
+	line-height: 33px;
+	color:#333;
+}
+
+
+.news-list{
+	margin: 30px 0;
+	padding: 20px 0;
+	border: 1px #CCC solid;
+	border-radius: 3px;
+}
+
+.news-list .news-title{
+	margin-top: 0;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 32px;
+	font-weight: 700;
+}
+
+.news-list .news-content p{
+	font-size: 18px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	line-height: 28px;
 }
 
 .vcenter {
 	display: flex;
 	align-items: center;
+}
+
+@media (max-width: 767px) {
+
+}
+
+@media (max-width: 991px) {
+	.thumbnail img{
+		height: 200px;
+	}
 }

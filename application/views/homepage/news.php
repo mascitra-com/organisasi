@@ -20,10 +20,8 @@
 	<?php endforeach; endif; ?>
 	<nav aria-label="...">
 		<ul class="pager">
-			<li class="previous"><a href="<?=site_url('homepage/news/1')?>"><span aria-hidden="true">&larr;</span> Lebih Baru</a></li>
-			<li class="next"><a href="<?=site_url('homepage/news/2')?>">Lebih Lama <span aria-hidden="true">&rarr;</span></a></li>
+			<li class="previous"><?=$prev_page?></li>
+			<li class="next"><?=$next_page?></li>
 		</ul>
 	</nav>
-	<?=$prev_page?>
-	<?=$next_page?>
 </div>

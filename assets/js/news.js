@@ -40,10 +40,9 @@ function all_news() {
 		dataType: "JSON",
 		success: function(data)
 		{
-			// console.log(data.artikel[0]['name']);
 			for(var i = 0; i < data.artikel.length; i++) {
 				var obj = data.artikel[i];
-				$("#news-list").append("<div class='col-xs-12 col-sm-4 col-md-3'><a href=homepage/show_news/"+obj.slug+"><div class='thumbnail'><img class='img-fit' src='"+obj.img_link+"' alt='thumbnail' width='100%'><div class='caption'><h5>"+obj.name+"</h5></div></div></a></div>");
+				$("#news-list").append("<div class='col-xs-12 col-sm-4 col-md-3'><a href=homepage/news_article/"+obj.slug+"><div class='thumbnail'><img class='img-fit' src='"+obj.img_link+"' alt='thumbnail' width='100%'><div class='caption'><h5>"+obj.name+"</h5></div></div></a></div>");
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) 
@@ -54,9 +53,51 @@ function all_news() {
 }
 
 function latest_news() {
-	alert('latest');
+	$("#news-list").empty();
+
+	$.ajax({
+		url: "homepage/get_latest_news",
+		type: "POST",
+		dataType: "JSON",
+		success: function(data)
+		{
+			for(var i = 0; i < data.artikel.length; i++) {
+				var obj = data.artikel[i];
+				$("#news-list").append("<div class='col-xs-12 col-sm-4 col-md-3'><a href=homepage/news_article/"+obj.slug+"><div class='thumbnail'><img class='img-fit' src='"+obj.img_link+"' alt='thumbnail' width='100%'><div class='caption'><h5>"+obj.name+"</h5></div></div></a></div>");
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) 
+		{
+			$("body").append("<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Gagal! </strong>Terjadi kesalahan dalam memperbaharui status berita.</div>");
+		}
+	});
 }
 
 function popular_news() {
-	alert('popular');
+	alert('still in progress');
+}
+
+function search_news() {
+	$("#news-list").empty();
+	$.ajax({
+		url: "homepage/get_searched_news",
+		type: "POST",
+		data: {'name':$('#name').val()},
+		dataType: "JSON",
+		success: function(data)
+		{
+			if (data.artikel == undefined) {
+				$("#news-list").append("<div class='col-xs-12 col-sm-4 col-md-3'>Berita tidak ditemukan</div>");
+			}else{
+				for(var i = 0; i < data.artikel.length; i++) {
+					var obj = data.artikel[i];
+					$("#news-list").append("<div class='col-xs-12 col-sm-4 col-md-3'><a href=homepage/news_article/"+obj.slug+"><div class='thumbnail'><img class='img-fit' src='"+obj.img_link+"' alt='thumbnail' width='100%'><div class='caption'><h5>"+obj.name+"</h5></div></div></a></div>");
+				}
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) 
+		{
+			$("body").append("<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Gagal! </strong>Terjadi kesalahan dalam memperbaharui status berita.</div>");
+		}
+	});
 }

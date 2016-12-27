@@ -29,17 +29,19 @@
 		<div class="page-header">
 			<h3>Berita terbaru</h3>
 		</div>
-		<?php for($i=0;$i<4;$i++):?>
+		<?php if(!empty($latest_articles)){ foreach($latest_articles as $article):?>
 			<div class="col-sm-6 col-md-3">
-				<div class="thumbnail">
-					<img class="img-fit" src="<?=base_url('assets/img/default-2.png')?>" alt="thumbnail">
-					<div class="caption">
-						<h3>Ini judul berita</h3>
-						<span>25 Desember, 2016</span>
+				<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
+					<div class="thumbnail">
+						<img class="img-fit" src="<?=$article->img_link?>" alt="thumbnail">
+						<div class="caption">
+							<h3><?=$article->name?></h3>
+							<span><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $article->published_at))) ?></span>
+						</div>
 					</div>
-				</div>
+				</a>
 			</div>
-		<?php endfor;?>
+		<?php endforeach; } else{ echo "Tidak ada berita"; }?>
 	</div>
 	<div class="row section" id="news">
 		<nav class="navbar navbar-default">
@@ -54,12 +56,12 @@
 					<a class="navbar-brand" href="#">Artikel Berita</a>
 				</div>
 				<div class="collapse navbar-collapse" id="nav-news">
-					<form class="navbar-form navbar-right">
+					<div class="navbar-form navbar-right">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="cari berita">
+							<input type="text" name="name" id="name" class="form-control" placeholder="cari berita">
 						</div>
-						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-					</form>
+						<button class="btn btn-default" onkeyup="search_news()"><i class="fa fa-search"></i></button>
+					</div>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#!" onclick="all_news()">Semua</a></li>
 						<li><a href="#!" onclick="latest_news()">Terbaru</a></li>
@@ -70,16 +72,18 @@
 		</nav>
 		<div class="col-md-12 white">
 			<div class="news-list" id="news-list">
-				<?php for($i=0;$i<8;$i++):?>
+				<?php if(!empty($articles)){ foreach($articles as $article):?>
 					<div class="col-xs-12 col-sm-4 col-md-3">
-						<div class="thumbnail">
-							<img class="img-fit" src="<?=base_url('assets/img/default-2.png')?>" alt="thumbnail" width="100%">
-							<div class="caption">
-								<h5>Ini judul berita</h5>
+						<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
+							<div class="thumbnail">
+								<img class="img-fit" src="<?=$article->img_link?>" alt="thumbnail" width="100%">
+								<div class="caption">
+									<h5><?=$article->name ?></h5>
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>
-				<?php endfor;?>
+				<?php endforeach; } else{ echo "Tidak ada berita"; }?>
 			</div>
 		</div>
 	</div>
@@ -91,7 +95,7 @@
 					<div class="page-header">
 						<h4>Agenda terbaru</h4>
 					</div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae exercitationem, dolorem sint libero, animi nesciunt eum sequi natus esse fugiat vero doloremque rem nulla quisquam.</p>
+					<p><?=$agenda->body?></p>
 				</div>
 			</div>
 			<div class="row" id="regulasi">

@@ -16,6 +16,8 @@ class News extends MY_Controller{
         $this->_view['js']       = 'news';
         $this->load->model('news_model');
         $this->slug_config($this->news_model->table, 'name');
+
+        $this->publishing_unactive_news();
     }
 
     public function index($search_status = FALSE)
@@ -31,6 +33,12 @@ class News extends MY_Controller{
         $this->_view['title'] = 'Berita';
         $this->_view['page'] = 'news/index';
         $this->init();
+    }
+
+    //Publish berita otomatis jika tanggal publish telah memenuhi
+    private function publishing_unactive_news(){
+        $today = date('Y-m-d');
+        $this->news_model->where('type','unactive')->where('published_at', '=', $today)->update(array('type' => 'active'));
     }
 
     public function draft($search_status = FALSE)

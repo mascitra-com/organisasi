@@ -5,6 +5,7 @@
 	<title><?=(isset($_view['title']))?$_view['title']:'Organisasi'?></title>
 	<?php $this->load->view('template/_main/styles') ?>
 	<link rel="stylesheet" href="<?=base_url('assets/css/template-dashboard.css')?>">
+	<script type="text/javascript">var title;</script>
 </head>
 <body>
 	<?php $this->load->view('template/_main/message'); ?>

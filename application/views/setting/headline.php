@@ -16,26 +16,32 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td colspan="4">
-								<input type="text" class="form-control" placeholder="cari judul berita">
-							</td>
-							<td>
-								<button class="btn btn-default btn-block"><i class="fa fa-plus"></i></button>
-							</td>
-						</tr>
-						<?php for($i=1; $i<5;$i++):?>
-						<tr>
-							<td class="text-center">01</td>
-							<td>Judul Berita</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, nisi.</td>
-							<td class="text-center text-nowrap">12 desember 2016</td>
-							<td class="text-center text-nowrap"><a href="#" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i></a></td>
-						</tr>
-					<?php endfor ?>
+						<form method="POST" action="<?=site_url('setting/headline_store')?>">
+							<tr>
+								<td colspan="4">
+									<input type="text" class="form-control" placeholder="cari judul berita" id="headline" name="headline" required>
+								</td>
+								<td>
+									<button class="btn btn-default btn-block" type="submit"><i class="fa fa-plus"></i></button>
+								</td>
+							</tr>
+						</form>
+						<?php if(!empty($articles)){ $no=1; foreach ($articles as $article): ?>
+							<tr>
+								<td class="text-center"><?=$no++;?></td>
+								<td><?=$article['name']?></td>
+								<td><?=(strlen($article['body']) > 254) ? substr($article['body'], 0, 254).'...' :  $article['body'] ?></td>
+								<td class="text-center text-nowrap"><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $article['published_at']))) ?></td>
+								<td class="text-center text-nowrap"><a href="<?=site_url('setting/headline_delete?id='. $article['id'])?>" class="btn btn-danger btn-xs" onclick="return confirm('Hapus headline?');"><i class="fa fa-remove"></i></a></td>
+							</tr>
+						<?php endforeach; } else { echo "<td colspan='5'>Tidak ada Headline<td>"; } ?>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	var title = <?=$title;?>
+</script>

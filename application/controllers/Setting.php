@@ -74,7 +74,53 @@ class Setting extends MY_Controller {
 	{
 		$this->_view['title'] = 'Headline Berita';
 		$this->_view['page'] = 'setting/headline';
+		$this->_view['js'] = 'headline';
+		$this->_data['title'] = $this->get_active_news();
+		$this->_data['articles'] = $this->news_model->where('status_headline','1')->as_array()->get_all();
 		$this->init();
+	}
+
+	public function headline_store()
+	{
+		$data= $this->input->post();
+		$input = explode("-", $data['headline']);		
+		
+		if ($this->news_model->fields('id')->where('id',$input[0])->get()) {
+			if($this->news_model->where('id',$input[0])->update(array('status_headline'=>'1'))){
+				$this->message('<strong>Sukses!</strong> Headline berhasil ditambahkan.','success');
+				$this->go('setting/headline');	
+			}else{
+				$this->message('<strong>Gagal!</strong> Terjadi kesalahan dalam sistem. Headline tidak berhasil ditambahkan','danger');
+				$this->go('setting/headline');
+			}
+		}else{
+			$this->message('<strong>Gagal!</strong> Berita tidak ditemukan. Pilih Berita terlebih dahulu.','danger');
+			$this->go('setting/headline');
+		}
+	}
+
+	public function get_active_news()
+	{
+		$this->load->model('news_model');
+
+		$articles = $this->news_model->fields('id, name')->where('type','active')->where('status_headline','0')->as_array()->get_all();
+
+		$titles = array();
+		foreach ($articles as $article) {
+			array_push($titles, $article['id']. '-'.$article['name']);
+		}
+		return json_encode($titles);
+	}
+
+	public function headline_delete()
+	{
+		$id = $this->input->get('id', TRUE);
+		if ($this->news_model->where('id', $id)->update(array('status_headline'=>'0'))) {
+			$this->message('<strong>Berhasil</strong> menghapus Headline', 'success');
+		} else {
+			$this->message('<strong>Gagal</strong> menghapus Headline', 'danger');
+		}
+		redirect('setting/headline');
 	}
 
 	public function banner()

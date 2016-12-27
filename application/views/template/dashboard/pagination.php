@@ -1,4 +1,4 @@
-<?php if (!empty($pagination) AND !isset($search)): ?>
+<?php if (!isset($search)): ?>
     <div class="row">
         <div class="text-center col-md-10">
             <?= $pagination ?>

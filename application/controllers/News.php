@@ -16,6 +16,8 @@ class News extends MY_Controller{
         $this->_view['js']       = 'news';
         $this->load->model('news_model');
         $this->slug_config($this->news_model->table, 'name');
+
+        $this->publishing_unactive_news();
     }
 
     public function index($search_status = FALSE)
@@ -31,6 +33,12 @@ class News extends MY_Controller{
         $this->_view['title'] = 'Berita';
         $this->_view['page'] = 'news/index';
         $this->init();
+    }
+
+    //Publish berita otomatis jika tanggal publish telah memenuhi
+    private function publishing_unactive_news(){
+        $today = date('Y-m-d');
+        $this->news_model->where('type','unactive')->where('published_at', '=', $today)->update(array('type' => 'active'));
     }
 
     public function draft($search_status = FALSE)
@@ -210,13 +218,13 @@ class News extends MY_Controller{
     public function show($slug = NULL) {
         if ($slug != NULL) {
             if ($this->news_model->get(array('slug' => $slug))) {
-                $this->_data['article'] = $this->news_model->with_user('fields:first_name,last_name')->get(array('slug' => $slug));
+                $this->_data['article'] = (object) $this->news_model->with_user('fields:first_name,last_name')->get(array('slug' => $slug));
                 $this->_view['title'] = 'Detail Berita';
                 $this->_view['page'] = 'news/detail';
                 $this->init();
             }
             else{
-                $this->message('<strong>Gagal</strong>. Agenda tidak ditemukan', 'warning');
+                $this->message('<strong>Gagal</strong>. Berita tidak ditemukan', 'warning');
                 $this->go('news');
             }
         }else{
@@ -232,7 +240,7 @@ class News extends MY_Controller{
             $article = $this->news_model->get(array('slug' => $slug));
             if ($article) 
             {
-                $this->_data['article'] = $this->news_model->with_user('fields:first_name,last_name')->get(array('slug' => $slug));
+                $this->_data['article'] = (object)$this->news_model->with_user('fields:first_name,last_name')->get(array('slug' => $slug));
                 $this->_view['title'] = 'Edit Berita';
                 $this->_view['page'] = 'news/edit';
                 $this->init();
@@ -288,13 +296,15 @@ class News extends MY_Controller{
                     $update_data['img_link'] = $link;
                 }
             } else {
-                $update_data['img_link'] = $former_news_img_link->img_link;
+                $update_data['img_link'] = $former_news_img_link['img_link'];
             }
             
             $update_data['slug'] = url_title($update_data['name'], 'dash', TRUE);
             if ($this->news_model->from_form(NULL,array('body'=>$update_data['body'], 'slug'=>$update_data['slug'], 'img_link'=>$update_data['img_link'], 'published_at'=>$update_data['published_at'],'type'=>$update_data['type']), array('id' => $id))->update()) {
+
                 $this->message('<strong>Berhasil</strong> mengedit Berita', 'success');
                 $this->news_check_redirect_previous($former_news_type);
+
             } else {
                 $update_data['id'] = $id;
                 $this->_data['article'] = (object)$update_data;
@@ -302,7 +312,8 @@ class News extends MY_Controller{
                 $this->_view['page'] = 'news/edit';
                 $this->init();
             }
-        }else{
+        }
+        else{
             $this->message('<strong>Gagal</strong> Berita tidak ditemukan', 'danger');
             $this->news_check_redirect_previous($former_news_type);
         }
@@ -335,13 +346,13 @@ class News extends MY_Controller{
     {
         $data = $this->input->post();
         $news_type = $this->news_model->where('id', $data['id'])->get();
-        if ($news_type->type == 'active') {
+        if ($news_type['type'] == 'active') {
             if ($this->news_model->update(array('type' => 'unactive'), array('id' => $data['id']))){
                 echo json_encode(array("status" => "unactive"));
             }else{
                 echo json_encode(array("status" => FALSE));
             }
-        }elseif ($news_type->type == 'unactive') {
+        }elseif ($news_type['type'] == 'unactive') {
             if ($this->news_model->update(array('type' => 'active'), array('id' => $data['id']))){
                 echo json_encode(array("status" => "active"));
             }else{       
@@ -357,14 +368,11 @@ class News extends MY_Controller{
     
     private function news_check_redirect_previous($data)
     {
-        if ($data->type == "draft") {
+        if ($data['type'] == "draft") {
             $this->go("news/draft");
-        }elseif($data->type == "archive"){
+        }elseif($data['type'] == "archive"){
             $this->go('news/archive');
         }else{
             $this->go('news');
         }
     }
-
-    
-}

@@ -17,7 +17,7 @@ class Auth extends MY_Controller {
 
 	// redirect if needed, otherwise display the user list
 	public function index() {
-        $this->data['title'] = "Daftar Pengguna";
+		$this->data['title'] = "Daftar Pengguna";
 		if (!$this->ion_auth->logged_in()) {
 			// redirect them to the login page
 			redirect('auth/login', 'refresh');
@@ -48,25 +48,25 @@ class Auth extends MY_Controller {
 		$this->_view['page'] = 'auth/login';
 		$this->_view['title'] = 'Login Organisasi';
         $this->_view['template'] = 'template/auth/index'; # Set template location
-		$this->data['title'] = $this->lang->line('login_heading');
+        $this->data['title'] = $this->lang->line('login_heading');
 
 		//validate form input
-		$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
-		$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
+        $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
+        $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
-		if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run() == true) {
 			// check to see if the user is logging in
 			// check for "remember me"
-			$remember = (bool) $this->input->post('remember');
+        	$remember = (bool) $this->input->post('remember');
 
-			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+        	if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
 				//if the login is successful
 				//redirect them back to the home page
-				redirect('dashboard', 'refresh');
-			} else {
+        		redirect('dashboard', 'refresh');
+        	} else {
 				// if the login was un-successful
 				// redirect them back to the login page
-				$this->session->set_flashdata('message', $this->ion_auth->errors());
+        		$this->session->set_flashdata('message', $this->ion_auth->errors());
 				redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		} else {
@@ -78,11 +78,11 @@ class Auth extends MY_Controller {
 				'id' => 'identity',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('identity'),
-			);
+				);
 			$this->data['password'] = array('name' => 'password',
 				'id' => 'password',
 				'type' => 'password',
-			);
+				);
 			$this->init();
 		}
 	}
@@ -121,25 +121,25 @@ class Auth extends MY_Controller {
 				'name' => 'old',
 				'id' => 'old',
 				'type' => 'password',
-			);
+				);
 			$this->data['new_password'] = array(
 				'name' => 'new',
 				'id' => 'new',
 				'type' => 'password',
 				'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
-			);
+				);
 			$this->data['new_password_confirm'] = array(
 				'name' => 'new_confirm',
 				'id' => 'new_confirm',
 				'type' => 'password',
 				'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
-			);
+				);
 			$this->data['user_id'] = array(
 				'name' => 'user_id',
 				'id' => 'user_id',
 				'type' => 'hidden',
 				'value' => $user->id,
-			);
+				);
 
 			// render
 			$this->_render_page('auth/change_password', $this->data);
@@ -175,7 +175,7 @@ class Auth extends MY_Controller {
 			// setup the input
 			$this->data['identity'] = array('name' => 'identity',
 				'id' => 'identity',
-			);
+				);
 
 			if ($this->config->item('identity', 'ion_auth') != 'email') {
 				$this->data['identity_label'] = $this->lang->line('forgot_password_identity_label');
@@ -242,19 +242,19 @@ class Auth extends MY_Controller {
 					'id' => 'new',
 					'type' => 'password',
 					'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
-				);
+					);
 				$this->data['new_password_confirm'] = array(
 					'name' => 'new_confirm',
 					'id' => 'new_confirm',
 					'type' => 'password',
 					'pattern' => '^.{' . $this->data['min_password_length'] . '}.*$',
-				);
+					);
 				$this->data['user_id'] = array(
 					'name' => 'user_id',
 					'id' => 'user_id',
 					'type' => 'hidden',
 					'value' => $user->id,
-				);
+					);
 				$this->data['csrf'] = $this->_get_csrf_nonce();
 				$this->data['code'] = $code;
 
@@ -385,7 +385,7 @@ class Auth extends MY_Controller {
 				'last_name' => $this->input->post('last_name'),
 				'company' => $this->input->post('company'),
 				'phone' => $this->input->post('phone'),
-			);
+				);
 		}
 		if ($this->form_validation->run() == true && $this->ion_auth->register($identity, $password, $email, $additional_data)) {
 			// check to see if we are creating the user
@@ -402,49 +402,49 @@ class Auth extends MY_Controller {
 				'id' => 'first_name',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('first_name'),
-			);
+				);
 			$this->data['last_name'] = array(
 				'name' => 'last_name',
 				'id' => 'last_name',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('last_name'),
-			);
+				);
 			$this->data['identity'] = array(
 				'name' => 'identity',
 				'id' => 'identity',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('identity'),
-			);
+				);
 			$this->data['email'] = array(
 				'name' => 'email',
 				'id' => 'email',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('email'),
-			);
+				);
 			$this->data['company'] = array(
 				'name' => 'company',
 				'id' => 'company',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('company'),
-			);
+				);
 			$this->data['phone'] = array(
 				'name' => 'phone',
 				'id' => 'phone',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('phone'),
-			);
+				);
 			$this->data['password'] = array(
 				'name' => 'password',
 				'id' => 'password',
 				'type' => 'password',
 				'value' => $this->form_validation->set_value('password'),
-			);
+				);
 			$this->data['password_confirm'] = array(
 				'name' => 'password_confirm',
 				'id' => 'password_confirm',
 				'type' => 'password',
 				'value' => $this->form_validation->set_value('password_confirm'),
-			);
+				);
 
 			$this->_render_page('auth/create_user', $this->data);
 		}
@@ -486,7 +486,7 @@ class Auth extends MY_Controller {
 					'last_name' => $this->input->post('last_name'),
 					'company' => $this->input->post('company'),
 					'phone' => $this->input->post('phone'),
-				);
+					);
 
 				// update the password if it was posted
 				if ($this->input->post('password')) {
@@ -549,35 +549,35 @@ class Auth extends MY_Controller {
 			'id' => 'first_name',
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('first_name', $user->first_name),
-		);
+			);
 		$this->data['last_name'] = array(
 			'name' => 'last_name',
 			'id' => 'last_name',
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('last_name', $user->last_name),
-		);
+			);
 		$this->data['company'] = array(
 			'name' => 'company',
 			'id' => 'company',
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('company', $user->company),
-		);
+			);
 		$this->data['phone'] = array(
 			'name' => 'phone',
 			'id' => 'phone',
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('phone', $user->phone),
-		);
+			);
 		$this->data['password'] = array(
 			'name' => 'password',
 			'id' => 'password',
 			'type' => 'password',
-		);
+			);
 		$this->data['password_confirm'] = array(
 			'name' => 'password_confirm',
 			'id' => 'password_confirm',
 			'type' => 'password',
-		);
+			);
 
 		$this->_render_page('auth/edit_user', $this->data);
 	}
@@ -611,13 +611,13 @@ class Auth extends MY_Controller {
 				'id' => 'group_name',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('group_name'),
-			);
+				);
 			$this->data['description'] = array(
 				'name' => 'description',
 				'id' => 'description',
 				'type' => 'text',
 				'value' => $this->form_validation->set_value('description'),
-			);
+				);
 
 			$this->_render_page('auth/create_group', $this->data);
 		}
@@ -668,22 +668,22 @@ class Auth extends MY_Controller {
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('group_name', $group->name),
 			$readonly => $readonly,
-		);
+			);
 		$this->data['group_description'] = array(
 			'name' => 'group_description',
 			'id' => 'group_description',
 			'type' => 'text',
 			'value' => $this->form_validation->set_value('group_description', $group->description),
-		);
+			);
 
 		$this->_render_page('auth/edit_group', $this->data);
 	}
 
-    public function groups()
-    {
-        $this->data['title'] = "Groups";
-        $this->data['groups'] = $this->ion_auth->groups()->result();
-        $this->_render_page('auth/groups', $this->data);
+	public function groups()
+	{
+		$this->data['title'] = "Groups";
+		$this->data['groups'] = $this->ion_auth->groups()->result();
+		$this->_render_page('auth/groups', $this->data);
 	}
 
 	public function _get_csrf_nonce() {
@@ -708,9 +708,9 @@ class Auth extends MY_Controller {
 	public function _render_page($view, $data = null, $returnhtml = false) //I think this makes more sense
 	{
 		$this->_data = $this->data;
-        $this->_view['title'] = $this->data['title'];
-        $this->_view['page'] = $view;
-        $this->init();
+		$this->_view['title'] = $this->data['title'];
+		$this->_view['page'] = $view;
+		$this->init();
 //This will return html on 3rd argument being true
 	}
 

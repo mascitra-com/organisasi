@@ -89,7 +89,7 @@
 	<div class="col-md-7" id="popular">
 		<div class="panel">
 			<div class="panel-body">
-				<h3 class="panel-title"><i class="fa fa-newspaper-o"></i> Berita Paling Populer</h3>
+				<h3 class="panel-title"><i class="fa fa-newspaper-o"></i> Berita Terpopuler</h3>
 				<table class="table table-hover">
 					<tbody>
 						<tr>

@@ -35,4 +35,12 @@ class Homepage extends MY_Controller
 		$this->_view['page'] 	= 'homepage/news-article';
 		$this->init();
 	}
+
+	public function page()
+	{
+		$this->_view['css'] 	= 'page';
+		$this->_view['title'] 	= 'Judul Halaman';
+		$this->_view['page'] 	= 'homepage/page';
+		$this->init();
+	}
 }

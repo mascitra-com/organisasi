@@ -30,3 +30,33 @@ function update_type(id, no, name){
 		}
 	});
 }
+
+function all_news() {
+	$("#news-list").empty();
+
+	$.ajax({
+		url: "homepage/get_all_news",
+		type: "POST",
+		dataType: "JSON",
+		success: function(data)
+		{
+			// console.log(data.artikel[0]['name']);
+			for(var i = 0; i < data.artikel.length; i++) {
+				var obj = data.artikel[i];
+				$("#news-list").append("<div class='col-xs-12 col-sm-4 col-md-3'><a href=homepage/show_news/"+obj.slug+"><div class='thumbnail'><img class='img-fit' src='"+obj.img_link+"' alt='thumbnail' width='100%'><div class='caption'><h5>"+obj.name+"</h5></div></div></a></div>");
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) 
+		{
+			$("body").append("<div class='alert alert-success'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Gagal! </strong>Terjadi kesalahan dalam memperbaharui status berita.</div>");
+		}
+	});
+}
+
+function latest_news() {
+	alert('latest');
+}
+
+function popular_news() {
+	alert('popular');
+}

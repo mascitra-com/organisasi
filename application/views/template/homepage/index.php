@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="<?=base_url('assets/css/template-homepage.css')?>">
 </head>
 <body>
-
+<?php $this->load->view('template/_main/message')?>
 	<?php
 		$this->load->view('template/homepage/navbar');
 		

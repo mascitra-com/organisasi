@@ -61,15 +61,15 @@
 						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 					</form>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">Semua</a></li>
-						<li><a href="#">Terbaru</a></li>
-						<li><a href="#">Terpopuler</a></li>
+						<li><a href="#!" onclick="all_news()">Semua</a></li>
+						<li><a href="#!" onclick="latest_news()">Terbaru</a></li>
+						<li><a href="#!" onclick="popular_news()">Terpopuler</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 		<div class="col-md-12 white">
-			<div class="news-list">
+			<div class="news-list" id="news-list">
 				<?php for($i=0;$i<8;$i++):?>
 					<div class="col-xs-12 col-sm-4 col-md-3">
 						<div class="thumbnail">

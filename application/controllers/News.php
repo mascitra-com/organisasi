@@ -376,3 +376,4 @@ class News extends MY_Controller{
             $this->go('news');
         }
     }
+}

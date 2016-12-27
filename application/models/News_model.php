@@ -144,13 +144,6 @@ class News_model extends MY_Model
               $this->db->order_by('published_at','asc');
           }
           $this->db->like('name', $search->name);
-            // $col = $this->db->list_fields($this->table);
-            // $i = 1;
-            // foreach ($search as $val) {
-            //     if(!empty($val)){
-            //         $this->db->like($col[$i], $val);}
-            //         $i++;
-            //     }
       }
   }
 }

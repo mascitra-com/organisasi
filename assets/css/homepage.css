@@ -1,29 +1,184 @@
-.section, .section > .row > [class*=col-]{
-	margin-top: 25px;
-	margin-bottom: 25px;
+.section{
+	margin-bottom: 30px;
+	font-family: Montserrat, sans-serif;
+	font-weight: 700;
+	color: #777;
 }
 
-.section-full > .row > [class*=col-]{
+.page-header{
+	border: none;
+	margin-bottom: 15px;
+	text-transform: uppercase;
+	letter-spacing: -.8px;
+}
+
+#jumbo{
+	height: 500px;
+	max-height: 500px;
+	overflow: hidden;
+}
+
+#jumbo [class*=col-]{
+	height: 100%;
 	padding: 0;
 }
 
-.jumbotron{
+#jumbo [class*=col-]:last-child{
+	overflow-y: scroll;
+}
+
+#jumbo .panel{
+	width: 100%;
+	box-shadow: none;
+	border: none;
+	padding: 0;
 	margin: 0;
-	min-height: 400px;
-	background-color: #16a085;
-	color: #FFF;
 }
 
-.jumbotron .container p, p.content{
-	font-family: 'Roboto', 'sans-serif';
-	font-weight: 400;
+#jumbo .panel .panel-title{
+	margin-bottom: 15px;
+	font-size: 20px;
 }
 
-.jumbotron .container h1, h1.title{
-	font-family: 'Montserrat', 'sans-serif';
+#jumbo .panel table tr td:first-child{
+	padding: 0;
+}
+
+#new-article,
+#new-article [class*=col-],
+#new-article .thumbnail{
+	padding: 0;
+}
+
+#new-article .thumbnail{
+	cursor: pointer;
+}
+
+#new-article .thumbnail img{
+	width: 100%;
+	height: 200px;
+}
+
+#new-article .thumbnail .caption{
+	padding: 0 0 20px 25px;
+	width: 100%;
+	background-color: rgba(0,0,0,0);
+}
+
+#new-article .thumbnail .caption h3{
+	margin-bottom: 0;
+}
+
+#new-article .thumbnail .caption span{
+	margin-right: 10px;
+	font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
 }
 
-.navbar{
-	margin-bottom: 0;
+#news .navbar{
+	padding: 0;
+}
+
+#news .navbar .navbar-brand{
+	padding-left: 30px;
+	text-transform: capitalize;
+}
+
+#news .navbar .nav{
+	padding:0 10px;
+}
+
+#news .news-list{
+	display: flex;
+	align-items: center;
+	/*justify-content: center;*/
+	flex-wrap: wrap;
+	padding: 30px 15px;
+}
+
+#news .news-list .thumbnail img{
+	max-height: 150px;
+}
+
+#misc1{
+	height: 400px;
+	max-height: 400px;
+	overflow: hidden;
+}
+
+#misc1 > [class*=col-]{
+	height: 100%;
+	padding: 0px 20px;
+}
+
+#sosmed{
+	overflow-y: scroll;
+}
+
+#banner-full,
+#banner-full [class*=col-],
+#banner-half,
+#banner-half [class*=col-]{
+	padding: 0;
+}
+
+#banner-full img{
+	width: 100%;
+	height: 270px;
+	object-fit: cover;
+}
+
+#banner-half img{
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+#gallery-photo{
+
+}
+
+#gallery-photo,
+#gallery-photo [class*=col-]{
+	padding: 0;
+}
+
+#gallery-photo img{
+	width: 100%;
+	object-fit: cover;
+}
+
+@media (max-width: 768px) {
+}
+
+@media (max-width: 991px) {
+	#jumbo{
+		height: auto;
+		max-height: auto;
+	}
+}
+
+.green{
+	background-color: #1abc9c;
+	color: #FFF;
+}
+
+.blue{
+	background-color: #3498db;
+	color: #FFF;
+}
+
+.red{
+	background-color: #e74c3c;
+	color: #FFF;
+}
+
+.yellow{
+	background-color: #f1c40f;
+	color: #FFF;
+}
+
+.white{
+	background-color: #fff;
 }

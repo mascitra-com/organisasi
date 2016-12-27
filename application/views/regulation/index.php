@@ -2,7 +2,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-success">
 			<div class="panel-heading">
-				<h3 class="panel-title pull-left">Data Regulasi</h3>
+				<h3 class="panel-title pull-left">Data Regulasi <?=isset($search) ? '- Hasil Pencarian' : ''?></h3>
 				<a href="<?=site_url('regulation/create')?>" class="btn btn-default btn-sm pull-right"><i class="fa fa-plus"></i> regulasi</a>
 				<div class="clearfix"></div>
 			</div>
@@ -20,7 +20,7 @@
 						</tr>
 					</thead>
 					<tbody>
-                    <?php if(!empty($regulations)){ $no = 1; foreach ($regulations as $regulation): ?>
+                    <?php if(is_array($regulations)){ $no = $number+1; foreach ($regulations as $regulation): ?>
 						<tr>
 							<td class="text-center"><?=$no++?></td>
 							<td><?= (strlen($regulation->name) > 100) ? substr($regulation->name, 0, 100).'...' :  $regulation->name ?></td>
@@ -30,13 +30,14 @@
 							<td class="text-center"><a href="<?=$regulation->link?>" class="btn btn-default btn-sm" download><i class="fa fa-file-word-o"></i></a></td>
 							<td class="text-center text-nowrap">
 								<a href="<?=site_url('regulation/edit?id='.$regulation->id)?>" class="btn btn-default btn-sm"><i class="fa fa-info"></i></a>
-								<a href="<?=site_url('regulation/destroy?id='.$regulation->id)?>" class="btn btn-default btn-sm"><i class="fa fa-trash"></i></a>
+								<a href="<?=site_url('regulation/destroy?id='.$regulation->id)?>" class="btn btn-default btn-sm" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
 							</td>
 						</tr>
-                    <?php endforeach; }?>
-					</tbody>
+                    <?php endforeach; } else { echo "<td colspan='8'>$regulations<td>"; } ?>
+                    </tbody>
 				</table>
-			</div>
+                <?php $this->load->view('template/dashboard/pagination'); ?>
+            </div>
 		</div>
 	</div>
 </div>

@@ -26,13 +26,56 @@ class Regulation extends MY_Controller
     /**
      *  Tampilan daftar Regulasi
      */
-    public function index()
-    {
+    public function index($search_status = FALSE) {
+        if($search_status == FALSE){
+            $this->session->unset_userdata('search_profiles');
+        }
+        $this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
+        $this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 10;
+        $this->_data['per_page_name'] = 'Profil';
+        $this->_data['per_page_options'] = array(10, 25, 50, 75, 100);
+        $this->page();
         $this->_view['title'] = 'Regulasi';
         $this->_view['page'] = 'regulation/index';
-        $this->_data['regulations'] = $this->regulation_model->get_all();
         $this->init();
     }
+
+    public function search()
+    {
+        $this->session->unset_userdata('search_regulation');
+        $this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+        $this->session->set_userdata('search_regulation', $this->_data['search']);
+        $this->index(TRUE);
+    }
+
+    public function refresh()
+    {
+        $this->session->unset_userdata('search_regulation');
+        $this->go('regulation');
+    }
+
+    private function page()
+    {
+        $this->_data['search'] = $this->session->userdata('search_regulation');
+        $config['base_url'] = site_url('regulation/index?per_page='.$this->_data['per_page']);
+        $config['page_query_string'] = TRUE;
+        $config['query_string_segment'] = 'number';
+        $config['per_page'] = $this->_data['per_page'];
+        $config['total_rows'] = $this->regulation_model->count_data($this->_data['search']);
+        $config["uri_segment"] = 3;
+        $config["num_links"] = 5;
+
+        //config for bootstrap pagination class integration
+        $config = $this->config_for_bootstrap_pagination($config);
+
+        $this->pagination->initialize($config);
+        $this->data['page'] = $this->_data['number'];
+
+        //call the model function to get the department data
+        $this->_data['regulations'] = $this->regulation_model->fetch_data($config["per_page"], $this->data['page'], $this->_data['search']);
+        $this->_data['pagination'] = $this->pagination->create_links();
+    }
+
 
     /**
      *  Menyimpan data baru
@@ -139,7 +182,7 @@ class Regulation extends MY_Controller
     {
         $data['file'] = 'file-' . date('dmYhis');
         if ($this->do_upload($data['file'])) {
-            $data['file'] = $this->upload->data('file_name');
+            $data['link'] = $this->upload->data('file_name');
             if ($this->regulation_model->update($data, $data['id']) == FALSE) {
                 delete_files($this->upload->data('full_path'));
                 $this->message('Gagal! Data gagal di update', 'danger');

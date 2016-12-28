@@ -5,5 +5,8 @@ html, body{
 .panel{
 	border-radius: 3px;
 	box-shadow: none;
+	border-left: 1px #DDD solid;
+	border-bottom: 1px #DDD solid;
+	padding-left: 20px;
 	
 }

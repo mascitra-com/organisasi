@@ -161,6 +161,11 @@ class Profile extends MY_Controller {
 		redirect('profile');
 	}
 
+	public function update_pos()
+	{
+		echo json_encode($id);
+	}
+
     /**
      * @param $id
      */

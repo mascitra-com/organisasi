@@ -49,6 +49,7 @@ class Profile_model extends MY_Model
     {
         $this->db->limit($limit, $start);
         $this->search($search);
+        $this->order_by('pos','ASC');
         $query = $this->db->get($this->table);
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {

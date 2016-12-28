@@ -19,7 +19,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profil <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <?php if(!empty($profiles)): $no=1; foreach ($profiles as $profile): ?>
-              <li><a href="<?=site_url('homepage/profile/'.$profile->slug)?>"><?=$profile->name?></a></li>
+              <li><a href="<?=site_url('homepage/profile_show/'.$profile->slug)?>"><?=$profile->name?></a></li>
             <?php endforeach; endif;?>
           </ul>
         </li>

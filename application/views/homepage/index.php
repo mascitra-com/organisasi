@@ -118,15 +118,15 @@
 	</div>
 	<div class="row section" id="banner-full">
 		<div class="col-md-12">
-			<img src="<?=base_url('assets/img/default.png')?>" alt="banner">
+			<img src="<?=$banners[0]?>" alt="banner">
 		</div>
 	</div>
 	<div class="row section" id="banner-half">
 		<div class="col-xs-12 col-sm-12 col-md-6">
-			<img src="<?=base_url('assets/img/default.png')?>" alt="banner">
+			<img src="<?=$banners[1]?>" alt="banner">
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-6">
-			<img src="<?=base_url('assets/img/default.png')?>" alt="banner">
+			<img src="<?=$banners[2]?>" alt="banner">
 		</div>
 	</div>
 

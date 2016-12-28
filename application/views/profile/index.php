@@ -45,8 +45,8 @@
                                 <td><?=(strlen($profile->headline) > 100) ? substr($profile->headline, 0, 100).'...' :  $profile->headline?></td>
                                 <td><?= (strlen($profile->body) > 100) ? substr(strip_tags($profile->body), 0, 100).'...' :  $profile->body ?></td>
                                 <td class="text-center">
-                                    <a class="btn btn-default" href="#"><i class="fa fa-arrow-up"></i></a>
-                                    <a class="btn btn-default" href="#"><i class="fa fa-arrow-down"></i></a>
+                                    <button class="btn btn-default" onclick="change_pos_profile(<?=$profile->id?>,0)"><i class="fa fa-arrow-up"></i></button>
+                                    <button class="btn btn-default" onclick="change_pos_profile(<?=$profile->id?>,1)"><i class="fa fa-arrow-down"></i></button>
                                 </td>
                                 <td class="text-nowrap text-center">
                                     <a class="btn btn btn-default" href="<?=site_url('profile/show/'.$profile->slug)?>"><i class="fa fa-info-circle"></i></a>

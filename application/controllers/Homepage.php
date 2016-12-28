@@ -12,7 +12,7 @@ class Homepage extends MY_Controller
 		$this->_view['template'] = 'template/homepage/index';
 
 		$this->load->model('profile_model');
-		$this->_data['profiles'] = $this->profile_model->as_object()->get_all();
+		$this->_data['profiles'] = $this->profile_model->order_by('pos', 'asc')->as_object()->get_all();
 
 		if (is_null($this->session->userdata('visitor'))) {
 			$this->session->set_userdata('visitor', array('ip' => $this->input->ip_address(), 'visited_articles' => array()));
@@ -24,7 +24,7 @@ class Homepage extends MY_Controller
 		}
 	}
 
-	public function profile($slug)
+	public function profile_show($slug = NULL)
 	{
 
 		if ($slug != NULL) {
@@ -60,6 +60,8 @@ class Homepage extends MY_Controller
 		
 		$this->load->model('agenda_model');
 		$this->_data['agenda'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get();
+
+		$this->_data['banners'] = $this->images_banners();
 
 		$this->init();
 	}
@@ -185,5 +187,21 @@ class Homepage extends MY_Controller
 		}else{
 			echo json_encode(array("status" => FALSE));
 		}
+	}
+
+	private function images_banners()
+	{
+		$this->load->helper('file');
+		$files = get_dir_file_info(APPPATH.'../assets/banners');
+		$banners = array();
+		for($i = 0; $i < 3; $i++){
+			foreach ($files as $file){
+				if (strpos($file['server_path'], strval($i+1)) !== false) {
+					$banners[$i] = str_replace(FCPATH, base_url(), $file['server_path']);
+				}
+			}
+			if(count($banners) == $i) $banners[$i] = base_url('assets/img/default.png');
+		}
+		return $banners;
 	}
 }

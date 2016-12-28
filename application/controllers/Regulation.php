@@ -126,6 +126,9 @@ class Regulation extends MY_Controller
      */
     public function do_upload($name)
     {
+        if (!file_exists('././assets/regulations')) {
+            mkdir('././assets/regulations');
+        }
         $config['upload_path'] = '././assets/regulations';
         $config['max_size'] = 10000;
         $config['file_name'] = $name;

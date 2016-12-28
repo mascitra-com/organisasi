@@ -4,6 +4,11 @@
 			<div class="panel">
 				<div class="panel-body">
 					<div class="panel-title"><h3>Agenda</h3></div>
+						<div class="container-fluid table-responsive">
+							<table class="table table-hover table-striped">
+
+							</table>
+						</div>
 				</div>
 			</div>
 		</div>

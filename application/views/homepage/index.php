@@ -105,7 +105,8 @@
 					<div class="page-header">
 						<h4>Regulasi terbaru</h4>
 					</div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, accusantium temporibus enim debitis vitae similique nihil. Id iusto iste dolores, fugit necessitatibus similique expedita neque.</p>
+					<p><?=$regulation->body?></p>
+					<a href="<?=str_replace(str_replace("\\",'/',FCPATH), base_url(), $regulation->link)?>" class="btn btn-default btn-sm" download><i class="fa fa-file-word-o"></i> Unduh Regulasi</a>
 				</div>
 			</div>
 		</div>

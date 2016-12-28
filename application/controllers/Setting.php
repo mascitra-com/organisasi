@@ -9,6 +9,7 @@ class Setting extends MY_Controller {
 
 		# Set data
 		$this->_view['template'] = 'template/dashboard/index';
+        $this->load->helper('file');
 		// $this->_view['css'] 	 = 'dashboard';
 		// $this->_view['js'] 		 = '';
 	}
@@ -42,7 +43,7 @@ class Setting extends MY_Controller {
 			} else {
 				$data['logo_link'] = $former_info_logo_link->logo_link;
 			}
-			
+
 			if ($this->info_model->from_form(NULL, array('logo_link'=>$data['logo_link']), array('no' => $id->no))->update()) {
 				$this->message('<strong>Berhasil</strong> menyunting Data Info Website', 'success');
 				redirect('setting/info');
@@ -66,7 +67,7 @@ class Setting extends MY_Controller {
 				$this->_view['title'] = 'Info Website';
 				$this->_view['page'] = 'setting/info';
 				$this->init();
-			}	
+			}
 		}
 	}
 
@@ -127,12 +128,19 @@ class Setting extends MY_Controller {
 	{
 		$this->_view['title'] = 'Banner';
 		$this->_view['page'] = 'setting/banner';
+		$this->_data['banners'] = $this->images_banners();
+        $this->output->set_header("HTTP/1.0 200 OK");
+        $this->output->set_header("HTTP/1.1 200 OK");
+        $this->output->set_header('Last-Modified: '.gmdate('D, d M Y H:i:s', time()).' GMT');
+        $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+        $this->output->set_header("Cache-Control: post-check=0, pre-check=0");
+        $this->output->set_header("Pragma: no-cache");
 		$this->init();
 	}
 
 	/*
 	 */
-	
+
 	public function do_upload($input_name, $path)
 	{
 		$config['file_name'] = $_FILES[$input_name]['name'];
@@ -151,4 +159,71 @@ class Setting extends MY_Controller {
 			return $link;
 		}
 	}
+
+    public function images_banners()
+    {
+        $files = get_dir_file_info(APPPATH.'../assets/banners');
+        $banners = array();
+        for($i = 0; $i < 3; $i++){
+            foreach ($files as $file){
+                if (strpos($file['server_path'], strval($i+1)) !== false) {
+                    $banners[$i] = str_replace(FCPATH, base_url(), $file['server_path']);
+                }
+            }
+            if(count($banners) == $i) $banners[$i] = base_url('assets/img/default.png');
+        }
+        return $banners;
+	}
+
+    public function update_banner($id = NULL)
+    {
+        $banners = $this->images_banners();
+        foreach ($banners as $banner) {
+            if (file_exists($banner) && strpos($banner, $id) !== false) {
+                unlink('./assets/banners/'.$banner);
+            }
+        }
+        if ($id == NULL) $this->go('banner');
+        $config['file_name'] = 'banner-'.$id;
+        $config['upload_path'] = './assets/banners/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['overwrite'] = TRUE;
+        $config['max_size'] = 8000;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('file')) {
+            $this->message($this->upload->display_errors(), 'danger');
+        } else {
+            $this->message("Banner $id berhasil disimpan', 'success");
+        }
+        $this->go('setting/banner');
+    }
+
+    public function remove_image($id)
+    {
+        $banners = $this->banners_file();
+        foreach ($banners as $banner) {
+            if (strpos($banner, strval($id)) !== false) {
+                unlink(str_replace(base_url(), '', $banner));
+                $this->message("Banner $id berhasil dihapus', 'success");
+            } else {
+                $this->message("Banner $id gagal dihapus', 'danger");
+            }
+        }
+        $this->go('setting/banner');
+    }
+
+    /**
+     * @return array
+     */
+    private function banners_file()
+    {
+        $files = get_dir_file_info(APPPATH . '../assets/banners');
+        $banners = array();
+        foreach ($files as $file) {
+            array_push($banners, $file['server_path']);
+        }
+        return $banners;
+    }
 }

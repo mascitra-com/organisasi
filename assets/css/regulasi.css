@@ -22,29 +22,25 @@ html, body{
 	width: 100%;
 }
 
-.panel .panel-body .container-fluid .table tbody tr td{
+.panel .panel-body .container-fluid .table tr td{
 	padding: 10px 20px;
 	border: none;
 	white-space: normal;
 }
 
-.panel .panel-body .container-fluid .table tbody tr:nth-of-type(odd) td:first-child{
-	background-color: #333;
-	color: #fff;
-}
-
-.panel .panel-body .container-fluid .table tbody tr:nth-of-type(even) td:first-child{
-	background-color: #777;
-	color: #fff;
-}
-
-.panel .panel-body .container-fluid .table tbody tr td h1{
+.panel .panel-body .container-fluid .table tr td h1{
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-.panel .panel-body .container-fluid .table tbody tr td h3{
+.panel .panel-body .container-fluid .table tr td h3{
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 700;
 	text-transform: uppercase;
+}
+
+.heading h4, .heading button{
+	margin: 0;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }

@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Homepage extends MY_Controller
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -74,6 +73,17 @@ class Homepage extends MY_Controller
 		$this->_view['css'] 	= 'agenda';
 		$this->_view['title'] 	= 'Agenda';
 		$this->_view['page'] 	= 'homepage/agenda';
+		$this->init();		
+	}
+
+	public function regulation()
+	{
+		// $this->load->model('agenda_model');
+		// $this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();
+
+		$this->_view['css'] 	= 'regulasi';
+		$this->_view['title'] 	= 'regulasi';
+		$this->_view['page'] 	= 'homepage/regulation';
 		$this->init();		
 	}
 

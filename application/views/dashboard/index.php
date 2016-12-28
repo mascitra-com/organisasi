@@ -3,30 +3,30 @@
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 			<div class="block blue">
 				<div class="block-left">
-					<i class="fa fa-archive"></i>
+					<i class="fa fa-users"></i>
 				</div>
 				<div class="block-right">
-					<h3>Lorem ipsum dolor sit.</h3>
+					<h3><?=$visitors['guestonline']?> <br/>Pengunjung<br/>Aktif</h3>
 				</div>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 			<div class="block green">
 				<div class="block-left">
-					<i class="fa fa-archive"></i>
+					<i class="fa fa-user"></i>
 				</div>
 				<div class="block-right">
-					<h3>Lorem ipsum dolor sit.</h3>
+					<h3><?=$visitors['memonline']?> <br/>Pengurus<br/>Aktif</h3>
 				</div>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 			<div class="block yellow">
 				<div class="block-left">
-					<i class="fa fa-archive"></i>
+					<i class="fa fa-anchor"></i>
 				</div>
 				<div class="block-right">
-					<h3>Lorem ipsum dolor sit.</h3>
+                    <h3>Lorem ipsum dolor sit.</h3>
 				</div>
 			</div>
 		</div>
@@ -64,22 +64,22 @@
 						<tr>
 							<td class="text-center"><i class="fa fa-users"></i></td>
 							<td class="text-left">Total Pengunjung</td>
-							<td class="text-right"><label>980</label></td>
+							<td class="text-right"><label><?=$visitors['totalvisit']?></label></td>
 						</tr>
 						<tr>
 							<td class="text-center"><i class="fa fa-newspaper-o"></i></td>
 							<td class="text-left">Total Berita</td>
-							<td class="text-right"><label>120</label></td>
+							<td class="text-right"><label><?=$totnews?></label></td>
 						</tr>
 						<tr>
 							<td class="text-center"><i class="fa fa-image"></i></td>
 							<td class="text-left">Total Foto</td>
-							<td class="text-right"><label>100</label></td>
+							<td class="text-right"><label><?=$totphotos?></label></td>
 						</tr>
 						<tr>
 							<td class="text-center"><i class="fa fa-film"></i></td>
 							<td class="text-left">Total Video</td>
-							<td class="text-right"><label>030</label></td>
+							<td class="text-right"><label><?=$totvideos?></label></td>
 						</tr>
 					</tbody>
 				</table>

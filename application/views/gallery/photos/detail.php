@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <?php $this->load->view('template/dashboard/pagination'); ?>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top:1em;">
                         <a href="<?= site_url('photos') ?>" class="btn btn-default"><i class="fa fa-arrow-left"></i>
                             Kembali</a>
                         <?php if (is_array($photos)) : ?>

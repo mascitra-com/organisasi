@@ -181,22 +181,9 @@ class News extends MY_Controller{
         $data['slug'] = $this->slug->create_uri($data);
 
         if (!empty($_FILES['img']['name'])) {
-            $config['file_name'] = $_FILES['img']['name'];
-            $config['upload_path'] = './assets/img/news_img/';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['max_size'] = 10000;
-
-            $this->load->library('upload', $config);
-
-            if (!$this->upload->do_upload('img')) {
-                $this->message($this->upload->display_errors(), 'danger');
-            }else{
-                $file_date = $this->upload->data();
-                $link = base_url('assets/img/news_img/' . $file_date['file_name']);
-                $data['img_link'] = $link;
-            }
+            $data['img_link']= $this->do_upload('img','news_img');
         } else {
-            $data['img_link'] = base_url('assets/img/default.png');
+            $data['img_link'] = NULL;
         }
 
         if ($this->news_model->from_form(NULL,array('body'=>$data['body'], 'slug'=>$data['slug'], 'img_link'=>$data['img_link'], 'published_at'=>$data['published_at'],'type'=>$data['type']))->insert()) {
@@ -280,26 +267,14 @@ class News extends MY_Controller{
                 }
             }
 
+
             if (!empty($_FILES['img']['name'])) {
-                $config['file_name'] = $_FILES['img']['name'];
-                $config['upload_path'] = './assets/img/news_img/';
-                $config['allowed_types'] = 'jpg|jpeg|png';
-                $config['max_size'] = 10000;
-
-                $this->load->library('upload', $config);
-
-                if (!$this->upload->do_upload('img')) {
-                    $this->message($this->upload->display_errors(), 'danger');
-                }else{
-                    $file_date = $this->upload->data();
-                    $link = base_url('assets/img/news_img/' . $file_date['file_name']);
-                    $update_data['img_link'] = $link;
-                }
+                $update_data['img_link']= $this->do_upload('img','news_img');
             } else {
                 $update_data['img_link'] = $former_news_img_link['img_link'];
             }
             
-            $update_data['slug'] = url_title($update_data['name'], 'dash', TRUE);
+            $update_data['slug'] = $this->slug->create_uri($update_data);
             if ($this->news_model->from_form(NULL,array('body'=>$update_data['body'], 'slug'=>$update_data['slug'], 'img_link'=>$update_data['img_link'], 'published_at'=>$update_data['published_at'],'type'=>$update_data['type']), array('id' => $id))->update()) {
 
                 $this->message('<strong>Berhasil</strong> mengedit Berita', 'success');
@@ -374,6 +349,25 @@ class News extends MY_Controller{
             $this->go('news/archive');
         }else{
             $this->go('news');
+        }
+    }
+
+    private function do_upload($input_name, $path)
+    {
+        $config['file_name'] = $_FILES[$input_name]['name'];
+        $config['upload_path'] = './assets/img/'.$path.'/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size'] = 10000;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload($input_name)) {
+            $this->message($this->upload->display_errors(), 'danger');
+            $this->news_check_redirect_previous($input_name);
+        }else{
+            $file_date = $this->upload->data();
+            $link = $file_date['file_name'];
+            return $link;
         }
     }
 }

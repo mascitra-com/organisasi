@@ -10,6 +10,40 @@ class Homepage extends MY_Controller
 		$this->_accessable = TRUE;
 		# Set data
 		$this->_view['template'] = 'template/homepage/index';
+
+		$this->load->model('profile_model');
+		$this->_data['profiles'] = $this->profile_model->as_object()->get_all();
+
+		if (is_null($this->session->userdata('visitor'))) {
+			$this->session->set_userdata('visitor', array('ip' => $this->input->ip_address(), 'visited_articles' => array()));
+		}else{
+			if ($this->session->userdata('visitor')['ip'] !== $this->input->ip_address()) {
+				$this->session->sess_destroy();
+				$this->session->set_userdata('visitor', array('ip' => $this->input->ip_address(), 'visited_articles' => array()));
+			}
+		}
+	}
+
+	public function profile($slug)
+	{
+
+		if ($slug != NULL) {
+
+			$profile = $this->profile_model->where('slug',$slug)->as_object()->get();
+			if ($profile) {
+				$this->_view['css'] 	= 'news';
+				$this->_view['title'] 	= $profile->headline;
+				$this->_view['page'] 	= 'homepage/page';
+				$this->_data['profile'] = $profile;
+				$this->init();		
+			}else{
+				$this->message('Gagal! Profil tidak ditemukan', 'danger');
+				$this->go('homepage');
+			}
+		}else{
+			$this->message('Gagal! Profil tidak ditemukan', 'danger');
+			$this->go('homepage');
+		}
 	}
 
 	public function index()
@@ -22,6 +56,7 @@ class Homepage extends MY_Controller
 		$this->load->model('news_model');
 		$this->_data['articles'] = $this->news_model->where('type','active')->order_by('name','asc')->as_object()->get_all();
 		$this->_data['latest_articles'] = $this->news_model->where('type','active')->order_by('published_at','desc')->limit(4)->as_object()->get_all();
+		$this->_data['popular_articles'] = $this->news_model->where('type','active')->order_by(array('count' => 'desc', 'published_at' => 'desc'	))->limit(4)->as_object()->get_all();
 		
 		$this->load->model('agenda_model');
 		$this->_data['agenda'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get();
@@ -29,38 +64,15 @@ class Homepage extends MY_Controller
 		$this->init();
 	}
 
-	protected function get_all_news()
+	public function agenda()
 	{
-		$this->load->model('news_model');
-		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->order_by('name','asc')->as_array()->get_all();
-		if ($articles) {
-			echo json_encode(array("artikel" => $articles));
-		}else{
-			echo json_encode(array("status" => FALSE));
-		}
-	}
+		$this->load->model('agenda_model');
+		$this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();
 
-	protected function get_latest_news()
-	{
-		$this->load->model('news_model');
-		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->order_by('published_at','desc')->as_array()->get_all();
-		if ($articles) {
-			echo json_encode(array("artikel" => $articles));
-		}else{
-			echo json_encode(array("status" => FALSE));
-		}
-	}
-
-	protected function get_searched_news()
-	{
-		$data = $this->input->post();
-		$this->load->model('news_model');
-		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->where('name','like',$data['name'])->order_by('name','asc')->as_array()->get_all();
-		if ($articles) {
-			echo json_encode(array("artikel" => $articles));
-		}else{
-			echo json_encode(array("status" => FALSE));
-		}
+		$this->_view['css'] 	= 'agenda';
+		$this->_view['title'] 	= 'Agenda';
+		$this->_view['page'] 	= 'homepage/agenda';
+		$this->init();		
 	}
 
 	public function news($page = NULL)
@@ -68,9 +80,9 @@ class Homepage extends MY_Controller
 		$this->load->model('news_model');
 		$this->news_model->pagination_arrows = array('<span aria-hidden="true">&larr;</span> Lebih Baru','Lebih Lama <span aria-hidden="true">&rarr;</span>');
 
-		$query= $this->news_model->with_user('fields:first_name,last_name')->where('type','active');
+		$query= $this->news_model->with_user('fields:first_name,last_name')->where('type','active')->order_by('published_at','asc');
 		$total_articles = $query->count_rows();
-		$articles = $query->paginate(1, $total_articles);
+		$articles = $query->paginate(4, $total_articles);
 
 		if ($page > $total_articles) {
 			$this->go('homepage/news');
@@ -87,13 +99,22 @@ class Homepage extends MY_Controller
 
 	public function news_article($slug = NULL)
 	{
+
 		if ($slug != NULL) {
+			
+			if (!$this->ion_auth->logged_in()) {
+				if (!in_array($slug, $this->session->userdata('visitor')['visited_articles'])) {
+					@$this->news_model->counter($slug);
+				}
+			}
+
 			$article = $this->news_model->where('slug',$slug)->with_user('fields:first_name,last_name')->as_object()->get();
 			if ($article) {
 				$this->_view['css'] 	= 'news';
-				$this->_view['title'] 	= 'Judul Berita';
+				$this->_view['title'] 	= $article->name;
 				$this->_view['page'] 	= 'homepage/news-article';
 				$this->_data['article'] = $article;
+				$this->_data['popular_articles'] = $this->news_model->where('type','active')->order_by(array('count' => 'desc', 'published_at' => 'desc'))->limit(4)->as_object()->get_all();
 				$this->init();		
 			}else{
 				$this->message('Gagal! Berita tidak ditemukan', 'danger');
@@ -105,11 +126,64 @@ class Homepage extends MY_Controller
 		}
 	}
 
-	public function page()
+	/*
+	 */
+	protected function get_all_news()
 	{
-		$this->_view['css'] 	= 'page';
-		$this->_view['title'] 	= 'Judul Halaman';
-		$this->_view['page'] 	= 'homepage/page';
-		$this->init();
+		$this->load->model('news_model');
+		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->order_by('name','asc')->as_array()->get_all();
+		if ($articles) {
+			for ($i=0; $i<count($articles); $i++) {
+				if (!file_exists('./assets/img/news_img/'.$articles[$i]['img_link']) || empty($articles[$i]['img_link'])) {
+					$articles[$i]['img_link'] = 'default-2.png';
+				}
+			}
+			echo json_encode($articles);
+		}
+	}
+
+	protected function get_latest_news()
+	{
+		$this->load->model('news_model');
+		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->order_by('published_at','desc')->as_array()->get_all();
+		if ($articles) {
+			for ($i=0; $i<count($articles); $i++) {
+				if (!file_exists('./assets/img/news_img/'.$articles[$i]['img_link']) || empty($articles[$i]['img_link'])) {
+					$articles[$i]['img_link'] = 'default-2.png';
+				}
+			}
+			echo json_encode($articles);
+		}
+	}
+
+	protected function get_popular_news()
+	{
+		$this->load->model('news_model');
+		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->order_by(array('count' => 'desc', 'published_at' => 'desc'	))->as_array()->get_all();
+		if ($articles) {
+			for ($i=0; $i<count($articles); $i++) {
+				if (!file_exists('./assets/img/news_img/'.$articles[$i]['img_link']) || empty($articles[$i]['img_link'])) {
+					$articles[$i]['img_link'] = 'default-2.png';
+				}
+			}
+			echo json_encode($articles);
+		}
+	}
+
+	protected function get_searched_news()
+	{
+		$data = $this->input->post();
+		$this->load->model('news_model');
+		$articles = $this->news_model->fields('name,slug,img_link')->where('type','active')->where('name','like',$data['name'])->order_by('name','asc')->as_array()->get_all();
+		if ($articles) {
+			for ($i=0; $i<count($articles); $i++) {
+				if (!file_exists('./assets/img/news_img/'.$articles[$i]['img_link']) || empty($articles[$i]['img_link'])) {
+					$articles[$i]['img_link'] = 'default-2.png';
+				}
+			}
+			echo json_encode(array("artikel" => $articles));
+		}else{
+			echo json_encode(array("status" => FALSE));
+		}
 	}
 }

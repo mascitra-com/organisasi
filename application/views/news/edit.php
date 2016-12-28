@@ -8,7 +8,7 @@
 				<form action="<?=site_url('news/update/'.$article->id)?>" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="">Judul</label>
-						<input type="text" class="form-control" name="name" placeholder="Judul berita" value="<?=$article->name?>" required minlength="3" maxlength="100">
+						<input type="text" class="form-control" id="name" name="name" placeholder="Judul berita" value="<?=$article->name?>" required minlength="3" maxlength="50">
 					</div>
 
 					<!-- <div class="form-group">

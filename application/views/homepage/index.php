@@ -9,15 +9,17 @@
 					<h3 class="panel-title"><i class="fa fa-newspaper-o"></i> Berita Paling Populer</h3>
 					<table class="table table-hover">
 						<tbody>
-							<?php for($i=0;$i<5;$i++):?>
+							<?php foreach($popular_articles as $article):?>
 								<tr>
-									<td><img src="<?=base_url('assets/img/default-2.png')?>" alt="thumbnail" height="75"></td>
+									<td><img src="<?=base_url('assets/img/news_img/'.check_image($article->img_link,'./assets/img/news_img/','default-2.png'))?>" alt="thumbnail" height="75"></td>
 									<td>
-										<h4>Judul berita</h4>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab quasi, perferendis...</p>
+										<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
+											<h4><?=$article->name?></h4>
+										</a>
+										<p><?= trim_article(strip_tags($article->body), 120)?></p>
 									</td>
 								</tr>
-							<?php endfor;?>
+							<?php endforeach;?>
 						</tbody>
 					</table>
 				</div>
@@ -33,9 +35,9 @@
 			<div class="col-sm-6 col-md-3">
 				<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
 					<div class="thumbnail">
-						<img class="img-fit" src="<?=$article->img_link?>" alt="thumbnail">
+						<img class="img-fit" src="<?=base_url('assets/img/news_img/'.check_image($article->img_link,'./assets/img/news_img/','default-2.png'))?>" alt="thumbnail">
 						<div class="caption">
-							<h3><?=$article->name?></h3>
+							<h4><?=$article->name?></h4>
 							<span><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $article->published_at))) ?></span>
 						</div>
 					</div>
@@ -63,9 +65,9 @@
 						<button class="btn btn-default" onkeyup="search_news()"><i class="fa fa-search"></i></button>
 					</div>
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#!" onclick="all_news()">Semua</a></li>
-						<li><a href="#!" onclick="latest_news()">Terbaru</a></li>
-						<li><a href="#!" onclick="popular_news()">Terpopuler</a></li>
+						<li><a class="btn btn-link" href="#!" onclick="all_news()">Semua</a></li>
+						<li><a class="btn btn-link" href="#!" onclick="latest_news()">Terbaru</a></li>
+						<li><a class="btn btn-link" href="#!" onclick="popular_news()">Terpopuler</a></li>
 					</ul>
 				</div>
 			</div>
@@ -76,7 +78,7 @@
 					<div class="col-xs-12 col-sm-4 col-md-3">
 						<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
 							<div class="thumbnail">
-								<img class="img-fit" src="<?=$article->img_link?>" alt="thumbnail" width="100%">
+								<img class="img-fit" src="<?=base_url('assets/img/news_img/'.check_image($article->img_link,'./assets/img/news_img/','default-2.png'))?>" alt="thumbnail" width="100%">
 								<div class="caption">
 									<h5><?=$article->name ?></h5>
 								</div>

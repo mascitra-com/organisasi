@@ -5,7 +5,7 @@
 	<?php if(!empty($articles)): foreach ($articles as $article): ?>
 		<div class="row news-list">
 			<div class="col-md-5">
-				<img src="<?= $article['img_link']?>" alt="judul berita" class="img-fit" width="100%" height="250px">
+				<img src="<?=base_url('assets/img/news_img/'.check_image($article['img_link'],'./assets/img/news_img/','default-2.png'))?>" alt="judul berita" class="img-fit" width="100%" height="250px">
 			</div>
 			<div class="col-md-7">
 				<h1 class="news-title"><?=$article['name']?></h1>

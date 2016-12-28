@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">ORGANISASI</a>
+      <a class="navbar-brand" href="<?=site_url('homepage')?>">ORGANISASI</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -18,11 +18,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profil <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Bagian Ortala</a></li>
-            <li><a href="#">Visi dan Misi</a></li>
-            <li><a href="#">Struktur Organisasi</a></li>
-            <li><a href="#">Tugas Pokok dan Fungsi</a></li>
-            <li><a href="#">Sekar Putih</a></li>
+            <?php if(!empty($profiles)): $no=1; foreach ($profiles as $profile): ?>
+              <li><a href="<?=site_url('homepage/profile/'.$profile->slug)?>"><?=$profile->name?></a></li>
+            <?php endforeach; endif;?>
           </ul>
         </li>
         <li><a href="<?=site_url('homepage/news')?>">Berita</a></li>

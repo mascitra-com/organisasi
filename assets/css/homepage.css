@@ -56,6 +56,9 @@ html, body{
 
 #new-article .thumbnail{
 	cursor: pointer;
+	height: 300px;
+	max-height: 300px;
+	overflow-y: hidden;
 }
 
 #new-article .thumbnail img{

@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class News_model extends MY_Model
 {
 	public $primary_key = 'id';
-    public $fillable = array('name','body','slug','img_name','img_link','type','published_at','status_headline');
+    public $fillable = array('name','body','slug','img_name','img_link','type','published_at','status_headline','count');
     public $protected = array('id');
 
     public $rules = array(
@@ -17,13 +17,13 @@ class News_model extends MY_Model
     		'name' => array(
     			'field' => 'name',
     			'label' => 'Judul',
-    			'rules' => 'trim|required|min_length[3]|max_length[100]'),
+    			'rules' => 'trim|required|min_length[3]|max_length[50]'),
     		),
     	'update' => array(
     		'name' => array(
     			'field' => 'name',
     			'label' => 'Judul',
-    			'rules' => 'trim|required|min_length[3]|max_length[100]'),
+    			'rules' => 'trim|required|min_length[3]|max_length[50]'),
     		)
     	);
 
@@ -31,6 +31,11 @@ class News_model extends MY_Model
     {
         $this->has_one['user'] = array('user_model', 'id', 'created_by');
         parent::__construct();
+    }
+
+    public function counter($slug)
+    {
+        return $this->db->query("UPDATE news SET count = count+1 WHERE slug ='$slug'");
     }
 
     public function fetch_data_index($limit, $start, $search)

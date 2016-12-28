@@ -9,18 +9,13 @@
 					<div class="form-group">
 						<label for="name">Judul</label>
 						<?php echo form_error('name'); ?>
-						<input id="title-name" type="text" class="form-control" name="name" placeholder="Judul berita" value="<?= (isset($article['name'])) ? $article['name'] : ''; ?>" required minlength="3" maxlength="100">
-						<span id="title-msg"></span>
+						<input id="title-name" type="text" class="form-control" name="name" placeholder="Judul berita" value="<?= (isset($article['name'])) ? $article['name'] : ''; ?>" required minlength="3" maxlength="50">
+						<span id="title-msg" class="text-success"></span>
 					</div>
-
-					<!-- <div class="form-group">
-						<label for="published_at">Tanggal Publish</label>
-						<input type="date" class="form-control" name="published_at" placeholder="Tanggal Publish" id="published_at" required>
-					</div> -->
 
 					<div class="form-group">
 						<label for="published_at">Tanggal Publish</label>
-						<input type="date" name="published_at" value="<?= (isset($article['published_at'])) ? $article['published_at'] : ''; ?>" min="<?=date('Y-m-d');?>">
+						<input type="date" class="form-control" name="published_at" value="<?= (isset($article['published_at'])) ? $article['published_at'] : ''; ?>" min="<?=date('Y-m-d');?>" placeholder="Tanggal publish berita">
 					</div>
 
 					<div class="form-group">

@@ -29,5 +29,8 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-    $("input[type='date']").datepicker();
+    $("input[type='date']").attr('type', 'text').datepicker({
+        'dateFormat': "yy-mm-dd",
+        'minDate': new Date()
+    });
 </script>

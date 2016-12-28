@@ -33,22 +33,22 @@
                 <?php if(is_array($articles)){ foreach ($articles as $article): ?>
                     <div class="row">
                         <div class="col-md-2">
-                            <img src="<?=$article->img_link?>" alt="thumbnail" width="100%">
-                        </div>
-                        <div class="col-md-8">
-                            <h3><?=$article->name ?></h3>
-                            <p><?=(strlen($article->body) > 254) ? substr($article->body, 0, 254).'...' :  $article->body?><br><a href="<?=site_url('news/show/'.$article->slug)?>">selengkapnya...</a></p>
-                            <span class="label label-default"><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $article->published_at))) ?></span>
-                            <span class="label label-default"><?=$article->first_name.' '.$article->last_name ?></span>
-                        </div>
-                        <div class="col-md-2">
-                            <a href="<?=site_url('news/edit?slug='.$article->slug)?>" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
-                            <a href="<?=site_url('news/move_to_archive?slug='.$article->slug)?>" onclick="return confirm('Pindah berita ke arsip?')" class="btn btn-xs btn-default"><i class="fa fa-archive"></i></a>
-                        </div>
+                          <img <?= (!empty($article->img_link)) ? "src='".base_url('assets/img/news_img/'.$article->img_link)."'" : "src='".base_url('assets/img/news_img/default/default-2.png')."'" ?> alt="thumbnail" width="100%">
+                      </div>
+                      <div class="col-md-8">
+                        <h3><?=$article->name ?></h3>
+                        <p><?=(strlen($article->body) > 254) ? substr($article->body, 0, 254).'...' :  $article->body?><br><a href="<?=site_url('news/show/'.$article->slug)?>">selengkapnya...</a></p>
+                        <span class="label label-default"><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $article->published_at))) ?></span>
+                        <span class="label label-default"><?=$article->first_name.' '.$article->last_name ?></span>
                     </div>
-                <?php endforeach; } else { echo '<div class="col-md-12">Tidak ada berita</div>'; } ?>
-                <?php $this->load->view('template/dashboard/pagination'); ?>
-            </div>
+                    <div class="col-md-2">
+                        <a href="<?=site_url('news/edit?slug='.$article->slug)?>" class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></a>
+                        <a href="<?=site_url('news/move_to_archive?slug='.$article->slug)?>" onclick="return confirm('Pindah berita ke arsip?')" class="btn btn-xs btn-default"><i class="fa fa-archive"></i></a>
+                    </div>
+                </div>
+            <?php endforeach; } else { echo '<div class="col-md-12">Tidak ada berita</div>'; } ?>
+            <?php $this->load->view('template/dashboard/pagination'); ?>
         </div>
     </div>
+</div>
 </div>

@@ -81,7 +81,6 @@ class Videos extends MY_Controller
     public function store()
     {
         $data = $this->input->post(NULL, TRUE);
-        $this->is_not_empty($data);
         $upload = FALSE;
         if (isset($_FILES['files']['name']) && !empty($_FILES['files']['name'])) {
             $data['link'] = $this->do_upload();

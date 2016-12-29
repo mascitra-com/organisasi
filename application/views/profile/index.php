@@ -38,23 +38,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(is_array($profiles)){ $no=1; foreach ($profiles as $profile): ?>
-                            <tr>
-                                <td class="text-center"><?=$no++?></td>
-                                <td><?=$profile->name?></td>
-                                <td><?=(strlen($profile->headline) > 100) ? substr($profile->headline, 0, 100).'...' :  $profile->headline?></td>
-                                <td><?= (strlen($profile->body) > 100) ? substr(strip_tags($profile->body), 0, 100).'...' :  $profile->body ?></td>
-                                <td class="text-center">
-                                    <button class="btn btn-default" onclick="change_pos_profile(<?=$profile->id?>,0)"><i class="fa fa-arrow-up"></i></button>
-                                    <button class="btn btn-default" onclick="change_pos_profile(<?=$profile->id?>,1)"><i class="fa fa-arrow-down"></i></button>
-                                </td>
-                                <td class="text-nowrap text-center">
-                                    <a class="btn btn btn-default" href="<?=site_url('profile/show/'.$profile->slug)?>"><i class="fa fa-info-circle"></i></a>
-                                    <a class="btn btn btn-success" href="<?=site_url('profile/edit/'.$profile->slug)?>"><i class="fa fa-pencil"></i></a>
-                                    <a class="btn btn btn-danger" href="<?=site_url('profile/destroy/'.$profile->slug)?>" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        <?php endforeach; } else { echo "<td colspan='5'>$profiles<td>"; } ?>
+                        <form method="POST" action="<?=site_url('profile/update_pos')?>">
+                            <?php if(is_array($profiles)){ $no=1; foreach ($profiles as $profile): ?>
+                                <tr>
+                                    <td class="text-center"><?=$no++?></td>
+                                    <td><?=$profile->name?></td>
+                                    <td><?=(strlen($profile->headline) > 100) ? substr($profile->headline, 0, 100).'...' :  $profile->headline?></td>
+                                    <td><?= (strlen($profile->body) > 100) ? substr(strip_tags($profile->body), 0, 100).'...' :  $profile->body ?></td>
+                                    <td class="text-center">
+                                    <button class="btn btn-default" name="pos" value="<?=$profile->id.':'.'0'.':'.$profile->pos?>" <?=($profile->pos == 0) ? '' : '' ?>><i class="fa fa-arrow-up"></i></button>
+                                        <button class="btn btn-default" name="pos" value="<?=$profile->id.':'.'1'.':'.$profile->pos?>"><i class="fa fa-arrow-down"></i></button>
+                                    </td>
+                                    <td class="text-nowrap text-center">
+                                        <a class="btn btn btn-default" href="<?=site_url('profile/show/'.$profile->slug)?>"><i class="fa fa-info-circle"></i></a>
+                                        <a class="btn btn btn-success" href="<?=site_url('profile/edit/'.$profile->slug)?>"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn btn-danger" href="<?=site_url('profile/destroy/'.$profile->slug)?>" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; } else { echo "<td colspan='5'>$profiles<td>"; } ?>
+                        </form>
                     </tbody>
                 </table>
                 <?php $this->load->view('template/dashboard/pagination'); ?>

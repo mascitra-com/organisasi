@@ -23,7 +23,7 @@ class Profile_model extends MY_Model
                 'field' => 'body',
                 'label' => 'Isi Profil',
                 'rules' => 'trim|required|min_length[3]'),
-        ),
+            ),
         'update' => array(
             'name' => array(
                 'field' => 'name',
@@ -37,8 +37,8 @@ class Profile_model extends MY_Model
                 'field' => 'body',
                 'label' => 'Isi Profil',
                 'rules' => 'trim|required|min_length[3]'),
-        ),
-    );
+            ),
+        );
 
     public function __construct()
     {
@@ -67,6 +67,15 @@ class Profile_model extends MY_Model
         return $this->db->get($this->table)->num_rows();
     }
 
+    public function change_menu_pos($id, $arrow)
+    {
+        if ($arrow === "0") {
+            return $this->db->query("UPDATE profiles SET pos = pos -1 WHERE id != '$id'");
+        }else{
+            return $this->db->query("UPDATE profiles SET pos = pos +1 WHERE id != '$id'");
+        }
+    }
+
     /**
      * @param $search
      */
@@ -77,9 +86,9 @@ class Profile_model extends MY_Model
             $i = 1;
             foreach ($search as $val) {
                 if(!empty($val)){
-                $this->db->like($col[$i], $val);}
-                $i++;
+                    $this->db->like($col[$i], $val);}
+                    $i++;
+                }
             }
         }
     }
-}

@@ -87,9 +87,9 @@ class Homepage extends MY_Controller
 		$this->load->model('news_model');
 		$this->news_model->pagination_arrows = array('<span aria-hidden="true">&larr;</span> Lebih Baru','Lebih Lama <span aria-hidden="true">&rarr;</span>');
 
-		$query= $this->news_model->with_user('fields:first_name,last_name')->where('type','active')->order_by('published_at','asc');
+		$query= $this->news_model->with_user('fields:first_name,last_name')->where('type','adawdj')->order_by('published_at','asc');
 		$total_articles = $query->count_rows();
-		$articles = $query->paginate(4, $total_articles);
+		$articles = $query->paginate(10, $total_articles);
 
 		if ($page > $total_articles) {
 			$this->go('homepage/news');

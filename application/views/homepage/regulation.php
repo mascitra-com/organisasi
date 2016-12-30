@@ -1,9 +1,22 @@
 <div class="container">
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<span class="navbar-brand" style="padding-left: 10px;">Regulasi</span>
+			</div>
+			<form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">Cari</button>
+			</form>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel">
 				<div class="panel-body">
-					<div class="panel-title"><h3>Regulasi</h3></div>
+					<div class="panel-title"></div>
 					<div class="container-fluid table-responsive">
 						<table class="table table-hover table-bordered table-striped">
 							<?php for($i=0; $i<5;$i++):?>

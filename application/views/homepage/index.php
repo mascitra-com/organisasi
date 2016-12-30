@@ -93,11 +93,27 @@
 	<div class="row section" id="misc1">
 		<div class="col-xs-12 col-sm-6 col-md-9 white">
 			<div class="row" id="agenda">
-				<div class="col-xs-12">
+				<div class="col-xs-12 table-responsive">
 					<div class="page-header">
 						<h4>Agenda terbaru</h4>
 					</div>
-					<p><?=$agenda->body?></p>
+					<table class="table table-striped table-hover">
+						<tbody>
+						<?php for($i=0;$i<3;$i++):?>
+							<tr>
+								<td class="text-right">
+									<h3><?=date('d', strtotime('25-12-2016'))?></h3>
+									<h5><?=date('F', strtotime('25-12-2016'))?></h5>
+									<h5><?=date('Y', strtotime('25-12-2016'))?></h5>
+								</td>
+								<td>
+									<h4>Judul Agenda</h4>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor harum, ipsum, porro ipsa commodi sed.</p>
+								</td>
+							</tr>
+							<?php endfor;?>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="row" id="regulasi">

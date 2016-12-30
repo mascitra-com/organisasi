@@ -5,6 +5,7 @@ class MY_Controller extends CI_Controller {
 	protected $_data; # atribut data
 	protected $_view; # atribut view
 	protected $_accessable; # atribut view
+    protected $_privileges;
 
 	public function __construct() {
 		parent::__construct();
@@ -15,33 +16,37 @@ class MY_Controller extends CI_Controller {
 		$this->_data['news_total'] = $this->news_model->where('type','active')->where('type','=','unactive',TRUE)->as_array()->count_rows();
         $this->_data['draft_total'] = $this->news_model->where('type','draft')->as_array()->count_rows();
         $this->_data['archive_total'] = $this->news_model->where('type','archive')->as_array()->count_rows();
+
+        $this->_privileges = $this->ion_auth->get_allowed_links();
+        if (empty($this->_privileges)) {
+            $this->_privileges = array();
+        }
     }
 
     public function _remap($method, $param = array()) {
       if (method_exists($this, $method)) {
          if ($this->ion_auth->logged_in() || $this->_accessable) {
-            if ($this->check_privileges(get_class($this), $method)) {
+            if ($this->check_privileges(get_class($this), $method) || $this->_accessable) {
                 return call_user_func_array(array($this, $method), $param);
             }else{
-                show_404();
+               die('anda tidak mempunyai hak akses untuk menu ini');
             }
         } else {
             $this->go('auth');
         }
     } else {
-        $this->go('auth');
+        show_404();
     }
 }
 
 protected function check_privileges($class, $method){
     
-    $privileges = $this->ion_auth->get_privileges();
-    foreach ($privileges as $privilege) {
+    foreach ($this->_privileges as $privilege) {
         if (strtolower($class.'/'.$method) == strtolower($privilege)) {
             return TRUE;
         }
     }
-    return TRUE;
+    return FALSE;
 }
 	/**
 	 * Berfungsi untuk mengeksekusi view

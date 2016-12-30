@@ -1384,7 +1384,7 @@ class Ion_auth_model extends CI_Model
 		return $this;
 	}
 
-	public function get_privileges()
+	public function get_allowed_links()
 	{
 		return $this->session->userdata('menu');
 	}
@@ -1721,9 +1721,22 @@ class Ion_auth_model extends CI_Model
 	 **/
 	public function set_session($user)
 	{
-		$this->db->get('privileges');
-
 		$this->trigger_events('pre_set_session');
+
+		$logged_in_user_groups = $this->get_users_groups($user->id)->result();
+
+		$groups_id = array();
+		for ($i=0; $i < count($logged_in_user_groups) ; $i++) { 
+			array_push($groups_id, $logged_in_user_groups[$i]->id);
+		}
+
+		$links = $this->db->select('menus.link')->from('privileges')->join('menus','menus.id = privileges.id_menu')->where_in('privileges.id_groups', $groups_id)->order_by('link', 'asc')->distinct()->get()->result();
+
+		$allowed_links = array();
+
+		for ($i=0; $i < count($links) ; $i++) { 
+			array_push($allowed_links, $links[$i]->link);
+		}        
 
 		$session_data = array(
 			'identity'             => $user->{$this->identity_column},
@@ -1731,7 +1744,7 @@ class Ion_auth_model extends CI_Model
 			'email'                => $user->email,
 		    'user_id'              => $user->id, //everyone likes to overwrite id so we'll use user_id
 		    'old_last_login'       => $user->last_login,
-		    'menu'				   => array('news/index','news/show')
+		    'menu'				   => $allowed_links
 		    );
 
 		$this->session->set_userdata($session_data);

@@ -109,14 +109,40 @@ html, body{
 }
 
 #misc1{
-	height: 400px;
-	max-height: 400px;
-	overflow: hidden;
+	/*height: 600px;
+	max-height: 600px;
+	overflow: hidden;*/
 }
 
 #misc1 > [class*=col-]{
 	height: 100%;
 	padding: 0px 20px;
+}
+
+#agenda table tr td{
+	border: none;
+	white-space: normal;
+}
+
+#agenda table tr td:first-child{
+	padding:10px;
+	background-color: #333;
+	color: #fff;
+}
+
+#agenda table tr:nth-of-type(odd) td:first-child{
+	background-color: #333;
+}
+
+#agenda table tr:nth-of-type(even) td:first-child{
+	background-color: #777;
+}
+
+#agenda table tr td h3,
+#agenda table tr td h4,
+#agenda table tr td h5{
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 #sosmed{

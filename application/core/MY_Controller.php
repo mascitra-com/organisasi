@@ -15,19 +15,34 @@ class MY_Controller extends CI_Controller {
 		$this->_data['news_total'] = $this->news_model->where('type','active')->where('type','=','unactive',TRUE)->as_array()->count_rows();
         $this->_data['draft_total'] = $this->news_model->where('type','draft')->as_array()->count_rows();
         $this->_data['archive_total'] = $this->news_model->where('type','archive')->as_array()->count_rows();
-	}
+    }
 
-	public function _remap($method, $param = array()) {
-		if (method_exists($this, $method)) {
-			if ($this->ion_auth->logged_in() || $this->_accessable) {
-				return call_user_func_array(array($this, $method), $param);
-			} else {
-				$this->go('auth');
-			}
-		} else {
-			$this->go('auth');
-		}
-	}
+    public function _remap($method, $param = array()) {
+      if (method_exists($this, $method)) {
+         if ($this->ion_auth->logged_in() || $this->_accessable) {
+            if ($this->check_privileges(get_class($this), $method)) {
+                return call_user_func_array(array($this, $method), $param);
+            }else{
+                show_404();
+            }
+        } else {
+            $this->go('auth');
+        }
+    } else {
+        $this->go('auth');
+    }
+}
+
+protected function check_privileges($class, $method){
+    
+    $privileges = $this->ion_auth->get_privileges();
+    foreach ($privileges as $privilege) {
+        if (strtolower($class.'/'.$method) == strtolower($privilege)) {
+            return TRUE;
+        }
+    }
+    return TRUE;
+}
 	/**
 	 * Berfungsi untuk mengeksekusi view
 	 */
@@ -65,7 +80,7 @@ class MY_Controller extends CI_Controller {
             'field' => 'slug',
             'title' => $title,
             'replacement' => 'dash' // Either dash or underscore
-        );
+            );
         $this->slug->set_config($config);
     }
 

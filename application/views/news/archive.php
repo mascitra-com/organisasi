@@ -33,7 +33,7 @@
                 <?php if(is_array($articles)){ foreach ($articles as $article): ?>
                     <div class="row">
                         <div class="col-md-2">
-                            <img <?= (!empty($article->img_link)) ? "src='".base_url('assets/img/news_img/'.$article->img_link)."'" : "src='".base_url('assets/img/news_img/default/default-2.png')."'" ?> alt="thumbnail" width="100%">
+                            <img src="<?=base_url('assets/img/news_img/'.check_image($article->img_link,'./assets/img/news_img/','default-2.png'))?>" alt="thumbnail" width="100%">
                         </div>
                         <div class="col-md-8">
                             <h3><?=$article->name ?></h3>

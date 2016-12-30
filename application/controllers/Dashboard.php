@@ -23,7 +23,7 @@ class Dashboard extends MY_Controller
         $this->_data['totnews'] = $this->news_model->count_rows();
         $this->_data['totphotos'] = $this->gallery_model->count_rows(array('type_id' => 1));
         $this->_data['totvideos'] = $this->gallery_model->count_rows(array('type_id' => 2));
-        dump($this->visitor_monthly());
+        // dump($this->visitor_monthly());
         $this->init();
     }
 }

@@ -24,7 +24,7 @@
           </ul>
         </li>
         <li><a href="<?=site_url('homepage/news')?>">Berita</a></li>
-        <li><a href="#">Agenda</a></li>
+        <li><a href="<?=site_url('homepage/agenda')?>">Agenda</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Galeri <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -34,16 +34,7 @@
             <li><a href="#">Buku Tamu</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PPID <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Evaluasi Kinerja dan OPD</a></li>
-            <li><a href="#">Struktur PPID</a></li>
-            <li><a href="#">DIP</a></li>
-            <li><a href="#">Informasi Berkala</a></li>
-            <li><a href="#">Kelembagaan dan Anjab</a></li>
-          </ul>
-        </li>
+        <li><a href="<?=site_url('homepage/regulation')?>">Regulasi</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

@@ -62,7 +62,7 @@
 						<div class="form-group">
 							<input type="text" name="name" id="name" class="form-control" placeholder="cari berita">
 						</div>
-						<button class="btn btn-default" onkeyup="search_news()"><i class="fa fa-search"></i></button>
+						<button class="btn btn-default" onclick="search_news()"><i class="fa fa-search"></i></button>
 					</div>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a class="btn btn-link" href="#!" onclick="all_news()">Semua</a></li>
@@ -99,19 +99,19 @@
 					</div>
 					<table class="table table-striped table-hover">
 						<tbody>
-						<?php for($i=0;$i<3;$i++):?>
+						<?php if(!empty($agendas)): foreach($agendas as $agenda):?>
 							<tr>
 								<td class="text-right">
-									<h3><?=date('d', strtotime('25-12-2016'))?></h3>
-									<h5><?=date('F', strtotime('25-12-2016'))?></h5>
-									<h5><?=date('Y', strtotime('25-12-2016'))?></h5>
+									<h3><?=date('d', strtotime($agenda->agenda_date))?></h3>
+									<h5><?=date('F', strtotime($agenda->agenda_date))?></h5>
+									<h5><?=date('Y', strtotime($agenda->agenda_date))?></h5>
 								</td>
 								<td>
-									<h4>Judul Agenda</h4>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor harum, ipsum, porro ipsa commodi sed.</p>
+									<h4><?=$agenda->name?></h4>
+									<p><?=$agenda->body?></p>
 								</td>
 							</tr>
-							<?php endfor;?>
+							<?php endforeach; endif;?>
 						</tbody>
 					</table>
 				</div>

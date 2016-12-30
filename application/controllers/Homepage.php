@@ -60,7 +60,7 @@ class Homepage extends MY_Controller
 		$this->_data['popular_articles'] = $this->news_model->where('type','active')->order_by(array('count' => 'desc', 'published_at' => 'desc'	))->limit(4)->as_object()->get_all();
 		
 		$this->load->model('agenda_model');
-		$this->_data['agenda'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get();
+		$this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();
 
 		$this->load->model('regulation_model');
 		$this->_data['regulation'] = $this->regulation_model->fields('body, link')->order_by('issued_at','desc')->as_object()->get();
@@ -70,7 +70,7 @@ class Homepage extends MY_Controller
 		$this->init();
 	}
 
-	public function agenda()
+	public function agenda($page = NULL)
 	{
 		$this->load->model('agenda_model');
 		$this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();

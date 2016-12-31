@@ -19,6 +19,8 @@ class Online_users
         $this->ip = $_SERVER['REMOTE_ADDR'];
         $this->data = @unserialize(file_get_contents($this->file));
         $aryData = $this->data['useronline'];
+        $total_visit = $this->data['totalvisit'];
+        $last_update = $this->data['last_update'];
         $timeout = time() - 120;
 
         //Removes expired data
@@ -32,6 +34,7 @@ class Online_users
                 }
             }
         }
+
         //If it’s the first hit, add the information to database
         if (!isset($aryData[$this->ip])) {
             $CI =& get_instance();
@@ -46,8 +49,9 @@ class Online_users
             } else {
                 $this->data['guestonline']++;
             }
-
-            $this->data['totalvisit']++;
+            if($this->data['totalvisit'] = $this->visitor_monthly($last_update)){
+                $this->data['last_update'] = time();
+            }
 
             //Loads the USER_AGENT class if it’s not loaded yet
             if (!isset($CI->agent)) {
@@ -61,6 +65,10 @@ class Online_users
         } else {
             $aryData[$this->ip]['time'] = time();
             $aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
+            if($this->visitor_monthly($last_update)){
+                $this->data['totalvisit'] = 0;
+                $this->data['last_update'] = time();
+            }
         }
 
         $this->data['useronline'] = $aryData;
@@ -146,5 +154,22 @@ class Online_users
         $this->online_users->get_info()['useronline']["$_SERVER[REMOTE_ADDR]"]['uri'];
     }
 
+    function visitor_monthly($last_update)
+    {
+        $d = new DateTime('first day of this month');
+        $the_first = date_timestamp_get($d);
+        $day_last_month = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
+        $total_visitor = $this->total_visit();
+        $data['date'] = time()-($day_last_month*24*3600);
+        $data['total_visitor'] = $total_visitor;
+        // If today is the 1st
+        if ($the_first < $last_update) {
+            // Store total visit to database
+            return 0;
+        } else {
+            // else add total visit by 1
+            return $total_visitor++;
+        }
+    }
 
 }

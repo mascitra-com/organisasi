@@ -75,7 +75,8 @@
  * @property CI_Encrypt          $encrypt              Provides two-way keyed encoding using Mcrypt
  * @property CI_Javascript       $javascript           Javascript Class
  ***************** YOUR LIBRARIES *****************
- * @property Ion_auth            $ion_auth             Layout Class
+ * @property Ion_auth            $ion_auth
+ * @property Online_users        $online_users
  * @property Slug                $slug
  ***************** YOUR MODELS *****************
  * @property agenda_model        $agenda_model
@@ -88,6 +89,7 @@
  * @property profile_model       $profile_model
  * @property regulation_model    $regulation_model
  * @property user_model          $user_model
+ * @property visitor_model       $visitor_model
  */
 class CI_Controller
 {

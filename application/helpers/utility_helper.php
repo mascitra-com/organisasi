@@ -16,4 +16,14 @@ if (!function_exists('trim_article')) {
 		return $article;
 	}
 }
+
+if (!function_exists('show_sidebar_menu')) {
+	function show_sidebar_menu($link, $allowed_menus){
+		if (in_array($link, $allowed_menus)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+}
+
 ?>

@@ -92,26 +92,32 @@ class Homepage extends MY_Controller
 		$this->init();		
 	}
 
-	public function news($page = NULL)
+	public function news()
 	{
+		$this->_view['css'] 	= 'news';
+		$this->_view['title'] 	= 'Berita';
+		$this->_view['page'] 	= 'homepage/news';
+		
 		$this->load->model('news_model');
-		$this->news_model->pagination_arrows = array('<span aria-hidden="true">&larr;</span> Lebih Baru','Lebih Lama <span aria-hidden="true">&rarr;</span>');
+		
+		$config['base_url'] = site_url('homepage/news');
+		$config['page_query_string'] = TRUE;
+		$config['query_string_segment'] = 'number';
+		$config['total_rows'] = $this->news_model->count_latest_active_news();
+		$config['per_page'] = 4;
+		$config['uri_segment'] = 3;
+		$config['display_pages'] = FALSE;
+		$config['first_link'] = FALSE;
+		$config['last_link'] = FALSE;
+		$config['prev_link'] = '<li class="previous"><span aria-hidden="true">&larr; Lebih Baru</span></li>';
+		$config['next_link'] = '<li class="next"><span aria-hidden="true">Lebih Lama  &rarr;</span></li>';
 
-		$query= $this->news_model->with_user('fields:first_name,last_name')->where('type','active')->order_by('published_at','asc');
-		$total_articles = $query->count_rows();
-		$articles = $query->paginate(4, $total_articles);
+		$this->pagination->initialize($config);
 
-		if ($page > $total_articles) {
-			$this->go('homepage/news');
-		}else{
-			$this->_view['css'] 	= 'news';
-			$this->_view['title'] 	= 'Berita';
-			$this->_view['page'] 	= 'homepage/news';
-			$this->_data['articles'] = $articles;
-			$this->_data['prev_page'] = $this->news_model->previous_page;
-			$this->_data['next_page'] = $this->news_model->next_page;
-			$this->init();
-		}
+		$this->_data['articles'] = $this->news_model->get_latest_active_news($config['per_page'], $this->input->get('number') != NULL ? $this->input->get('number') : 0);
+		$this->_data['pagination'] = $this->pagination->create_links();
+		$this->init();
+		
 	}
 
 	public function news_article($slug = NULL)

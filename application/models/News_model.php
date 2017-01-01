@@ -38,113 +38,129 @@ class News_model extends MY_Model
         return $this->db->query("UPDATE news SET count = count+1 WHERE slug ='$slug'");
     }
 
-    public function get_latest_active_news()
+    public function count_latest_active_news()
     {
-       $query = $this->db->select('news.*, users.first_name, users.last_name')
-       ->from('news')
-       ->join('users', 'users.id = news.created_by')
-       ->where('type', 'active')->order_by('published_at','desc');
-       return $query->get()->result(); 
-   }
+        $this->db->select('id');
+        $this->db->where('type','active');
+        $this->db->order_by('published_at','DESC');
+        return $this->db->get($this->table)->num_rows();
+    }
 
-   public function fetch_data_index($limit, $start, $search)
-   {
-    $this->db->select('news.*, users.first_name, users.last_name');
-    $this->db->join('users', 'users.id = news.created_by');
-    if (isset($search)) {
-        if ($search->type === "active") {
-            $this->db->where('type', 'active');
-        }elseif ($search->type === "unactive") {
-            $this->db->where('type', 'unactive');
+    public function get_latest_active_news($limit, $start)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->limit($limit, $start);
+        $this->db->where('type','active');
+        $this->order_by('published_at','DESC');
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Tidak ada berita';
+    }
+
+    public function fetch_data_index($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->join('users', 'users.id = news.created_by');
+        if (isset($search)) {
+            if ($search->type === "active") {
+                $this->db->where('type', 'active');
+            }elseif ($search->type === "unactive") {
+                $this->db->where('type', 'unactive');
+            }else{
+                $this->db->where_in('type', array('active', 'unactive'));
+            }
         }else{
             $this->db->where_in('type', array('active', 'unactive'));
         }
-    }else{
-        $this->db->where_in('type', array('active', 'unactive'));
-    }
-    $this->db->limit($limit, $start);
-    $this->search($search);
-    $query = $this->db->get($this->table);
-    if ($query->num_rows() > 0) {
-        foreach ($query->result() as $row) {
-            $data[] = $row;
+        $this->db->limit($limit, $start);
+        $this->search($search);
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
         }
-        return $data;
+        return 'Berita tidak ditemukan'; 
     }
-    return 'Berita tidak ditemukan'; 
-}
 
-public function fetch_data_draft($limit, $start, $search)
-{
-    $this->db->select('news.*, users.first_name, users.last_name');
-    $this->db->from('news');
-    $this->db->join('users', 'users.id = news.created_by');
-    $this->db->where('type', 'draft');
-    $this->db->order_by('published_at','desc');
-    $this->db->limit($limit, $start);
-    $this->search($search);
-    $query = $this->db->get();
-    if ($query->num_rows() > 0) {
-        foreach ($query->result() as $row) {
-            $data[] = $row;
+    public function fetch_data_draft($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->from('news');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->where('type', 'draft');
+        $this->db->order_by('published_at','desc');
+        $this->db->limit($limit, $start);
+        $this->search($search);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
         }
-        return $data;
+        return 'Berita tidak ditemukan';
     }
-    return 'Berita tidak ditemukan';
-}
 
-public function fetch_data_archive($limit, $start, $search)
-{
-    $this->db->select('news.*, users.first_name, users.last_name');
-    $this->db->from('news');
-    $this->db->join('users', 'users.id = news.created_by');
-    $this->db->where('type', 'archive');
-    $this->db->order_by('published_at','desc');
-    $this->db->limit($limit, $start);
-    $this->search($search);
-    $query = $this->db->get();
-    if ($query->num_rows() > 0) {
-        foreach ($query->result() as $row) {
-            $data[] = $row;
+    public function fetch_data_archive($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->from('news');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->where('type', 'archive');
+        $this->db->order_by('published_at','desc');
+        $this->db->limit($limit, $start);
+        $this->search($search);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
         }
-        return $data;
+        return 'Berita tidak ditemukan';
     }
-    return 'Berita tidak ditemukan';
-}
 
-public function count_data_index($search)
-{
-    $this->db->select('id');
-    if (isset($search)) {
-        if ($search->type === "active") {
-            $this->db->where('type', 'active');
-        }elseif ($search->type === "unactive") {
-            $this->db->where('type', 'unactive');
+    public function count_data_index($search)
+    {
+        $this->db->select('id');
+        if (isset($search)) {
+            if ($search->type === "active") {
+                $this->db->where('type', 'active');
+            }elseif ($search->type === "unactive") {
+                $this->db->where('type', 'unactive');
+            }else{
+                $this->db->where_in('type', array('active', 'unactive'));
+            }
         }else{
             $this->db->where_in('type', array('active', 'unactive'));
         }
-    }else{
-        $this->db->where_in('type', array('active', 'unactive'));
+        $this->search($search);
+        return $this->db->get($this->table)->num_rows();
     }
-    $this->search($search);
-    return $this->db->get($this->table)->num_rows();
-}
 
-public function count_data_draft($search)
-{
-    $this->db->select('id');
-    $this->db->where('type', 'draft');
-    $this->search($search);
-    return $this->db->get($this->table)->num_rows();
-}
+    public function count_data_draft($search)
+    {
+        $this->db->select('id');
+        $this->db->where('type', 'draft');
+        $this->search($search);
+        return $this->db->get($this->table)->num_rows();
+    }
 
-public function count_data_archive($search)
-{
-    $this->db->select('id');
-    $this->db->where('type', 'archive');
-    $this->search($search);
-    return $this->db->get($this->table)->num_rows();
-}
+    public function count_data_archive($search)
+    {
+        $this->db->select('id');
+        $this->db->where('type', 'archive');
+        $this->search($search);
+        return $this->db->get($this->table)->num_rows();
+    }
 
     /**
      * @param $search

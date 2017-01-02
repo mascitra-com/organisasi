@@ -19,6 +19,7 @@ class Regulation_model extends MY_Model
     {
         $this->db->limit($limit, $start);
         $this->search($search);
+        $this->db->order_by('issued_at', 'desc');
         $query = $this->db->get($this->table);
         if ($query->num_rows() > 0) {
             foreach ($query->result() as $row) {

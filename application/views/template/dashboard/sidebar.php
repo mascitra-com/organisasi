@@ -80,7 +80,7 @@
 			</li>
 		<?php endif; ?>
 
-		<?php if(show_sidebar_menu('regulasi/index', $link_privileges)): ?>
+		<?php if(show_sidebar_menu('regulation/index', $link_privileges)): ?>
 			<li class="link <?=(strpos($_view['page'], 'regulation')!==FALSE)?'active':''?>">
 				<a href="<?=site_url('regulation')?>">
 					<i class="fa fa-legal fa-fw"></i>

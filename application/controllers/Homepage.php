@@ -70,40 +70,111 @@ class Homepage extends MY_Controller
 		$this->init();
 	}
 
-	public function agenda($page = NULL)
+	public function search($type)
 	{
-		$this->load->model('agenda_model');
-		$this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();
+		$this->session->unset_userdata('search_homepages');
+		$this->_data['search'] = $this->input->post() != NULL ? (object) $this->input->post() : '';
+		$this->session->set_userdata('search_homepages', $this->_data['search']);
+
+		if ($type === 'agenda') {
+			$this->agenda(TRUE);
+		}elseif ($type === 'regulasi') {
+			$this->regulation(TRUE);
+		}elseif ($type === 'news') {
+			$this->news(TRUE);
+		}else{
+			$this->session->unset_userdata('search_homepages');
+			$this->message('<strong>Gagal!</strong> Terjadi kesalahan pada sistem!', 'danger');
+			$this->go('homepage/index');
+		}
+	}
+
+	public function agenda($search_status = FALSE)
+	{
+		if($search_status == FALSE){
+			$this->session->unset_userdata('search_homepages');
+		}
 
 		$this->_view['css'] 	= 'agenda';
 		$this->_view['title'] 	= 'Agenda';
 		$this->_view['page'] 	= 'homepage/agenda';
+
+		$this->_data['search'] = $this->session->userdata('search_homepages');
+		
+		$this->load->model('agenda_model');
+		
+		$config['base_url'] = site_url('homepage/agenda');
+		$config['page_query_string'] = TRUE;
+		$config['query_string_segment'] = 'number';
+		$config['total_rows'] = $this->agenda_model->count_all($this->_data['search']);
+		$config['per_page'] = 3;
+		$config['uri_segment'] = 3;
+		$config['display_pages'] = FALSE;
+		$config['first_link'] = FALSE;
+		$config['last_link'] = FALSE;
+		$config['prev_link'] = '<li class="previous"><span aria-hidden="true">&larr; Lebih Baru</span></li>';
+		$config['next_link'] = '<li class="next"><span aria-hidden="true">Lebih Lama  &rarr;</span></li>';
+
+		$this->pagination->initialize($config);
+
+
+		$this->_data['agendas'] = $this->agenda_model->get_latest($config['per_page'], $this->input->get('number') != NULL ? $this->input->get('number') : 0, $this->_data['search']);
+		$this->_data['pagination'] = $this->pagination->create_links();
 		$this->init();		
 	}
 
-	public function regulation()
+	public function regulation($search_status = FALSE)
 	{
-		// $this->load->model('agenda_model');
-		// $this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();
+		if($search_status == FALSE){
+			$this->session->unset_userdata('search_homepages');
+		}
 
 		$this->_view['css'] 	= 'regulasi';
 		$this->_view['title'] 	= 'regulasi';
 		$this->_view['page'] 	= 'homepage/regulation';
-		$this->init();		
+
+		$this->_data['search'] = $this->session->userdata('search_homepages');
+		
+		$this->load->model('regulation_model');
+		
+		$config['base_url'] = site_url('homepage/regulation');
+		$config['page_query_string'] = TRUE;
+		$config['query_string_segment'] = 'number';
+		$config['total_rows'] = $this->regulation_model->count_data($this->_data['search']);
+		$config['per_page'] = 5;
+		$config['uri_segment'] = 3;
+		$config['display_pages'] = FALSE;
+		$config['first_link'] = FALSE;
+		$config['last_link'] = FALSE;
+		$config['prev_link'] = '<li class="previous"><span aria-hidden="true">&larr; Lebih Baru</span></li>';
+		$config['next_link'] = '<li class="next"><span aria-hidden="true">Lebih Lama  &rarr;</span></li>';
+
+		$this->pagination->initialize($config);
+
+
+		$this->_data['regulations'] = $this->regulation_model->fetch_data($config['per_page'], $this->input->get('number') != NULL ? $this->input->get('number') : 0, $this->_data['search']);
+		$this->_data['pagination'] = $this->pagination->create_links();
+		$this->init();	
 	}
 
-	public function news()
+	public function news($search_status = FALSE)
 	{
+		if($search_status == FALSE){
+			$this->session->unset_userdata('search_homepages');
+		}
+
 		$this->_view['css'] 	= 'news';
 		$this->_view['title'] 	= 'Berita';
 		$this->_view['page'] 	= 'homepage/news';
 		
+		$this->_data['search'] = $this->session->userdata('search_homepages');
+
 		$this->load->model('news_model');
 		
 		$config['base_url'] = site_url('homepage/news');
 		$config['page_query_string'] = TRUE;
 		$config['query_string_segment'] = 'number';
-		$config['total_rows'] = $this->news_model->count_latest_active_news();
+		$config['total_rows'] = $this->news_model->count_latest_active_news($this->_data['search']);
 		$config['per_page'] = 4;
 		$config['uri_segment'] = 3;
 		$config['display_pages'] = FALSE;
@@ -114,7 +185,7 @@ class Homepage extends MY_Controller
 
 		$this->pagination->initialize($config);
 
-		$this->_data['articles'] = $this->news_model->get_latest_active_news($config['per_page'], $this->input->get('number') != NULL ? $this->input->get('number') : 0);
+		$this->_data['articles'] = $this->news_model->get_latest_active_news($config['per_page'], $this->input->get('number') != NULL ? $this->input->get('number') : 0, $this->_data['search']);
 		$this->_data['pagination'] = $this->pagination->create_links();
 		$this->init();
 		

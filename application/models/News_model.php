@@ -38,20 +38,22 @@ class News_model extends MY_Model
         return $this->db->query("UPDATE news SET count = count+1 WHERE slug ='$slug'");
     }
 
-    public function count_latest_active_news()
+    public function count_latest_active_news($search)
     {
         $this->db->select('id');
         $this->db->where('type','active');
+        $this->search_homepage($search);
         $this->db->order_by('published_at','DESC');
         return $this->db->get($this->table)->num_rows();
     }
 
-    public function get_latest_active_news($limit, $start)
+    public function get_latest_active_news($limit, $start, $search)
     {
         $this->db->select('news.*, users.first_name, users.last_name');
         $this->db->join('users', 'users.id = news.created_by');
         $this->db->limit($limit, $start);
         $this->db->where('type','active');
+        $this->search_homepage($search);
         $this->order_by('published_at','DESC');
         $query = $this->db->get($this->table);
         if ($query->num_rows() > 0) {
@@ -176,4 +178,17 @@ class News_model extends MY_Model
           $this->db->like('name', $search->name);
       }
   }
+
+  private function search_homepage($search)
+  {
+    if (isset($search)) {
+        $col = $this->db->list_fields($this->table);
+        $i = 1;
+        foreach ($search as $val) {
+            if(!empty($val)){
+                $this->db->like($col[$i], $val);}
+                $i++;
+            }
+        }
+    }
 }

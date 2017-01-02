@@ -10,11 +10,17 @@
 <!-- Load jQuery UI -->
 <link rel="stylesheet" href="<?= base_url('assets/plugins/jquery-ui/jquery-ui.min.css') ?>">
 
-<!-- Load CUSTOM CSS -->
 <?php if (isset($_view['css']) && !empty($_view['css'])): ?>
-    <link rel="stylesheet" href="<?= base_url('assets/css/' . $_view['css'] . '.css') ?>">
+	<!-- Load CUSTOM CSS -->
+	<link rel="stylesheet" href="<?= base_url('assets/css/' . $_view['css'] . '.css') ?>">
 <?php endif; ?>
-<!-- Load CUSTOM CSS -->
+
 <?php if ($_view['page'] == 'gallery/photos/add'): ?>
-    <link rel="stylesheet" href="<?= base_url('assets/plugins/dropzone/dropzone.css') ?>">
+	<!-- Load CUSTOM CSS -->
+	<link rel="stylesheet" href="<?= base_url('assets/plugins/dropzone/dropzone.css') ?>">
+<?php endif; ?>
+
+<?php if ($_view['page'] == 'homepage/index'): ?>
+	<!-- Load CUSTOM CSS -->
+	<link rel="stylesheet" href="<?= base_url('assets/plugins/flexslider2/css/flexslider.css') ?>">
 <?php endif; ?>

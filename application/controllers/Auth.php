@@ -4,6 +4,12 @@ class Auth extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		$this->data['link_privileges'] = $this->_data['link_privileges'];
+
+		$this->data['news_total'] = $this->_data['news_total'];
+		$this->data['draft_total'] = $this->_data['draft_total'];
+		$this->data['archive_total'] = $this->_data['archive_total'];
+
 		$this->_accessable = TRUE;
 		$this->load->database();
 		$this->load->library(array('ion_auth', 'form_validation'));

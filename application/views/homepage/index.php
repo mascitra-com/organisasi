@@ -1,7 +1,36 @@
 <div class="container">
 	<div class="row section" id="jumbo">
-		<div class="col-xs-12 col-sm-12 col-md-8 green">
-			<div class="text-center"><h1>SLIDER</h1></div>
+		<div class="col-xs-12 col-sm-12 col-md-8 black">
+			<div class="text-center">
+				<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner" role="listbox">
+
+						<?php if(!empty($headlines)) {$no=1; foreach($headlines as $headline):?>
+							<div class="item <?=($no == 1) ? 'active' : ''?>">
+								<a href="<?=site_url('homepage/news_article/'. $headline->slug)?>">
+									<img src="<?=base_url('assets/img/news_img/'.check_image($headline->img_link,'./assets/img/news_img/','default-2.png'))?>"" alt="">
+								</a>
+								<div class="carousel-caption">
+									<h3><?=$headline->name?></h3>
+									<p><?= trim_article(strip_tags($headline->body), 120)?></p>
+								</div>
+							</div>
+							<?php $no++;?>
+						<?php endforeach; } ?>
+					</div>
+
+					<!-- Left and right controls -->
+					<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						<span class="sr-only">Next</span>
+					</a>
+				</div>
+			</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-4 white">
 			<div class="panel">
@@ -99,18 +128,18 @@
 					</div>
 					<table class="table table-striped table-hover">
 						<tbody>
-						<?php if(!empty($agendas)): foreach($agendas as $agenda):?>
-							<tr>
-								<td class="text-right">
-									<h3><?=date('d', strtotime($agenda->agenda_date))?></h3>
-									<h5><?=date('F', strtotime($agenda->agenda_date))?></h5>
-									<h5><?=date('Y', strtotime($agenda->agenda_date))?></h5>
-								</td>
-								<td>
-									<h4><?=$agenda->name?></h4>
-									<p><?=$agenda->body?></p>
-								</td>
-							</tr>
+							<?php if(!empty($agendas)): foreach($agendas as $agenda):?>
+								<tr>
+									<td class="text-right">
+										<h3><?=date('d', strtotime($agenda->agenda_date))?></h3>
+										<h5><?=date('F', strtotime($agenda->agenda_date))?></h5>
+										<h5><?=date('Y', strtotime($agenda->agenda_date))?></h5>
+									</td>
+									<td>
+										<h4><?=$agenda->name?></h4>
+										<p><?=$agenda->body?></p>
+									</td>
+								</tr>
 							<?php endforeach; endif;?>
 						</tbody>
 					</table>

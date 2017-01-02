@@ -11,12 +11,10 @@
 						<input type="text" class="form-control" id="name" name="name" placeholder="Judul berita" value="<?=$article->name?>" required minlength="3" maxlength="50">
 					</div>
 
-					<!-- <div class="form-group">
+					<div class="form-group">
 						<label for="published_at">Tanggal Publish</label>
-						<input type="date" class="form-control" name="published_at" placeholder="Tanggal Publish" id="published_at" required>
-					</div> -->
-
-					<input type="date" name="published_at" value="<?=($article->published_at)?>" min="<?=date('Y-m-d');?>">
+						<input type="date" class="form-control" name="published_at" value="<?= (isset($article->published_at)) ? $article->published_at : ''; ?>" min="<?=date('Y-m-d');?>" placeholder="Tanggal publish berita">
+					</div>
 
 					<div class="form-group">
 						<label for="">Gambar Thumbnail</label>

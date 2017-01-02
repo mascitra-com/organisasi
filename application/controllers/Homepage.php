@@ -30,7 +30,7 @@ class Homepage extends MY_Controller
 
 			$profile = $this->profile_model->where('slug',$slug)->as_object()->get();
 			if ($profile) {
-				$this->_view['css'] 	= 'news';
+				$this->_view['css'] 	= 'page';
 				$this->_view['title'] 	= $profile->headline;
 				$this->_view['page'] 	= 'homepage/page';
 				$this->_data['profile'] = $profile;
@@ -58,6 +58,7 @@ class Homepage extends MY_Controller
 		$this->_data['articles'] = $this->news_model->where('type','active')->order_by('name','asc')->as_object()->get_all();
 		$this->_data['latest_articles'] = $this->news_model->where('type','active')->order_by('published_at','desc')->limit(4)->as_object()->get_all();
 		$this->_data['popular_articles'] = $this->news_model->where('type','active')->order_by(array('count' => 'desc', 'published_at' => 'desc'	))->limit(4)->as_object()->get_all();
+		$this->_data['headlines'] = $this->news_model->where('status_headline', '1')->order_by('updated_at', 'desc')->as_object()->get_all();
 		
 		$this->load->model('agenda_model');
 		$this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();

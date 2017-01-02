@@ -181,14 +181,15 @@ class News_model extends MY_Model
 
   private function search_homepage($search)
   {
-    if (isset($search)) {
-        $col = $this->db->list_fields($this->table);
-        $i = 1;
-        foreach ($search as $val) {
-            if(!empty($val)){
-                $this->db->like($col[$i], $val);}
-                $i++;
-            }
-        }
+      if (isset($search)) {
+        if ($search->filter === "newest") {
+            $this->db->order_by('published_at','desc');
+        }elseif($search->filter === "oldest"){
+          $this->db->order_by('published_at','asc');
+      }else{
+        $this->db->order_by('count','desc');
     }
+    $this->db->like('name', $search->name);
+}
+}
 }

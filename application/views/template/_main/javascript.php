@@ -10,19 +10,24 @@
 <!-- Load CUSTOM JAVASCRIPT -->
 <?php if (isset($_view['js']) && !empty($_view['js'])): ?>
 
-    <!-- Load Tiny MCE -->
     <?php if (in_array($_view['js'], array('news', 'gallery', 'profile'))): ?>
+        <!-- Load Tiny MCE -->
         <script src="<?= base_url('assets/plugins/tinymce/tinymce.min.js') ?>"></script>
     <?php endif ?>
 
-    <!-- Load Chart.js -->
     <?php if (in_array($_view['js'], array('dashboard'))): ?>
+        <!-- Load Chart.js -->
         <script src="<?= base_url('assets/plugins/chartjs/chart.js') ?>"></script>
     <?php endif ?>
-	
-	<!-- Load Dropzone.js -->
+
     <?php if (in_array($_view['js'], array('gallery'))): ?>
+        <!-- Load Dropzone.js -->
         <script src="<?= base_url('assets/plugins/dropzone/dropzone.js') ?>"></script>
+    <?php endif ?>
+
+    <?php if ($_view['page'] == 'homepage/index'): ?>
+        <!-- Load Flexslider.js -->
+        <script src="<?= base_url('assets/plugins/flexslider2/js/flexslider.js') ?>"></script>
     <?php endif ?>
 
     <script src="<?= base_url('assets/js/' . $_view['js'] . '.js') ?>"></script>

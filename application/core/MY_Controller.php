@@ -24,12 +24,18 @@ class MY_Controller extends CI_Controller {
       $this->_privileges = array();
     }
     $this->_data['link_privileges'] = $this->_privileges;
+    $this->_data['is_admin'] = FALSE;
+    
+    if ($this->ion_auth->is_admin()) {
+      $this->_data['is_admin'] = TRUE;
+    }
+
   }
 
   public function _remap($method, $param = array()) {
     if (method_exists($this, $method)) {
      if ($this->ion_auth->logged_in() || $this->_accessable) {
-      if ($this->check_privileges(get_class($this), $method) || $this->_accessable) {
+      if ($this->check_privileges(get_class($this), $method) || $this->_accessable || $this->ion_auth->is_admin()) {
         return call_user_func_array(array($this, $method), $param);
       }else{
        die('anda tidak mempunyai hak akses untuk menu ini');

@@ -1,14 +1,24 @@
 <div class="container">
-	<div class="page-header">
-		<h1><i class="fa fa-newspaper-o"></i> Berita</h1>
-	</div>
-
-	<form class="" role="search" method="POST" action="<?=site_url('homepage/search/news')?>">
-		<div class="form-group">
-			<input type="text" class="form-control" placeholder="Cari judul berita" name="search">
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<span class="navbar-brand" style="padding-left: 10px;">Berita</span>
+			</div>
+			<form class="navbar-form navbar-right" role="search" method="POST" action="<?=site_url('homepage/search/news')?>">
+				<div class="form-group">
+					<select name="filter" class="form-control">
+						<option value="newest" <?= (isset($search->filter) && $search->filter === "newest") ? 'selected' : ''?>>Terbaru</option>
+						<option value="oldest" <?= (isset($search->filter) && $search->filter === "oldest") ? 'selected' : ''?>>Terlama</option>
+						<option value="popular" <?= (isset($search->filter) && $search->filter === "popular") ? 'selected' : ''?>>Terpopuler</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Cari judul berita" name="name" value="<?= isset($search->name) ?$search->name : '' ?>">
+				</div>
+				<button type="submit" class="btn btn-default">Cari</button>
+			</form>
 		</div>
-		<button type="submit" class="btn btn-default">Cari</button>
-	</form>
+	</div>
 
 	<?php if(is_array($articles)){ foreach ($articles as $article): ?>
 		<div class="row news-list">

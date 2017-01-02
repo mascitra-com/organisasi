@@ -17,8 +17,8 @@ html, body{
 }
 
 #jumbo{
-	height: 500px;
-	max-height: 500px;
+	height: 440px;
+	max-height: 440px;
 	overflow: hidden;
 }
 
@@ -46,6 +46,29 @@ html, body{
 
 #jumbo .panel table tr td:first-child{
 	padding: 0;
+}
+
+.carousel-inner{
+	height: 100%;
+}
+
+.carousel-inner>.item>a>img,
+.carousel-inner>.item>img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    filter: opacity(50%);
+}
+
+.carousel-caption{
+	text-align: left;
+	left:5%;
+	bottom: 15px;
+	padding-bottom: 10px;
+}
+
+.carousel-indicators{
+	top:20px;
 }
 
 #new-article,
@@ -182,13 +205,20 @@ html, body{
 	object-fit: cover;
 }
 
-@media (max-width: 768px) {
-}
+@media (max-width: 768px) {}
 
 @media (max-width: 991px) {
+	html,body{
+		padding: 0 10px;
+	}
+
 	#jumbo{
 		height: auto;
 		max-height: auto;
+	}
+
+	#jumbo > [class*=col-]:last-child{
+		display: none;
 	}
 }
 
@@ -214,4 +244,8 @@ html, body{
 
 .white{
 	background-color: #fff;
+}
+
+.black{
+	background-color: #333;
 }

@@ -5,51 +5,51 @@ class MY_Controller extends CI_Controller {
 	protected $_data; # atribut data
 	protected $_view; # atribut view
 	protected $_accessable; # atribut view
-    protected $_privileges;
+  protected $_privileges;
 
-    public function __construct() {
-      parent::__construct();
+  public function __construct() {
+    parent::__construct();
 
-      $this->load->helper('utility');
+    $this->load->helper('utility');
 
 		# Set atribut _data
-      $this->_data = array();
-      $this->load->model('news_model');
-      $this->_data['news_total'] = $this->news_model->where('type','active')->where('type','=','unactive',TRUE)->as_array()->count_rows();
-      $this->_data['draft_total'] = $this->news_model->where('type','draft')->as_array()->count_rows();
-      $this->_data['archive_total'] = $this->news_model->where('type','archive')->as_array()->count_rows();
+    $this->_data = array();
+    $this->load->model('news_model');
+    $this->_data['news_total'] = $this->news_model->where('type','active')->where('type','=','unactive',TRUE)->as_array()->count_rows();
+    $this->_data['draft_total'] = $this->news_model->where('type','draft')->as_array()->count_rows();
+    $this->_data['archive_total'] = $this->news_model->where('type','archive')->as_array()->count_rows();
 
-      $this->_privileges = $this->ion_auth->get_allowed_links();
-      if (empty($this->_privileges)) {
-        $this->_privileges = array();
+    $this->_privileges = $this->ion_auth->get_allowed_links();
+    if (empty($this->_privileges)) {
+      $this->_privileges = array();
     }
-        $this->_data['link_privileges'] = $this->_privileges;
-}
+    $this->_data['link_privileges'] = $this->_privileges;
+  }
 
-public function _remap($method, $param = array()) {
-  if (method_exists($this, $method)) {
-   if ($this->ion_auth->logged_in() || $this->_accessable) {
-    if ($this->check_privileges(get_class($this), $method) || $this->_accessable) {
+  public function _remap($method, $param = array()) {
+    if (method_exists($this, $method)) {
+     if ($this->ion_auth->logged_in() || $this->_accessable) {
+      if ($this->check_privileges(get_class($this), $method) || $this->_accessable) {
         return call_user_func_array(array($this, $method), $param);
-    }else{
-     die('anda tidak mempunyai hak akses untuk menu ini');
- }
-} else {
+      }else{
+       die('anda tidak mempunyai hak akses untuk menu ini');
+     }
+   } else {
     $this->go('auth');
-}
+  }
 } else {
-    show_404();
+  show_404();
 }
 }
 
 protected function check_privileges($class, $method){
 
-    foreach ($this->_privileges as $privilege) {
-        if (strtolower($class.'/'.$method) == strtolower($privilege)) {
-            return TRUE;
-        }
+  foreach ($this->_privileges as $privilege) {
+    if (strtolower($class.'/'.$method) == strtolower($privilege)) {
+      return TRUE;
     }
-    return TRUE;
+  }
+  return TRUE;
 }
 	/**
 	 * Berfungsi untuk mengeksekusi view
@@ -82,14 +82,14 @@ protected function check_privileges($class, $method){
      * @param $title - Field as reference for slug
      */
     protected function slug_config($table, $title){
-        $config = array(
-            'table' => $table,
-            'id' => 'id',
-            'field' => 'slug',
-            'title' => $title,
+      $config = array(
+        'table' => $table,
+        'id' => 'id',
+        'field' => 'slug',
+        'title' => $title,
             'replacement' => 'dash' // Either dash or underscore
             );
-        $this->slug->set_config($config);
+      $this->slug->set_config($config);
     }
 
     /**
@@ -99,11 +99,11 @@ protected function check_privileges($class, $method){
      */
     protected function might_make_errors($var)
     {
-        if ($var === NULL || $var === FALSE) {
-            $this->message('Terjadi Kesalahan Sistem', 'danger');
-            $this->go('photos');
+      if ($var === NULL || $var === FALSE) {
+        $this->message('Terjadi Kesalahan Sistem', 'danger');
+        $this->go('photos');
 
-        }
+      }
     }
 
     /**
@@ -113,11 +113,11 @@ protected function check_privileges($class, $method){
      */
     protected function is_worked($condition = FALSE, $status = 'membuat', $type = 'Foto')
     {
-        if ($condition) {
-            $this->message('<strong>Berhasil</strong> '.$status.' '.$type, 'success');
-        } else {
-            $this->message('<strong>Gagal</strong> '.$status.' '.$type, 'danger');
-        }
+      if ($condition) {
+        $this->message('<strong>Berhasil</strong> '.$status.' '.$type, 'success');
+      } else {
+        $this->message('<strong>Gagal</strong> '.$status.' '.$type, 'danger');
+      }
     }
 
     /**
@@ -127,24 +127,24 @@ protected function check_privileges($class, $method){
      */
     protected function config_for_bootstrap_pagination($config)
     {
-        $config['full_tag_open'] = '<ul class="pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_link'] = $this->lang->line('pagination_first_link');
-        $config['last_link'] = $this->lang->line('pagination_last_link');
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_link'] = $this->lang->line('pagination_prev_link');
-        $config['prev_tag_open'] = '<li class="prev">';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_link'] = $this->lang->line('pagination_next_link');
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="active"><a href="#">';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-        return $config;
+      $config['full_tag_open'] = '<ul class="pagination">';
+      $config['full_tag_close'] = '</ul>';
+      $config['first_link'] = $this->lang->line('pagination_first_link');
+      $config['last_link'] = $this->lang->line('pagination_last_link');
+      $config['first_tag_open'] = '<li>';
+      $config['first_tag_close'] = '</li>';
+      $config['prev_link'] = $this->lang->line('pagination_prev_link');
+      $config['prev_tag_open'] = '<li class="prev">';
+      $config['prev_tag_close'] = '</li>';
+      $config['next_link'] = $this->lang->line('pagination_next_link');
+      $config['next_tag_open'] = '<li>';
+      $config['next_tag_close'] = '</li>';
+      $config['last_tag_open'] = '<li>';
+      $config['last_tag_close'] = '</li>';
+      $config['cur_tag_open'] = '<li class="active"><a href="#">';
+      $config['cur_tag_close'] = '</a></li>';
+      $config['num_tag_open'] = '<li>';
+      $config['num_tag_close'] = '</li>';
+      return $config;
     }
-}
+  }

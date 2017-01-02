@@ -24,6 +24,11 @@ class Dashboard extends MY_Controller
         $this->_data['totphotos'] = $this->gallery_model->count_rows(array('type_id' => 1));
         $this->_data['totvideos'] = $this->gallery_model->count_rows(array('type_id' => 2));
         // dump($this->visitor_monthly());
+
+        //Berita populer
+        $this->load->model('news_model');
+        $this->_data['popular_articles'] = $this->news_model->where('type','active')->order_by(array('count' => 'desc', 'published_at' => 'desc'    ))->limit(3)->as_object()->get_all();
+
         $this->init();
     }
 

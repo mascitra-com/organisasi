@@ -297,4 +297,20 @@ class Homepage extends MY_Controller
 		}
 		return $banners;
 	}
+
+	public function gallery()
+	{
+		$this->_view['css'] 	= 'gallery';
+		$this->_view['title'] 	= 'galery';
+		$this->_view['page'] 	= 'homepage/gallery';
+		$this->init();
+	}
+
+	public function videos()
+	{
+		$this->_view['css'] 	= 'gallery';
+		$this->_view['title'] 	= 'galery';
+		$this->_view['page'] 	= 'homepage/videos';
+		$this->init();
+	}
 }

@@ -28,10 +28,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Galeri <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Galeri Foto</a></li>
+            <li><a href="<?=site_url('homepage/gallery')?>">Galeri Foto</a></li>
             <li><a href="#">Galeri Video</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Buku Tamu</a></li>
           </ul>
         </li>
         <li><a href="<?=site_url('homepage/regulation')?>">Regulasi</a></li>

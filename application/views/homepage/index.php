@@ -74,6 +74,13 @@
 			</div>
 		<?php endforeach; } else{ echo "Tidak ada berita"; }?>
 	</div>
+	<!-- BANNER FULL -->
+	<div class="row section" id="banner-full">
+		<div class="col-md-12">
+			<img src="<?=$banners[0]?>" alt="banner">
+		</div>
+	</div>
+	<!-- NEWS -->
 	<div class="row section" id="news">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
@@ -160,11 +167,6 @@
 				<h4>Sosisal media</h4>
 			</div>
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate possimus ratione voluptatibus deserunt libero est odio dignissimos repellendus, in fugiat!</p>
-		</div>
-	</div>
-	<div class="row section" id="banner-full">
-		<div class="col-md-12">
-			<img src="<?=$banners[0]?>" alt="banner">
 		</div>
 	</div>
 	<div class="row section" id="banner-half">

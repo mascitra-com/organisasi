@@ -49,7 +49,7 @@ protected function check_privileges($class, $method){
       return TRUE;
     }
   }
-  return TRUE;
+  return FALSE;
 }
 	/**
 	 * Berfungsi untuk mengeksekusi view

@@ -13,7 +13,6 @@ class Auth extends MY_Controller {
 		$this->_view['template'] = 'template/dashboard/index'; # Set template location
 		$this->_view['css'] = 'auth'; # Set CSS
 		$this->lang->load('auth');
-		
 	}
 
 	// redirect if needed, otherwise display the user list

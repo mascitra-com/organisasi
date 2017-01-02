@@ -23,7 +23,8 @@ img{
 
 .navbar{
 	padding: 10px 10px;
-	background-color: #FFF;
+	background-color: rgba(21, 157, 130, .8);
+	border: none;
 }
 
 .navbar .navbar-brand{
@@ -31,7 +32,7 @@ img{
 	font-family: 'Montserrat', 'sans-serif';
 	font-weight: 700;
 	padding-left: 75px;
-	color: #1abc9c;
+	color: #FFF;
 }
 
 .navbar ul.navbar-right{
@@ -45,16 +46,29 @@ img{
 }
 
 .navbar ul.nav li a{
-	color: #212121;
+	color: #FFF;
 }
 
 .navbar ul.nav li a:hover{
-	color: red;
+	color: yellow;
+}
+
+.navbar ul.nav li.active a{
+	background-color: #FFF;
 }
 
 .navbar ul.nav li .navbar-btn{
 	margin-left: 10px;
 	margin-right: 10px;
+}
+
+.navbar ul.nav li .dropdown-menu{
+	background-color: rgba(21, 157, 130, .9);
+}
+
+.navbar ul.nav li .dropdown-menu li a:hover{
+	background-color: inherit;
+	color: yellow;
 }
 
 .footer{

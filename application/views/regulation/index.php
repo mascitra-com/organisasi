@@ -27,7 +27,7 @@
 							<td><?= (strlen($regulation->body) > 100) ? substr($regulation->body, 0, 100).'...' :  $regulation->body ?></td>
 							<td class="text-center"><?= mdate('%d-%m-%Y', strtotime(str_replace('-', '/', $regulation->issued_at))); ?></td>
 							<td class="text-center"><?=$regulation->issued_by?></td>
-							<td class="text-center"><a href="<?=$regulation->link?>" class="btn btn-default btn-sm" download><i class="fa fa-file-word-o"></i></a></td>
+							<td class="text-center"><a href="<?=str_replace(str_replace("\\",'/',FCPATH), base_url(), $regulation->link)?>" class="btn btn-default btn-sm" download><i class="fa fa-file-word-o"></i></a></td>
 							<td class="text-center text-nowrap">
 								<a href="<?=site_url('regulation/edit?id='.$regulation->id)?>" class="btn btn-default btn-sm"><i class="fa fa-info"></i></a>
 								<a href="<?=site_url('regulation/destroy?id='.$regulation->id)?>" class="btn btn-default btn-sm" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>

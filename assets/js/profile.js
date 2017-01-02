@@ -1,3 +1,3 @@
 $(document).ready(function () {
-    tinymce.init({selector: '.tinymce'});
+	tinymce.init({selector: '.tinymce'});
 });

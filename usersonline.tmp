@@ -1,1 +1,1 @@
-a:5:{s:9:"memonline";i:0;s:10:"totalvisit";i:0;s:10:"useronline";a:1:{s:9:"127.0.0.1";a:4:{s:4:"time";i:1483160546;s:3:"uri";s:31:"/organisasi/index.php/dashboard";s:8:"identity";N;s:3:"bot";b:0;}}s:11:"guestonline";i:1;s:11:"last_update";i:1481923086;}
+a:4:{s:9:"memonline";i:1;s:10:"totalvisit";i:99;s:10:"useronline";a:1:{s:12:"192.168.1.20";a:4:{s:4:"time";i:1483351963;s:3:"uri";s:32:"/organisasi/index.php/regulation";s:8:"identity";s:15:"admin@admin.com";s:3:"bot";b:0;}}s:11:"guestonline";i:0;}

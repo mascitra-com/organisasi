@@ -17,7 +17,7 @@ class Menu extends MY_Controller {
 	public function index() {
 		$this->_view['title'] = 'Menu';
 		$this->_view['page'] = 'Menu/index';
-		$this->_data['menus'] = $this->menu_model->get_all();
+		$this->_data['menus'] = $this->menu_model->order_by('link', 'asc')->get_all();
 		$this->init();
 	}
 

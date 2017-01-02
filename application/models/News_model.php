@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class News_model extends MY_Model
 {
 	public $primary_key = 'id';
-    public $fillable = array('name','body','slug','img_name','img_link','type','published_at','status_headline');
+    public $fillable = array('name','body','slug','img_name','img_link','type','published_at','status_headline','count');
     public $protected = array('id');
 
     public $rules = array(
@@ -17,13 +17,13 @@ class News_model extends MY_Model
     		'name' => array(
     			'field' => 'name',
     			'label' => 'Judul',
-    			'rules' => 'trim|required|min_length[3]|max_length[100]'),
+    			'rules' => 'trim|required|min_length[3]|max_length[50]'),
     		),
     	'update' => array(
     		'name' => array(
     			'field' => 'name',
     			'label' => 'Judul',
-    			'rules' => 'trim|required|min_length[3]|max_length[100]'),
+    			'rules' => 'trim|required|min_length[3]|max_length[50]'),
     		)
     	);
 
@@ -31,6 +31,38 @@ class News_model extends MY_Model
     {
         $this->has_one['user'] = array('user_model', 'id', 'created_by');
         parent::__construct();
+    }
+
+    public function counter($slug)
+    {
+        return $this->db->query("UPDATE news SET count = count+1 WHERE slug ='$slug'");
+    }
+
+    public function count_latest_active_news($search)
+    {
+        $this->db->select('id');
+        $this->db->where('type','active');
+        $this->search_homepage($search);
+        $this->db->order_by('published_at','DESC');
+        return $this->db->get($this->table)->num_rows();
+    }
+
+    public function get_latest_active_news($limit, $start, $search)
+    {
+        $this->db->select('news.*, users.first_name, users.last_name');
+        $this->db->join('users', 'users.id = news.created_by');
+        $this->db->limit($limit, $start);
+        $this->db->where('type','active');
+        $this->search_homepage($search);
+        $this->order_by('published_at','DESC');
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Tidak ada berita';
     }
 
     public function fetch_data_index($limit, $start, $search)
@@ -146,4 +178,18 @@ class News_model extends MY_Model
           $this->db->like('name', $search->name);
       }
   }
+
+  private function search_homepage($search)
+  {
+      if (isset($search)) {
+        if ($search->filter === "newest") {
+            $this->db->order_by('published_at','desc');
+        }elseif($search->filter === "oldest"){
+          $this->db->order_by('published_at','asc');
+      }else{
+        $this->db->order_by('count','desc');
+    }
+    $this->db->like('name', $search->name);
+}
+}
 }

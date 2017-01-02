@@ -8,168 +8,172 @@
  * @author Leonardo Monteiro Bersan de Araujo
  * @link hhttp://codeigniter.com/wiki/Library: Online_Users
  */
-class Online_users
-{
-    public $file = "usersonline.tmp";
-    public $data;
-    public $ip;
+class Online_users {
+	public $file = "usersonline.tmp";
+	public $data;
+	public $ip;
 
-    function __construct()
-    {
-        $this->ip = $_SERVER['REMOTE_ADDR'];
-        $this->data = @unserialize(file_get_contents($this->file));
-        $aryData = $this->data['useronline'];
-        $total_visit = $this->data['totalvisit'];
-        $last_update = $this->data['last_update'];
-        $timeout = time() - 120;
+	function __construct() {
+		$this->ip = $_SERVER['REMOTE_ADDR'];
+		$this->data = @unserialize(file_get_contents($this->file));
+		$aryData = $this->data['useronline'];
+		$total_visit = $this->data['totalvisit'];
+		$last_update = $this->data['last_update'] != NULL ? $this->data['last_update'] : '';
+		$timeout = time() - 120;
 
-        //Removes expired data
-        if (!empty($aryData)) {
-            foreach ($aryData as $key => $value) {
-                if ($value['time'] <= $timeout) {
-                    if ($value['identity']) {
-                        $this->data['memonline']--;
-                    } else $this->data['guestonline']--;
-                    unset($aryData[$key]);
-                }
-            }
-        }
+		//Removes expired data
+		if (!empty($aryData)) {
+			foreach ($aryData as $key => $value) {
+				if ($value['time'] <= $timeout) {
+					if ($value['identity']) {
+						$this->data['memonline']--;
+					} else {
+						$this->data['guestonline']--;
+					}
 
-        //If it’s the first hit, add the information to database
-        if (!isset($aryData[$this->ip])) {
-            $CI =& get_instance();
-            $aryData[$this->ip]['time'] = time();
-            $aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
+					unset($aryData[$key]);
+				}
+			}
+		}
 
-            $identity = $CI->session->userdata('identity');
-            $aryData[$this->ip]['identity'] = $identity;
+		//If it’s the first hit, add the information to database
+		if (!isset($aryData[$this->ip])) {
+			$CI = &get_instance();
+			$aryData[$this->ip]['time'] = time();
+			$aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
 
-            if ($identity) {
-                $this->data['memonline']++;
-            } else {
-                $this->data['guestonline']++;
-            }
-            if($this->data['totalvisit'] = $this->visitor_monthly($last_update)){
-                $this->data['last_update'] = time();
-            }
+			$identity = $CI->session->userdata('identity');
+			$aryData[$this->ip]['identity'] = $identity;
 
-            //Loads the USER_AGENT class if it’s not loaded yet
-            if (!isset($CI->agent)) {
-                $CI->load->library('user_agent');
-                $class_loaded = true;
-            }
-            if ($CI->agent->is_robot()) $aryData[$this->ip]['bot'] = $CI->agent->robot(); else $aryData[$this->ip]['bot'] = false;
+			if ($identity) {
+				$this->data['memonline']++;
+			} else {
+				$this->data['guestonline']++;
+			}
+			if ($this->data['totalvisit'] = $this->visitor_monthly($last_update)) {
+				$this->data['last_update'] = time();
+			}
 
-            //Destroys the USER_AGENT class so it can be loaded again on the controller
-            if ($class_loaded) unset($class_loaded, $CI->agent);
-        } else {
-            $aryData[$this->ip]['time'] = time();
-            $aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
-            if($this->visitor_monthly($last_update)){
-                $this->data['totalvisit'] = 0;
-                $this->data['last_update'] = time();
-            }
-        }
+			//Loads the USER_AGENT class if it’s not loaded yet
+			if (!isset($CI->agent)) {
+				$CI->load->library('user_agent');
+				$class_loaded = true;
+			}
+			if ($CI->agent->is_robot()) {
+				$aryData[$this->ip]['bot'] = $CI->agent->robot();
+			} else {
+				$aryData[$this->ip]['bot'] = false;
+			}
 
-        $this->data['useronline'] = $aryData;
-        $this->_save();
-    }
+			//Destroys the USER_AGENT class so it can be loaded again on the controller
+			if ($class_loaded) {
+				unset($class_loaded, $CI->agent);
+			}
 
-    //this function return the total number of online users
-    function _save()
-    {
-        $fp = fopen($this->file, 'w');
-        flock($fp, LOCK_EX);
-        $write = fwrite($fp, serialize($this->data));
-        fclose($fp);
-        return $write;
-    }
+		} else {
+			$aryData[$this->ip]['time'] = time();
+			$aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
+			if ($this->visitor_monthly($last_update)) {
+				$this->data['totalvisit'] = 0;
+				$this->data['last_update'] = time();
+			}
+		}
 
-    //this function return the total number of online members
-    function total_users()
-    {
-        return count($this->data['useronline']);
-    }
+		$this->data['useronline'] = $aryData;
+		$this->_save();
+	}
 
-    //this function return the total number of online guest
-    function total_mems()
-    {
-        return @$this->data['memonline'];
-    }
+	//this function return the total number of online users
+	function _save() {
+		$fp = fopen($this->file, 'w');
+		flock($fp, LOCK_EX);
+		$write = fwrite($fp, serialize($this->data));
+		fclose($fp);
+		return $write;
+	}
 
-    //this function return the total number of total visit
-    function total_guests()
-    {
-        return @$this->data['guestonline'];
-    }
+	//this function return the total number of online members
+	function total_users() {
+		return count($this->data['useronline']);
+	}
 
-    //this function return the total number of online robots
-    function total_visit()
-    {
-        return @$this->data['totalvisit'];
-    }
+	//this function return the total number of online guest
+	function total_mems() {
+		return @$this->data['memonline'];
+	}
 
-    //Used to set custom data
-    function total_robots()
-    {
-        $i = 0;
-        foreach ($this->data as $value) {
-            if ($value['is_robot']) $i++;
-        }
-        return $i;
-    }
+	//this function return the total number of total visit
+	function total_guests() {
+		return @$this->data['guestonline'];
+	}
 
-    function set_data($data = false, $force_update = false)
-    {
-        if (!is_array($data)) {
-            return false;
-        }
+	//this function return the total number of online robots
+	function total_visit() {
+		return @$this->data['totalvisit'];
+	}
 
-        $tmp = false; //Used to control if there are changes
+	//Used to set custom data
+	function total_robots() {
+		$i = 0;
+		foreach ($this->data as $value) {
+			if ($value['is_robot']) {
+				$i++;
+			}
 
-        foreach ($data as $key => $value) {
-            if (!isset($aryData[$this->ip]['useronline'][$key]) || $force_update) {
-                $aryData[$this->ip]['useronline'][$key] = $value;
-                $tmp = true;
-            }
-        }
+		}
+		return $i;
+	}
 
-        //Check if the user’s already have this setting and skips the wiriting file process (saves CPU)
-        if (!$tmp) return false;
-        $this->data['useronline'] = $aryData;
-        return $this->_save();
-    }
+	function set_data($data = false, $force_update = false) {
+		if (!is_array($data)) {
+			return false;
+		}
 
-    //Save current data into file
-    function get_info()
-    {
-        if (@$this->data) {
-            return @$this->data;
-        }
-    }
+		$tmp = false; //Used to control if there are changes
 
-    //Return uri visitor now visit
-    function page_visit()
-    {
-        $this->online_users->get_info()['useronline']["$_SERVER[REMOTE_ADDR]"]['uri'];
-    }
+		foreach ($data as $key => $value) {
+			if (!isset($aryData[$this->ip]['useronline'][$key]) || $force_update) {
+				$aryData[$this->ip]['useronline'][$key] = $value;
+				$tmp = true;
+			}
+		}
 
-    function visitor_monthly($last_update)
-    {
-        $d = new DateTime('first day of this month');
-        $the_first = date_timestamp_get($d);
-        $day_last_month = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
-        $total_visitor = $this->total_visit();
-        $data['date'] = time()-($day_last_month*24*3600);
-        $data['total_visitor'] = $total_visitor;
-        // If today is the 1st
-        if ($the_first < $last_update) {
-            // Store total visit to database
-            return 0;
-        } else {
-            // else add total visit by 1
-            return $total_visitor++;
-        }
-    }
+		//Check if the user’s already have this setting and skips the wiriting file process (saves CPU)
+		if (!$tmp) {
+			return false;
+		}
+
+		$this->data['useronline'] = $aryData;
+		return $this->_save();
+	}
+
+	//Save current data into file
+	function get_info() {
+		if (@$this->data) {
+			return @$this->data;
+		}
+	}
+
+	//Return uri visitor now visit
+	function page_visit() {
+		$this->online_users->get_info()['useronline']["$_SERVER[REMOTE_ADDR]"]['uri'];
+	}
+
+	function visitor_monthly($last_update) {
+		$d = new DateTime('first day of this month');
+		$the_first = date_timestamp_get($d);
+		$day_last_month = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
+		$total_visitor = $this->total_visit();
+		$data['date'] = time() - ($day_last_month * 24 * 3600);
+		$data['total_visitor'] = $total_visitor;
+		// If today is the 1st
+		if ($the_first < $last_update) {
+			// Store total visit to database
+			return 0;
+		} else {
+			// else add total visit by 1
+			return $total_visitor++;
+		}
+	}
 
 }

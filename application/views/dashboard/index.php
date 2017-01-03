@@ -64,7 +64,7 @@
 						<tr>
 							<td class="text-center"><i class="fa fa-users"></i></td>
 							<td class="text-left">Total Pengunjung</td>
-							<td class="text-right"><label><?=$visitors['totalvisit']?></label></td>
+							<td class="text-right"><label><?=$totalvisitor?></label></td>
 						</tr>
 						<tr>
 							<td class="text-center"><i class="fa fa-newspaper-o"></i></td>
@@ -107,3 +107,6 @@
 		</div>
 	</div>
 </div>
+<script>
+    var graph = <?=$graph?>;
+</script>

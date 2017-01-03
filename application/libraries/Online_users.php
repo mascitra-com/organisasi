@@ -20,7 +20,7 @@ class Online_users {
 		$total_visit = $this->data['totalvisit'];
 		$last_update = $this->data['last_update'] != NULL ? $this->data['last_update'] : '';
 		$timeout = time() - 120;
-
+        $CI =& get_instance();
 		//Removes expired data
 		if (!empty($aryData)) {
 			foreach ($aryData as $key => $value) {
@@ -30,7 +30,6 @@ class Online_users {
 					} else {
 						$this->data['guestonline']--;
 					}
-
 					unset($aryData[$key]);
 				}
 			}
@@ -38,7 +37,6 @@ class Online_users {
 
 		//If it’s the first hit, add the information to database
 		if (!isset($aryData[$this->ip])) {
-			$CI = &get_instance();
 			$aryData[$this->ip]['time'] = time();
 			$aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
 
@@ -73,14 +71,12 @@ class Online_users {
 		} else {
 			$aryData[$this->ip]['time'] = time();
 			$aryData[$this->ip]['uri'] = $_SERVER['REQUEST_URI'];
-			if ($this->visitor_monthly($last_update)) {
-				$this->data['totalvisit'] = 0;
+			if (!$this->data['totalvisit'] = $this->visitor_monthly($last_update)) {
 				$this->data['last_update'] = time();
-			}
-		}
-
-		$this->data['useronline'] = $aryData;
-		$this->_save();
+            }
+        }
+        $this->data['useronline'] = $aryData;
+        $this->_save();
 	}
 
 	//this function return the total number of online users
@@ -162,16 +158,22 @@ class Online_users {
 	function visitor_monthly($last_update) {
 		$d = new DateTime('first day of this month');
 		$the_first = date_timestamp_get($d);
-		$day_last_month = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
-		$total_visitor = $this->total_visit();
-		$data['date'] = time() - ($day_last_month * 24 * 3600);
-		$data['total_visitor'] = $total_visitor;
-		// If today is the 1st
-		if ($the_first < $last_update) {
+        // If today is the 1st
+        $total_visitor = $this->total_visit();
+        if ($last_update < $the_first) {
+            $day_last_month = cal_days_in_month(CAL_GREGORIAN, date('n'), date('Y'));
+            $last_month = time() - ($day_last_month * 24 * 3600);
+            $data['month'] = date('F', $last_month);
+            $data['year'] = date('Y', $last_month);
+            $data['total'] = $total_visitor;
 			// Store total visit to database
-			return 0;
+            $CI =& get_instance();
+            $CI->load->model('visitor_model');
+            $CI->visitor_model->insert($data);
+            return 0;
 		} else {
 			// else add total visit by 1
+            $total_visitor = $this->total_visit();
 			return $total_visitor++;
 		}
 	}

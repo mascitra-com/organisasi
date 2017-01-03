@@ -1,9 +1,9 @@
 var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: graph.label,
     datasets: [
         {
             label: "Jumlah Pegunjung",
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: graph.total,
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(75,192,192,0.4)",

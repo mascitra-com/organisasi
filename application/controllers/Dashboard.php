@@ -10,15 +10,17 @@ class Dashboard extends MY_Controller {
 		$this->_view['template'] = 'template/dashboard/index';
 		$this->_view['css'] = 'dashboard';
 		$this->_view['js'] = 'dashboard';
-		$this->load->model(array('news_model', 'gallery_model', 'agenda_model'));
+		$this->load->model(array('news_model', 'gallery_model', 'agenda_model', 'visitor_model'));
 	}
 
 	public function index() {
 		$this->_view['title'] = 'Halaman Dashboard';
 		$this->_view['page'] = 'dashboard/index';
 		$this->_data['visitors'] = $this->online_users->get_info();
-		$this->_data['totnews'] = $this->news_model->count_rows();
+        $this->_data['totalvisitor'] = (int) $this->visitor_model->total_visitor() + (int) $this->_data['visitors']['totalvisit'];
+        $this->_data['totnews'] = $this->news_model->count_rows();
 		$this->_data['totagenda'] = $this->agenda_model->count_rows();
+		$this->_data['graph'] = $this->graph_data();
 		$this->_data['totphotos'] = $this->gallery_model->count_rows(array('type_id' => 1));
 		$this->_data['totvideos'] = $this->gallery_model->count_rows(array('type_id' => 2));
 		// dump($this->visitor_monthly());
@@ -30,22 +32,18 @@ class Dashboard extends MY_Controller {
 		$this->init();
 	}
 
-	public function test() {
-		$user = $this->ion_auth->user()->row();
-		$logged_in_user_groups = $this->ion_auth->get_users_groups($user->id)->result();
+	private function graph_data(){
+	    $results = $this->visitor_model->limit(12)->get_all();
+	    $data['label'] = array();
+	    $data['total'] = array();
+	    foreach ($results as $result){
+	        array_push($data['label'], $result->month);
+	        array_push($data['total'], $result->total);
+        }
+        array_push($data['label'], date('F'));
+        array_push($data['total'], $this->online_users->get_info()['totalvisit']);
 
-		$groups_id = array();
-		for ($i = 0; $i < count($logged_in_user_groups); $i++) {
-			array_push($groups_id, $logged_in_user_groups[$i]->id);
-		}
+        return json_encode($data);
+    }
 
-		$links = $this->db->select('menus.link')->from('privileges')->join('menus', 'menus.id = privileges.id_menu')->where_in('privileges.id_groups', $groups_id)->order_by('link', 'asc')->distinct()->get()->result();
-
-		$allowed_links = array();
-
-		for ($i = 0; $i < count($links); $i++) {
-			array_push($allowed_links, $links[$i]->link);
-		}
-		dump($allowed_links);
-	}
 }

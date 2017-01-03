@@ -131,9 +131,9 @@ class Photos extends MY_Controller
         }
     }
 
-    public function show($slug = NULL)
+    public function show()
     {
-        $this->_data['slug'] = $slug;
+        $this->_data['slug'] = $this->input->get('id');
         $this->input_get_for_pagination(8);
         $this->might_make_errors($this->_data['galleries'] = $this->category_model->get(array('slug' => $this->_data['slug'])));
         $this->_data['per_page_name'] = 'Foto';

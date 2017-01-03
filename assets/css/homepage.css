@@ -172,19 +172,6 @@ html, body{
 	overflow-y: scroll;
 }
 
-#banner-full,
-#banner-full [class*=col-],
-#banner-half,
-#banner-half [class*=col-]{
-	padding: 0;
-}
-
-#banner-full img{
-	width: 100%;
-	/*height: 270px;*/
-	object-fit: cover;
-}
-
 #banner-half img{
 	width: 100%;
 	height: 200px;

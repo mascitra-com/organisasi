@@ -25,11 +25,6 @@
         <script src="<?= base_url('assets/plugins/dropzone/dropzone.js') ?>"></script>
     <?php endif ?>
 
-    <?php if ($_view['page'] == 'homepage/index'): ?>
-        <!-- Load Flexslider.js -->
-        <script src="<?= base_url('assets/plugins/flexslider2/js/flexslider.js') ?>"></script>
-    <?php endif ?>
-
     <script src="<?= base_url('assets/js/' . $_view['js'] . '.js') ?>"></script>
 <?php endif; ?>
 

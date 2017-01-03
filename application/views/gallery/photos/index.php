@@ -33,9 +33,9 @@
                         <td><?= (strlen($gallery->name) > 50) ? substr($gallery->name, 0, 50).'...' :  $gallery->name ?></td>
                         <td><?= (strlen($gallery->description) > 200) ? substr($gallery->description, 0, 200).'...' :  $gallery->description?></td>
                         <td class="text-nowrap">
-                            <a href="<?= site_url('photos/show/') ?>" class="btn btn-default"><i class="fa fa-info-circle"></i></a>
-                            <a href="<?= site_url('photos/edit/') ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
-                            <a href="<?= site_url('photos/destroy/') ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
+                            <a href="<?= site_url('photos/show/'.$gallery->slug) ?>" class="btn btn-default"><i class="fa fa-info-circle"></i></a>
+                            <a href="<?= site_url('photos/edit/'.$gallery->slug) ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                            <a href="<?= site_url('photos/destroy/'.$gallery->slug) ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                 <?php endforeach; } else { echo '<td colspan="4">Tidak ditemukan Galeri Foto<td>'; } ?>

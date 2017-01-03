@@ -45,4 +45,10 @@
 			<?=$pagination?>
 		</ul>
 	</nav>
+	<!-- BANNER FULL -->
+	<div class="row section" id="banner-full">
+		<div class="col-md-12">
+			<img src="<?=$banners[0]?>" alt="banner">
+		</div>
+	</div>
 </div>

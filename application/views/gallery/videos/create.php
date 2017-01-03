@@ -39,7 +39,7 @@
             </div>
             <?php endif; ?><br/>
             <label for="">Deskripsi</label>
-            <textarea name="description" class="form-control tinymce"
+            <textarea name="description" class="form-control"
                       rows="5"><?= isset($data->description) ? $data->description : '' ?></textarea><br>
             <a class="btn btn-default" href="<?=site_url('videos')?>">Kembali</a>
             <button class="btn btn-primary" type="submit">Simpan</button>

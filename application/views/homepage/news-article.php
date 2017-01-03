@@ -18,7 +18,7 @@
 	<div class="row" id='popular'>
 		<?php if(!empty($popular_articles)){ foreach($popular_articles as $article):?>
 			<div class="col-sm-6 col-md-3">
-			<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
+				<a href="<?=site_url('homepage/news_article/'.$article->slug)?>">
 					<div class="thumbnail">
 						<img class="img-fit" src="<?=base_url('assets/img/news_img/'.check_image($article->img_link,'./assets/img/news_img/','default-2.png'))?>" alt="thumbnail" width="100%" height="100px">
 						<div class="caption">
@@ -28,5 +28,11 @@
 				</a>
 			</div>
 		<?php endforeach; } else{ echo "Tidak ada berita"; }?>
+	</div>
+	<!-- BANNER FULL -->
+	<div class="row section" id="banner-full">
+		<div class="col-md-12">
+			<img src="<?=$banners[0]?>" alt="banner">
+		</div>
 	</div>
 </div>

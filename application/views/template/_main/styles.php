@@ -19,8 +19,3 @@
 	<!-- Load CUSTOM CSS -->
 	<link rel="stylesheet" href="<?= base_url('assets/plugins/dropzone/dropzone.css') ?>">
 <?php endif; ?>
-
-<?php if ($_view['page'] == 'homepage/index'): ?>
-	<!-- Load CUSTOM CSS -->
-	<link rel="stylesheet" href="<?= base_url('assets/plugins/flexslider2/css/flexslider.css') ?>">
-<?php endif; ?>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 03 Jan 2017 pada 10.35
+-- Generation Time: 03 Jan 2017 pada 11.54
 -- Versi Server: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -47,6 +47,26 @@ INSERT INTO `agendas` (`id`, `name`, `body`, `agenda_date`, `created_at`, `creat
 (1, 'New Agenda edit', 'edit content', '2016-12-07 17:00:00', '2016-12-08 03:15:11', 1, '2016-12-09 01:52:48', 1, NULL, NULL),
 (2, 'Ini agenda', 'Ini isi Agenda', '2016-12-08 17:00:00', '2016-12-09 01:41:02', 1, NULL, NULL, NULL, NULL),
 (3, 'test', 'test again', '2016-12-30 17:00:00', '2016-12-09 01:57:18', 1, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `body` text NOT NULL,
+  `expiration_date` date NOT NULL,
+  `priority` enum('0','1') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` int(11) NOT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_by` int(11) NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `deleted_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -124,7 +144,7 @@ CREATE TABLE `groups` (
 
 INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Dapat mengakses semua fitur'),
-(2, 'Moderator', 'Dapat mengakses fitur berita, profil, regulasi, galeri'),
+(2, 'Moderator', 'Dapat mengakses fitur berita, profil, regulasi, galeri, pengumuman'),
 (3, 'Analytics', 'Mengakses halaman dashboard'),
 (4, 'content-creator', 'Mengakses fitur berita, agenda, regulasi, galeri');
 
@@ -160,7 +180,7 @@ CREATE TABLE `infos` (
 --
 
 INSERT INTO `infos` (`no`, `website_name`, `acronym`, `description`, `office_address`, `phone`, `phone_alt`, `email`, `postal_code`, `facebook`, `twitter`, `logo_link`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 'Website Name', 'akrnim', 'des', 'al', '0', '1', 'andrehardika@gmail.com', '68118', 'BITS.UNEJ', 'BITS2015', 'http://127.0.0.1/organisasi/assets/img/website_logo/ew.jpg', '2016-12-26 23:03:50', 1, '2017-01-03 03:32:12', 1, NULL, 0);
+(1, 'Organisasi', 'Cemungut mas :*', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat aliquam pellentesque. Ut tristique blandit pharetra. Mauris rutrum magna eget nibh laoreet interdum. Proin id mauris sapien. Ut viverra sed urna sit amet maximus. Ut purus ipsum, ullamcorper pharetra leo vel, venenatis pretium felis. Donec nec augue non nibh congue ullamcorper ut semper est. Proin nec malesuada sapien.\r\n\r\nPraesent purus elit, maximus vitae fringilla quis, facilisis id dui. In cursus in dolor eu finibus. Ut placerat nisl in justo iaculis, et dignissim nulla vehicula. Nullam dolor nunc, vestibulum nec risus vel, venenatis feugiat velit. Nunc a purus dui. Pellentesque iaculis metus et augue tincidunt, at ullamcorper lacus euismod. Vivamus eget aliquet metus, non aliquet justo. Pellentesque ut porta erat.', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat aliquam pellentesque. Ut tristique blandit pharetra. Mauris rutrum magna eget nibh laoreet interdum. Proin id mauris sapien. Ut viverra sed urna sit amet maximus. Ut purus ipsum, ullamcorper pharetra leo vel, venenatis pretium felis. Donec nec augue non nibh congue ullamcorper ut semper est. Proin nec malesuada sapien.\r\n\r\nPraesent purus elit, maximus vitae fringilla quis, facilisis id dui. In cursus in dolor eu finibus. Ut placerat nisl in justo iaculis, et dignissim nulla vehicula. Nullam dolor nunc, vestibulum nec risus vel, venenatis feugiat velit. Nunc a purus dui. Pellentesque iaculis metus et augue tincidunt, at ullamcorper lacus euismod. Vivamus eget aliquet metus, non aliquet justo. Pellentesque ut porta erat.', '0', '1', 'andrehardika@gmail.com', '68118', 'BITS.UNEJ', 'BITS2015', 'http://127.0.0.1/organisasi/assets/img/website_logo/apple-touch-icon-72x72.png', '2016-12-26 23:03:50', 1, '2017-01-03 04:37:12', 1, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -213,7 +233,13 @@ INSERT INTO `menus` (`id`, `nama_menu`, `link`, `deskripsi_menu`, `created_at`, 
 (12, 'User Group', 'auth/groups', 'Mengakses halaman daftar grup pengguna', '2016-12-23 23:59:23', 2, NULL, NULL, NULL, NULL),
 (13, 'Menu', 'menu', 'Mengakses halaman daftar menu', '2016-12-23 23:59:40', 2, NULL, NULL, NULL, NULL),
 (14, 'Privilege', 'privilege', 'Mengakses halaman hak akses grup pengguna', '2016-12-24 00:00:44', 2, NULL, NULL, NULL, NULL),
-(15, 'Pengaturan', 'setting', 'Mengakses halaman pengaturan', '2016-12-24 00:01:22', 2, NULL, NULL, NULL, NULL);
+(15, 'Pengaturan', 'setting', 'Mengakses halaman pengaturan', '2016-12-24 00:01:22', 2, NULL, NULL, NULL, NULL),
+(16, 'Pengumuman', 'announcement/index', 'Pengumuman', '2017-01-03 03:54:13', 1, NULL, NULL, NULL, NULL),
+(17, 'Form tambah pengumuman', 'announcement/create', 'Form tambah pengumuman', '2017-01-03 04:29:45', 1, NULL, NULL, NULL, NULL),
+(18, 'Tambah pengumuman', 'announcement/store', 'Tambah pengumuman', '2017-01-03 04:30:03', 1, NULL, NULL, NULL, NULL),
+(19, 'Form Edit pengumuman', 'announcement/edit', 'Form edit pengumuman', '2017-01-03 04:30:21', 1, NULL, NULL, NULL, NULL),
+(20, 'Edit pengumuman', 'announcement/update', 'Edit pengumuman', '2017-01-03 04:30:46', 1, NULL, NULL, NULL, NULL),
+(21, 'Hapus pengumuman', 'announcement/destroy', 'Hapus pengumuman', '2017-01-03 04:31:14', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -313,7 +339,12 @@ INSERT INTO `privileges` (`no`, `id_groups`, `id_menu`, `created_at`, `created_b
 (33, 4, 8, '2016-12-27 03:03:59', 1, NULL, NULL, NULL, NULL),
 (34, 4, 9, '2016-12-27 03:04:01', 1, NULL, NULL, NULL, NULL),
 (35, 4, 10, '2016-12-27 03:04:02', 1, NULL, NULL, NULL, NULL),
-(36, 4, 1, '2016-12-28 05:11:38', 1, NULL, NULL, NULL, NULL);
+(36, 4, 1, '2016-12-28 05:11:38', 1, NULL, NULL, NULL, NULL),
+(37, 2, 17, '2017-01-03 04:31:50', 1, NULL, NULL, NULL, NULL),
+(38, 2, 18, '2017-01-03 04:31:50', 1, NULL, NULL, NULL, NULL),
+(39, 2, 19, '2017-01-03 04:31:51', 1, NULL, NULL, NULL, NULL),
+(40, 2, 20, '2017-01-03 04:31:52', 1, NULL, NULL, NULL, NULL),
+(41, 2, 21, '2017-01-03 04:31:53', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -407,7 +438,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', 'ee5ef828d84ebcb28fc5ff22c2b648932a596e9c', NULL, NULL, 'y2gkLeoLxmo7BNq2RR5BQ.', 1268889823, 1483435161, 1, 'Super', 'Admin', 'ADMIN', '0'),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', 'ee5ef828d84ebcb28fc5ff22c2b648932a596e9c', NULL, NULL, 'y2gkLeoLxmo7BNq2RR5BQ.', 1268889823, 1483438311, 1, 'Super', 'Admin', 'ADMIN', '0'),
 (2, '127.0.0.1', 'generaladmin@general.com', '$2y$08$dPbZyqErk9Gzcj4Jc6V6.OQPJPg8Q70hmSgWAkem6ANYLmi8cLvi2', NULL, 'generaladmin@general.com', NULL, NULL, NULL, NULL, 1482558339, 1482559063, 1, 'Moderator', 'test', 'mascitra', '1'),
 (3, '127.0.0.1', 'berita@berita.com', '$2y$08$2VYZvKs8g/z0Y5Bfm71rQOmxbYRMPWszg7wG6bZi1Fv054AIc1qD2', NULL, 'berita@berita.com', NULL, NULL, NULL, NULL, 1482558513, 1482861637, 1, 'Admin', 'Berita', 'berita', '2');
 
@@ -462,6 +493,12 @@ INSERT INTO `visitors` (`id`, `month`, `year`, `total`, `created_by`) VALUES
 -- Indexes for table `agendas`
 --
 ALTER TABLE `agendas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -559,6 +596,11 @@ ALTER TABLE `visitors`
 ALTER TABLE `agendas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
@@ -587,7 +629,7 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `news`
 --
@@ -597,7 +639,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT for table `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `profiles`
 --

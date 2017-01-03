@@ -67,14 +67,20 @@
 							<div class="form-group">
 								<label for="website_name">Facebook</label>
 								<?php echo form_error('facebook'); ?>
-								<input type="text" class="form-control" name="facebook" placeholder="nama username facebook" value="<?= (isset($info['facebook'])) ? $info['facebook'] : ''; ?>">
+								<div class="input-group">
+									<div class="input-group-addon">http://www.facebook.com/</div>
+									<input type="text" class="form-control" name="facebook" placeholder="nama username facebook" value="<?= (isset($info['facebook'])) ? $info['facebook'] : ''; ?>">
+								</div>
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-6">
 							<div class="form-group">
 								<label for="acronym">Twitter</label>
 								<?php echo form_error('twitter'); ?>
-								<input type="text" class="form-control" name="twitter" placeholder="nama username twitter" value="<?= (isset($info['twitter'])) ? $info['twitter'] : ''; ?>">
+								<div class="input-group">
+									<div class="input-group-addon">http://www.twitter.com/</div>
+									<input type="text" class="form-control" name="twitter" placeholder="nama username twitter" value="<?= (isset($info['twitter'])) ? $info['twitter'] : ''; ?>">
+								</div>
 							</div>
 						</div>
 					</div>

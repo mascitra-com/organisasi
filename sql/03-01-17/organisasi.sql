@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 02 Jan 2017 pada 11.29
--- Versi Server: 10.1.13-MariaDB
--- PHP Version: 7.0.8
+-- Generation Time: 03 Jan 2017 pada 10.35
+-- Versi Server: 10.1.10-MariaDB
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -74,9 +74,10 @@ CREATE TABLE `galleries` (
 --
 
 INSERT INTO `galleries` (`id`, `name`, `description`, `category_id`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`, `created_at`, `type_id`, `link`) VALUES
-(1, 'Lorem Ipsum', '', NULL, 1, NULL, NULL, NULL, NULL, '2016-12-28 03:23:13', 2, 'http://127.0.0.1/organisasi/assets/videos/video-28122016102313.mp4'),
-(2, 'Sketch.png', NULL, 2, 1, NULL, NULL, NULL, NULL, '2016-12-28 03:24:22', 1, 'http://127.0.0.1/organisasi/assets/photos/Sketch.png'),
-(3, 'cate_2.jpg', NULL, 2, 1, NULL, NULL, NULL, NULL, '2016-12-28 03:24:22', 1, 'http://127.0.0.1/organisasi/assets/photos/cate_2.jpg');
+(1, '13597790_325426314455556_543149465_n.jpg', NULL, 1, 1, NULL, NULL, NULL, NULL, '2017-01-03 00:30:07', 1, 'http://127.0.0.1/organisasi/assets/photos/13597790_325426314455556_543149465_n.jpg'),
+(2, '12341234_639836199489476_2609214437683738355_n.png', NULL, 1, 1, NULL, NULL, NULL, NULL, '2017-01-03 00:30:07', 1, 'http://127.0.0.1/organisasi/assets/photos/12341234_639836199489476_2609214437683738355_n.png'),
+(3, '774251_1121142544562915_3325271867756935543_o.jpg', NULL, 2, 1, NULL, NULL, NULL, NULL, '2017-01-03 00:30:24', 1, 'http://127.0.0.1/organisasi/assets/photos/774251_1121142544562915_3325271867756935543_o.jpg'),
+(4, 'Pelatihan', '<p><span xss=removed>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p>', NULL, 1, NULL, NULL, NULL, NULL, '2017-01-03 01:30:38', 2, 'https://www.youtube.com/embed/TUnylyz5mqQ');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,8 @@ CREATE TABLE `gallery_categories` (
 --
 
 INSERT INTO `gallery_categories` (`id`, `name`, `description`, `slug`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(2, 'Lorem', '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse explicabo laudantium similique. Alias animi aperiam cupiditate distinctio ducimus, expedita facere hic laboriosam laudantium, magni nesciunt officiis, quam quidem ratione veritatis.</p>', 'lorem', '2016-12-28 03:23:57', 1, NULL, NULL, NULL, NULL);
+(1, 'Workshop', '<p><span style="font-family: ''Open Sans'', Arial, sans-serif; font-size: 14px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p>', 'workshop', '2017-01-03 00:28:03', 1, NULL, NULL, NULL, NULL),
+(2, 'Seminar', '<p><span style="font-family: ''Open Sans'', Arial, sans-serif; font-size: 14px; text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p>', 'seminar', '2017-01-03 00:28:22', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -142,6 +144,8 @@ CREATE TABLE `infos` (
   `phone_alt` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `postal_code` varchar(20) NOT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `twitter` varchar(255) NOT NULL,
   `logo_link` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` int(11) NOT NULL,
@@ -155,8 +159,8 @@ CREATE TABLE `infos` (
 -- Dumping data untuk tabel `infos`
 --
 
-INSERT INTO `infos` (`no`, `website_name`, `acronym`, `description`, `office_address`, `phone`, `phone_alt`, `email`, `postal_code`, `logo_link`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 'Website Name', 'akrnim', 'des', 'al', '0', '1', 'andrehardika@gmail.com', '68118', 'http://127.0.0.1/organisasi/assets/img/website_logo/ew.jpg', '2016-12-26 23:03:50', 1, '2016-12-26 23:04:18', 1, NULL, 0);
+INSERT INTO `infos` (`no`, `website_name`, `acronym`, `description`, `office_address`, `phone`, `phone_alt`, `email`, `postal_code`, `facebook`, `twitter`, `logo_link`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
+(1, 'Website Name', 'akrnim', 'des', 'al', '0', '1', 'andrehardika@gmail.com', '68118', 'BITS.UNEJ', 'BITS2015', 'http://127.0.0.1/organisasi/assets/img/website_logo/ew.jpg', '2016-12-26 23:03:50', 1, '2017-01-03 03:32:12', 1, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -240,8 +244,8 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `name`, `body`, `slug`, `img_link`, `type`, `status_headline`, `count`, `published_at`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`) VALUES
-(1, 'News title for publishing', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliena dixit in physicis nec ea ipsa, quae tibi probarentur; Hoc loco tenere se Triarius non potuit. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Audeo dicere, inquit. Duo Reges: constructio interrete. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Non ego tecum iam ita iocabor, ut isdem his de rebus, cum L.</p>\r\n<p>Scripta sane et multa et polita, sed nescio quo pacto auctoritatem oratio non habet. Et quidem, Cato, hanc totam copiam iam Lucullo nostro notam esse oportebit; Quodcumque in mentem incideret, et quodcumque tamquam occurreret. Quamquam haec quidem praeposita recte et reiecta dicere licebit. Nos paucis ad haec additis finem faciamus aliquando; Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. Sextilio Rufo, cum is rem ad amicos ita deferret, se esse heredem Q. Ergo hoc quidem apparet, nos ad agendum esse natos. Quasi ego id curem, quid ille aiat aut neget.</p>\r\n<p>Omnes enim iucundum motum, quo sensus hilaretur. Sed plane dicit quod intellegit. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Si enim ad populum me vocas, eum. Primum in nostrane potestate est, quid meminerimus? Idem adhuc; Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. Quid ait Aristoteles reliquique Platonis alumni? Quis non odit sordidos, vanos, leves, futtiles? Bonum valitudo: miser morbus.</p>\r\n<p>Proclivi currit oratio. Ab hoc autem quaedam non melius quam veteres, quaedam omnino relicta. Mihi, inquam, qui te id ipsum rogavi? Atqui reperies, inquit, in hoc quidem pertinacem;</p>\r\n<p>&nbsp;</p>\r\n<p>Sit sane ista voluptas. Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudiandum. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ergo id est convenienter naturae vivere, a natura discedere. Certe non potest.&nbsp;</p>', 'news-title-for-publishing-1', '15101679_1834395266799449_3600192340859289600_n.jpg', 'active', '0', 21, '2016-12-28', '2016-12-27 23:54:18', 1, '2016-12-28 01:38:42', 1, NULL, NULL),
-(2, 'Another news title', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliena dixit in physicis nec ea ipsa, quae tibi probarentur; Hoc loco tenere se Triarius non potuit. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Audeo dicere, inquit. Duo Reges: constructio interrete. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Non ego tecum iam ita iocabor, ut isdem his de rebus, cum L.</p>\r\n<p>Scripta sane et multa et polita, sed nescio quo pacto auctoritatem oratio non habet. Et quidem, Cato, hanc totam copiam iam Lucullo nostro notam esse oportebit; Quodcumque in mentem incideret, et quodcumque tamquam occurreret. Quamquam haec quidem praeposita recte et reiecta dicere licebit. Nos paucis ad haec additis finem faciamus aliquando; Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. Sextilio Rufo, cum is rem ad amicos ita deferret, se esse heredem Q. Ergo hoc quidem apparet, nos ad agendum esse natos. Quasi ego id curem, quid ille aiat aut neget.</p>\r\n<p>Omnes enim iucundum motum, quo sensus hilaretur. Sed plane dicit quod intellegit. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Si enim ad populum me vocas, eum. Primum in nostrane potestate est, quid meminerimus? Idem adhuc; Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. Quid ait Aristoteles reliquique Platonis alumni? Quis non odit sordidos, vanos, leves, futtiles? Bonum valitudo: miser morbus.</p>\r\n<p>Proclivi currit oratio. Ab hoc autem quaedam non melius quam veteres, quaedam omnino relicta. Mihi, inquam, qui te id ipsum rogavi? Atqui reperies, inquit, in hoc quidem pertinacem;</p>\r\n<p>&nbsp;</p>\r\n<p>Sit sane ista voluptas. Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudiandum. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ergo id est convenienter naturae vivere, a natura discedere. Certe non potest.&nbsp;</p>', 'another-news-title', '13658511_981456238635880_1491093037_n2.jpg', 'active', '0', 2, '2016-12-30', '2016-12-27 23:54:44', 1, '2016-12-27 23:54:47', 1, NULL, NULL),
+(1, 'News title for publishing', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliena dixit in physicis nec ea ipsa, quae tibi probarentur; Hoc loco tenere se Triarius non potuit. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Audeo dicere, inquit. Duo Reges: constructio interrete. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Non ego tecum iam ita iocabor, ut isdem his de rebus, cum L.</p>\r\n<p>Scripta sane et multa et polita, sed nescio quo pacto auctoritatem oratio non habet. Et quidem, Cato, hanc totam copiam iam Lucullo nostro notam esse oportebit; Quodcumque in mentem incideret, et quodcumque tamquam occurreret. Quamquam haec quidem praeposita recte et reiecta dicere licebit. Nos paucis ad haec additis finem faciamus aliquando; Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. Sextilio Rufo, cum is rem ad amicos ita deferret, se esse heredem Q. Ergo hoc quidem apparet, nos ad agendum esse natos. Quasi ego id curem, quid ille aiat aut neget.</p>\r\n<p>Omnes enim iucundum motum, quo sensus hilaretur. Sed plane dicit quod intellegit. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Si enim ad populum me vocas, eum. Primum in nostrane potestate est, quid meminerimus? Idem adhuc; Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. Quid ait Aristoteles reliquique Platonis alumni? Quis non odit sordidos, vanos, leves, futtiles? Bonum valitudo: miser morbus.</p>\r\n<p>Proclivi currit oratio. Ab hoc autem quaedam non melius quam veteres, quaedam omnino relicta. Mihi, inquam, qui te id ipsum rogavi? Atqui reperies, inquit, in hoc quidem pertinacem;</p>\r\n<p>&nbsp;</p>\r\n<p>Sit sane ista voluptas. Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudiandum. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ergo id est convenienter naturae vivere, a natura discedere. Certe non potest.&nbsp;</p>', 'news-title-for-publishing-1', '15101679_1834395266799449_3600192340859289600_n.jpg', 'active', '1', 21, '2016-12-28', '2016-12-27 23:54:18', 1, '2016-12-28 01:38:42', 1, NULL, NULL),
+(2, 'Another news title', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliena dixit in physicis nec ea ipsa, quae tibi probarentur; Hoc loco tenere se Triarius non potuit. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Audeo dicere, inquit. Duo Reges: constructio interrete. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Non ego tecum iam ita iocabor, ut isdem his de rebus, cum L.</p>\r\n<p>Scripta sane et multa et polita, sed nescio quo pacto auctoritatem oratio non habet. Et quidem, Cato, hanc totam copiam iam Lucullo nostro notam esse oportebit; Quodcumque in mentem incideret, et quodcumque tamquam occurreret. Quamquam haec quidem praeposita recte et reiecta dicere licebit. Nos paucis ad haec additis finem faciamus aliquando; Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. Sextilio Rufo, cum is rem ad amicos ita deferret, se esse heredem Q. Ergo hoc quidem apparet, nos ad agendum esse natos. Quasi ego id curem, quid ille aiat aut neget.</p>\r\n<p>Omnes enim iucundum motum, quo sensus hilaretur. Sed plane dicit quod intellegit. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Si enim ad populum me vocas, eum. Primum in nostrane potestate est, quid meminerimus? Idem adhuc; Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. Quid ait Aristoteles reliquique Platonis alumni? Quis non odit sordidos, vanos, leves, futtiles? Bonum valitudo: miser morbus.</p>\r\n<p>Proclivi currit oratio. Ab hoc autem quaedam non melius quam veteres, quaedam omnino relicta. Mihi, inquam, qui te id ipsum rogavi? Atqui reperies, inquit, in hoc quidem pertinacem;</p>\r\n<p>&nbsp;</p>\r\n<p>Sit sane ista voluptas. Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudiandum. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ergo id est convenienter naturae vivere, a natura discedere. Certe non potest.&nbsp;</p>', 'another-news-title', '13658511_981456238635880_1491093037_n2.jpg', 'active', '1', 4, '2016-12-30', '2016-12-27 23:54:44', 1, '2016-12-27 23:54:47', 1, NULL, NULL),
 (3, 'The news is epic!', '<p><strong>Jember -</strong>&nbsp;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliena dixit in physicis nec ea ipsa, quae tibi probarentur; Hoc loco tenere se Triarius non potuit. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Audeo dicere, inquit. Duo Reges: constructio interrete. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Non ego tecum iam ita iocabor, ut isdem his de rebus, cum L.</p>\r\n<p>Scripta sane et multa et polita, sed nescio quo pacto auctoritatem oratio non habet. Et quidem, Cato, hanc totam copiam iam Lucullo nostro notam esse oportebit; Quodcumque in mentem incideret, et quodcumque tamquam occurreret. Quamquam haec quidem praeposita recte et reiecta dicere licebit. Nos paucis ad haec additis finem faciamus aliquando; Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. Sextilio Rufo, cum is rem ad amicos ita deferret, se esse heredem Q. Ergo hoc quidem apparet, nos ad agendum esse natos. Quasi ego id curem, quid ille aiat aut neget.</p>\r\n<p>Omnes enim iucundum motum, quo sensus hilaretur. Sed plane dicit quod intellegit. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Si enim ad populum me vocas, eum. Primum in nostrane potestate est, quid meminerimus? Idem adhuc; Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. Quid ait Aristoteles reliquique Platonis alumni? Quis non odit sordidos, vanos, leves, futtiles? Bonum valitudo: miser morbus.</p>\r\n<p>Proclivi currit oratio. Ab hoc autem quaedam non melius quam veteres, quaedam omnino relicta. Mihi, inquam, qui te id ipsum rogavi? Atqui reperies, inquit, in hoc quidem pertinacem;</p>\r\n<p>&nbsp;</p>\r\n<p>Sit sane ista voluptas. Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudiandum. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ergo id est convenienter naturae vivere, a natura discedere. Certe non potest.&nbsp;</p>', 'the-news-is-epic', '13886427_761182577354784_134803317120135536_n.jpg', 'unactive', '0', 1, '2016-12-31', '2016-12-27 23:55:18', 1, NULL, NULL, NULL, NULL),
 (4, 'Hola this is an awesome article!', '<p><strong>Lorem</strong> ipsum dolor sit amet, consectetur adipiscing elit. Aliena dixit in physicis nec ea ipsa, quae tibi probarentur; Hoc loco tenere se Triarius non potuit. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Audeo dicere, inquit. Duo Reges: constructio interrete. Dolor ergo, id est summum malum, metuetur semper, etiamsi non aderit; Non ego tecum iam ita iocabor, ut isdem his de rebus, cum L.</p>\r\n<p>Scripta sane et multa et polita, sed nescio quo pacto auctoritatem oratio non habet. Et quidem, Cato, hanc totam copiam iam Lucullo nostro notam esse oportebit; Quodcumque in mentem incideret, et quodcumque tamquam occurreret. Quamquam haec quidem praeposita recte et reiecta dicere licebit. Nos paucis ad haec additis finem faciamus aliquando; Utinam quidem dicerent alium alio beatiorem! Iam ruinas videres. Sextilio Rufo, cum is rem ad amicos ita deferret, se esse heredem Q. Ergo hoc quidem apparet, nos ad agendum esse natos. Quasi ego id curem, quid ille aiat aut neget.</p>\r\n<p>Omnes enim iucundum motum, quo sensus hilaretur. Sed plane dicit quod intellegit. Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur. Quae animi affectio suum cuique tribuens atque hanc, quam dico. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Si enim ad populum me vocas, eum. Primum in nostrane potestate est, quid meminerimus? Idem adhuc; Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. Quid ait Aristoteles reliquique Platonis alumni? Quis non odit sordidos, vanos, leves, futtiles? Bonum valitudo: miser morbus.</p>\r\n<p>Proclivi currit oratio. Ab hoc autem quaedam non melius quam veteres, quaedam omnino relicta. Mihi, inquam, qui te id ipsum rogavi? Atqui reperies, inquit, in hoc quidem pertinacem;</p>\r\n<p>&nbsp;</p>\r\n<p>Sit sane ista voluptas. Aut haec tibi, Torquate, sunt vituperanda aut patrocinium voluptatis repudiandum. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ergo id est convenienter naturae vivere, a natura discedere. Certe non potest.&nbsp;</p>', 'hola-this-is-an-awesome-article', '13902739_763620783777630_6428913875350940020_n.jpg', 'active', '0', 1, '2016-12-28', '2016-12-27 23:56:12', 1, '2016-12-27 23:56:21', 1, NULL, NULL),
 (5, 'This is draft example', '', 'this-is-draft-example', NULL, 'draft', '0', 0, '0000-00-00', '2016-12-27 23:57:03', 1, NULL, NULL, NULL, NULL),
@@ -403,7 +407,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', 'ee5ef828d84ebcb28fc5ff22c2b648932a596e9c', NULL, NULL, 'y2gkLeoLxmo7BNq2RR5BQ.', 1268889823, 1482992723, 1, 'Super', 'Admin', 'ADMIN', '0'),
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', 'ee5ef828d84ebcb28fc5ff22c2b648932a596e9c', NULL, NULL, 'y2gkLeoLxmo7BNq2RR5BQ.', 1268889823, 1483435161, 1, 'Super', 'Admin', 'ADMIN', '0'),
 (2, '127.0.0.1', 'generaladmin@general.com', '$2y$08$dPbZyqErk9Gzcj4Jc6V6.OQPJPg8Q70hmSgWAkem6ANYLmi8cLvi2', NULL, 'generaladmin@general.com', NULL, NULL, NULL, NULL, 1482558339, 1482559063, 1, 'Moderator', 'test', 'mascitra', '1'),
 (3, '127.0.0.1', 'berita@berita.com', '$2y$08$2VYZvKs8g/z0Y5Bfm71rQOmxbYRMPWszg7wG6bZi1Fv054AIc1qD2', NULL, 'berita@berita.com', NULL, NULL, NULL, NULL, 1482558513, 1482861637, 1, 'Admin', 'Berita', 'berita', '2');
 
@@ -427,6 +431,28 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (25, 1, 1),
 (29, 2, 2),
 (30, 3, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `visitors`
+--
+
+CREATE TABLE `visitors` (
+  `id` int(11) NOT NULL,
+  `month` varchar(10) NOT NULL,
+  `year` int(4) NOT NULL,
+  `total` int(11) NOT NULL,
+  `created_by` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `visitors`
+--
+
+INSERT INTO `visitors` (`id`, `month`, `year`, `total`, `created_by`) VALUES
+(1, 'November', 2016, 10, '2017-01-03 09:13:31'),
+(2, 'December', 2016, 35, '2017-01-03 09:13:31');
 
 --
 -- Indexes for dumped tables
@@ -518,6 +544,12 @@ ALTER TABLE `users_groups`
   ADD KEY `fk_users_groups_groups1_idx` (`group_id`);
 
 --
+-- Indexes for table `visitors`
+--
+ALTER TABLE `visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -530,7 +562,7 @@ ALTER TABLE `agendas`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `gallery_categories`
 --
@@ -586,6 +618,11 @@ ALTER TABLE `users`
 --
 ALTER TABLE `users_groups`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+--
+-- AUTO_INCREMENT for table `visitors`
+--
+ALTER TABLE `visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --

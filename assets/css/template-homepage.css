@@ -109,6 +109,14 @@ img{
 	object-fit: cover;
 }
 
+.text-warning{
+	color: yellow;
+}
+
+.text-bold{
+	font-weight: bolder;
+}
+
 @media (max-width: 768px) {
 	.navbar .navbar-brand{
 		padding-left: 10px;

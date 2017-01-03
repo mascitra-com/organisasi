@@ -56,6 +56,16 @@
 		</div>
 	</div>
 
+	<!-- PENGUMUMAN -->
+	<div class="row section" id="pengumuman">
+		<div class="row">
+			<div class="col-xs-12 pengumuman">
+				<span class="text-warning text-bold">[30-12-2016] Lorem ipsum dolor sit amet</span>
+				<span>[25-12-2016] Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur voluptatibus velit necessitatibus cum. Ab tempore, rerum. Necessitatibus et voluptatibus, adipisci.</span>
+			</div>
+		</div>
+	</div>
+
 	<div class="row section" id="new-article">
 		<div class="page-header">
 			<h3>Berita terbaru</h3>
@@ -127,48 +137,52 @@
 	</div>
 
 	<div class="row section" id="misc1">
-		<div class="col-xs-12 col-sm-6 col-md-9 white">
-			<div class="row" id="agenda">
-				<div class="col-xs-12 table-responsive">
-					<div class="page-header">
-						<h4>Agenda terbaru</h4>
-					</div>
-					<table class="table table-striped table-hover">
-						<tbody>
-							<?php if(!empty($agendas)): foreach($agendas as $agenda):?>
-								<tr>
-									<td class="text-right">
-										<h3><?=date('d', strtotime($agenda->agenda_date))?></h3>
-										<h5><?=date('F', strtotime($agenda->agenda_date))?></h5>
-										<h5><?=date('Y', strtotime($agenda->agenda_date))?></h5>
-									</td>
-									<td>
-										<h4><?=$agenda->name?></h4>
-										<p><?=$agenda->body?></p>
-									</td>
-								</tr>
-							<?php endforeach; endif;?>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="row" id="regulasi">
-				<div class="col-xs-12">
-					<div class="page-header">
-						<h4>Regulasi terbaru</h4>
-					</div>
-					<p><?=$regulation->body?></p>
-					<a href="<?=str_replace(str_replace("\\",'/',FCPATH), base_url(), $regulation->link)?>" class="btn btn-default btn-sm" download><i class="fa fa-file-word-o"></i> Unduh Regulasi</a>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-12 col-sm-6 col-md-3 blue" id="sosmed">
+		<div class="col-xs-12 col-md-6 table-responsive" id="agenda">
 			<div class="page-header">
-				<h4>Sosisal media</h4>
+				<h4>Agenda terbaru</h4>
 			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate possimus ratione voluptatibus deserunt libero est odio dignissimos repellendus, in fugiat!</p>
+			<table class="table table-striped table-hover">
+				<tbody>
+					<?php if(!empty($agendas)): foreach($agendas as $agenda):?>
+						<tr>
+							<td class="text-right">
+								<h3><?=date('d', strtotime($agenda->agenda_date))?></h3>
+								<h5><?=date('F', strtotime($agenda->agenda_date))?></h5>
+								<h5><?=date('Y', strtotime($agenda->agenda_date))?></h5>
+							</td>
+							<td>
+								<h4><?=$agenda->name?></h4>
+								<p><?=$agenda->body?></p>
+							</td>
+						</tr>
+					<?php endforeach; endif;?>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-xs-12 col-md-6 table-responsive" id="agenda">
+			<div class="page-header">
+				<h4>Regulasi terbaru</h4>
+			</div>
+			<table class="table table-striped table-hover">
+				<tbody>
+					<?php if(!empty($regulations)): foreach($regulations as $regulation):?>
+						<tr>
+							<td class="text-center">
+								<h3><a href="<?=str_replace(str_replace("\\",'/',FCPATH), base_url(), $regulation->link)?>" download><i class="fa fa-download"></i></a></h3>
+							</td>
+							<td>
+								<h4><?= (strlen($regulation->name) > 100) ? substr($regulation->name, 0, 100).'...' :  $regulation->name ?></h4>
+								<p><?= (strlen($regulation->body) > 100) ? substr($regulation->body, 0, 100).'...' :  $regulation->body ?></p>
+								<span class="label label-default"><?=$regulation->issued_by?></span>
+								<span class="label label-default"><?= mdate('%d %M %Y', strtotime(str_replace('-', '/', $regulation->issued_at))) ?></span>
+							</td>
+						</tr>
+					<?php endforeach; endif;?>
+				</tbody>
+			</table>
 		</div>
 	</div>
+
 	<div class="row section" id="banner-half">
 		<div class="col-xs-12 col-sm-12 col-md-6">
 			<img src="<?=$banners[1]?>" alt="banner">

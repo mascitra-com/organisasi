@@ -106,6 +106,22 @@ html, body{
 	font-weight: 700;
 }
 
+#pengumuman{
+	background-color: #1abc9c;
+	color: #FFF;
+	padding: 10px;
+	max-height: 40px;
+	font-size: 14px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-bottom: 0;
+	border-radius: 3px;
+}
+
+#pengumuman span{
+	margin-right: 20px;
+}
+
 #news .navbar{
 	padding: 0;
 }
@@ -132,14 +148,13 @@ html, body{
 }
 
 #misc1{
-	/*height: 600px;
-	max-height: 600px;
-	overflow: hidden;*/
+	height: 350px;
+	max-height: 350px;
 }
 
 #misc1 > [class*=col-]{
 	height: 100%;
-	padding: 0px 20px;
+	background-color: #fff;
 }
 
 #agenda table tr td{
@@ -149,6 +164,7 @@ html, body{
 
 #agenda table tr td:first-child{
 	padding:10px;
+	width: 5%;
 	background-color: #333;
 	color: #fff;
 }

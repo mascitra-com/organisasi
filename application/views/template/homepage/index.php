@@ -24,4 +24,5 @@
 
 </body>
 <?php $this->load->view('template/_main/javascript') ?>
+<script src="<?=base_url('assets/js/template-homepage.js')?>"></script>
 </html>

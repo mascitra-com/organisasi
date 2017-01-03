@@ -4,6 +4,8 @@ class Auth extends MY_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		$this->data['is_admin'] = $this->_data['is_admin'];
+
 		$this->data['link_privileges'] = $this->_data['link_privileges'];
 
 		$this->data['news_total'] = $this->_data['news_total'];

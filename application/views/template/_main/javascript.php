@@ -7,6 +7,9 @@
 <!-- Load jQuery UI -->
 <script src="<?= base_url('assets/plugins/jquery-ui/jquery-ui.min.js') ?>"></script>
 
+<!-- Load jQuery UI -->
+<script src="<?= base_url('assets/plugins/jquery-marquee/jquery.marquee.min.js') ?>"></script>
+
 <!-- Load CUSTOM JAVASCRIPT -->
 <?php if (isset($_view['js']) && !empty($_view['js'])): ?>
 

@@ -70,7 +70,7 @@ class Homepage extends MY_Controller
 		$this->_data['agendas'] = $this->agenda_model->order_by('agenda_date','desc')->as_object()->get_all();
 
 		$this->load->model('regulation_model');
-		$this->_data['regulation'] = $this->regulation_model->fields('body, link')->order_by('issued_at','desc')->as_object()->get();
+		$this->_data['regulations'] = $this->regulation_model->limit(3)->order_by('issued_at','desc')->as_object()->get_all();
 
 		$this->init();
 	}

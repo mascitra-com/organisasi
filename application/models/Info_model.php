@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Info_model extends MY_Model
 {
     public $primary_key = 'no';
-    public $fillable = array('website_name','acronym','description','office_address','phone','phone_alt','email','postal_code','logo_link');
+    public $fillable = array('website_name','acronym','description','office_address','phone','phone_alt','email','postal_code','facebook','twitter','logo_link');
     public $protected = array('no');
 
     public $rules = array(
@@ -45,7 +45,7 @@ class Info_model extends MY_Model
             'postal_code' => array(
                 'field' => 'postal_code',
                 'label' => 'Kode Pos',
-                'rules' => 'trim|alpha_numeric|required'),
+                'rules' => 'trim|alpha_numeric|required')
             ),
         'update' => array(
             'website_name' => array(

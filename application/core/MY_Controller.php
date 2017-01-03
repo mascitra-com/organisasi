@@ -26,6 +26,11 @@ class MY_Controller extends CI_Controller {
     $this->_data['link_privileges'] = $this->_privileges;
     $this->_data['is_admin'] = FALSE;
     
+    #Info website
+    $this->load->model('info_model');
+    $this->_data['acronym'] = $this->info_model->fields('acronym')->as_object()->get();
+    #End Info website
+
     if ($this->ion_auth->is_admin()) {
       $this->_data['is_admin'] = TRUE;
     }

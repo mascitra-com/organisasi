@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?=site_url('homepage')?>">ORGANISASI</a>
+      <a class="navbar-brand" href="<?=site_url('homepage')?>"><?=$acronym->acronym?></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -33,6 +33,7 @@
           </ul>
         </li>
         <li><a href="<?=site_url('homepage/regulation')?>">Regulasi</a></li>
+        <li><a href="<?=site_url('homepage/info')?>">Tentang</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

@@ -42,7 +42,7 @@ class Setting extends MY_Controller {
 				$data['logo_link'] = $former_info_logo_link->logo_link;
 			}
 
-			if ($this->info_model->from_form(NULL, array('logo_link'=>$data['logo_link']), array('no' => $id->no))->update()) {
+			if ($this->info_model->from_form(NULL, array('facebook'=>$data['facebook'],'twitter'=>$data['twitter'],'logo_link'=>$data['logo_link']), array('no' => $id->no))->update()) {
 				$this->message('<strong>Berhasil</strong> menyunting Data Info Website', 'success');
 				redirect('setting/info');
 			}else{
@@ -57,7 +57,7 @@ class Setting extends MY_Controller {
 			} else {
 				$data['logo_link'] = base_url('assets/img/default-2.png');
 			}
-			if ($this->info_model->from_form(NULL, array('logo_link'=>$data['logo_link']))->insert()) {
+			if ($this->info_model->from_form(NULL, array('facebook'=>$data['facebook'],'twitter'=>$data['twitter'],'logo_link'=>$data['logo_link']))->insert()) {
 				$this->message('<strong>Berhasil</strong> menyimpan Data Info Website', 'success');
 				redirect('setting/info');
 			} else {

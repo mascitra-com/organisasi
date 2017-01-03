@@ -126,7 +126,7 @@
 						<i class="fa fa-angle-down fa-fw pull-right hidden-xs hidden-sm"></i>
 					</a>
 					<ul class="collapse collapseable" id="collapse-hak">
-						<?php if(show_sidebar_menu('auth/index', $link_privileges)): ?>
+						<?php if(show_sidebar_menu('auth/index', $link_privileges) || $is_admin ): ?>
 							<li>
 								<a href="<?=site_url('auth')?>">
 									<i class="fa fa-user fa-fw"></i>
@@ -187,6 +187,15 @@
 								<a href="<?=site_url('setting/banner')?>">
 									<i class="fa fa-image fa-fw"></i>
 									<span class="nav-label">Banner</span>
+								</a>
+							</li>
+						<?php endif; ?>
+
+						<?php if(show_sidebar_menu('announcement', $link_privileges) || $is_admin): ?>
+							<li>
+								<a href="<?=site_url('announcement')?>">
+									<i class="fa fa-bullhorn fa-fw"></i>
+									<span class="nav-label">Pengumuman</span>
 								</a>
 							</li>
 						<?php endif; ?>

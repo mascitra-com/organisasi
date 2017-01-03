@@ -12,7 +12,18 @@ class Visitor_model extends MY_Model
 
     public function __construct()
     {
+        $this->timestamps = FALSE;
         parent::__construct();
     }
 
+    public function total_visitor()
+    {
+        $this->db->select('SUM(total) as totalvisitor');
+        $results = $this->db->get('visitors')->result();
+        if($results[0]->totalvisitor){
+            return $results[0]->totalvisitor;
+        } else {
+            return 0;
+        }
+    }
 }

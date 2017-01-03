@@ -21,12 +21,20 @@ var data = {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            spanGaps: false,
+            spanGaps: true
         }
     ]
 };
 var myBarChart = new Chart($("#chart1"), {
     type: 'line',
     data: data,
-    options: {}
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
 });

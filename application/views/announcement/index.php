@@ -21,9 +21,9 @@
 									<input type="text" name="body" class="form-control" placeholder="Isi" value="<?= isset($search->body) ?$search->body : '' ?>">
 								</td>
 								<td class="form-group text-center">
-									<select class="form-control" name="published_at">
-										<option value="newest" <?= (isset($search->published_at) && $search->published_at === "newest") ? 'selected' : ''?>>Terbaru</option>
-										<option value="oldest" <?= (isset($search->published_at) && $search->published_at === "oldest") ? 'selected' : ''?>>Terlama</option>
+									<select class="form-control" name="expiration_date">
+										<option value="newest" <?= (isset($search->expiration_date) && $search->expiration_date === "newest") ? 'selected' : ''?>>Terbaru</option>
+										<option value="oldest" <?= (isset($search->expiration_date) && $search->expiration_date === "oldest") ? 'selected' : ''?>>Terlama</option>
 									</select>
 								</td>
 								<td class="form-group text-center">
@@ -57,7 +57,7 @@
 								<td class="text-center"><a href="<?=site_url('announcement/update_priority/'.$announcement->id)?>"><i class="fa fa-circle text-<?=($announcement->priority == '1')? 'danger' : 'primary' ?>"></i></a></td>
 								<td class="text-center text-nowrap">
 									<a class="btn btn-xs btn-default" href="<?=site_url('announcement/edit/'.$announcement->slug)?>"><i class="fa fa-info"></i></a>
-									<a class="btn btn-xs btn-default" href="#"><i class="fa fa-trash"></i></a>
+									<a class="btn btn-xs btn-default" href="<?=site_url('announcement/destroy/'.$announcement->id)?>"><i class="fa fa-trash" onclick="return confirm('Hapus pengumuman?')"></i></a>
 								</td>
 							</tr>
 						<?php endforeach; } else { echo "<td colspan='5'>$announcements<td>"; } ?>

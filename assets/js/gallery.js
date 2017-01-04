@@ -59,3 +59,8 @@ function prev() {
     $("#detailModal").modal();
     console.log(id);
 }
+
+function preview(link)
+{
+    $("#img-besar").prop('src', link);
+}

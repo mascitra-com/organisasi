@@ -1,0 +1,25 @@
+.info{
+	margin-bottom: 15px;
+	color: #555;
+}
+
+.info h1, .info h3{
+	color:#333;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+}
+
+.info span, .info p{
+	display: block;
+	font-family: Roboto;
+}
+
+.row [class*=col-]:last-child{
+	padding-left: 15px;
+	max-height: 520px;
+	overflow: hidden;
+}
+
+.text-bold{
+	font-weight: bold;
+}

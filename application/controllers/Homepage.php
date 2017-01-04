@@ -335,6 +335,7 @@ class Homepage extends MY_Controller
 		$this->_view['title'] = 'Isi Galeri';
 		$this->_view['css'] 	= 'gallery';
 		$this->_view['page'] = 'homepage/gallery-album';
+		$this->_view['js'] = 'gallery';
 		$this->init();
 	}
 
@@ -438,10 +439,10 @@ class Homepage extends MY_Controller
 
 	 public function info()
 	 {
-	 	$this->_view['title'] = 'Info';
+	 	$this->_view['title'] = 'Informasi Website';
 	 	$this->_view['page'] = 'homepage/info';
+	 	$this->_view['css'] = 'info';
 	 	$this->_data['infos'] = $this->info_model->get_all();
-	 	$this->_data['banners'] = $this->images_banners();
 	 	$this->init();
 	 }
 	}

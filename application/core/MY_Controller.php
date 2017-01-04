@@ -28,7 +28,7 @@ class MY_Controller extends CI_Controller {
     
     #Info website
     $this->load->model('info_model');
-    $this->_data['acronym'] = $this->info_model->fields('acronym')->as_object()->get();
+    $this->_data['info'] = $this->info_model->fields('acronym,facebook,twitter')->as_object()->get();
     #End Info website
 
     if ($this->ion_auth->is_admin()) {

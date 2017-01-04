@@ -22,7 +22,7 @@ class Announcement extends MY_Controller {
 		}
 		$this->_data['number'] = $this->input->get('number') != NULL ? $this->input->get('number') : 0;
 		$this->_data['per_page'] = $this->input->get('per_page') != NULL ? $this->input->get('per_page') : 10;
-		$this->_data['per_page_name'] = 'Profil';
+		$this->_data['per_page_name'] = 'Pengumuman';
 		$this->_data['per_page_options'] = array(10, 25, 50, 75, 100);
 		$this->page();
 		$this->_view['title'] = 'Pengumuman';
@@ -119,13 +119,17 @@ class Announcement extends MY_Controller {
 		}
 	}
 
-	public function destroy($id) {
-		if ($this->announcement_model->delete($id)) {
-			$this->message('<strong>Berhasil</strong> menghapus Data Announcement', 'success');
-		} else {
-			$this->message('<strong>Gagal</strong> menghapus Data Announcement', 'danger');
+	public function destroy($id = NULL) {
+		if ($id != NULL) {
+			if ($this->announcement_model->delete($id)) {
+				$this->message('<strong>Berhasil</strong> menghapus Data Pengumuman', 'success');
+			} else {
+				$this->message('<strong>Gagal</strong> menghapus Data Pengumuman', 'danger');
+			}
+			redirect('announcement');
+		}else{
+			$this->go('announcement');
 		}
-		redirect('announcement');
 	}
 
 	public function search()

@@ -13,8 +13,8 @@
 					<a href="<?=site_url('homepage/gallery')?>">Galeri</a>
 					<a href="<?=site_url('homepage/regulation')?>">Regulasi</a>
 					<a href="<?=site_url('auth/login')?>">Login</a>
-					<a href="#" class="btn btn-default btn-xs btn-primary" style="color:#fff;margin-right:5px;"><i class="fa fa-facebook"></i> like</a>
-					<a href="#" class="btn btn-default btn-xs btn-primary" style="background-color:#1dcaff;color:#fff"><i class="fa fa-twitter"></i> follow</a>
+					<a href="http://www.facebook.com/<?=$info->facebook?>" target="_blank" class="btn btn-default btn-xs btn-primary" style="color:#fff;margin-right:5px;"><i class="fa fa-facebook"></i> like</a>
+					<a href="http://www.twitter.com/<?=$info->twitter?>" target="_blank" class="btn btn-default btn-xs btn-primary" style="background-color:#1dcaff;color:#fff"><i class="fa fa-twitter"></i> follow</a>
 				</div>
 			</div>
 		</div>

@@ -14,9 +14,7 @@
 		</div>
 		<div class="col-md-7">
 			<div class="pull-right">
-				<a href="#" class="top-nav-menu"><i class="fa fa-bell"></i><span class="label label-warning">99</span></a>
-				<a href="#" class="top-nav-menu"><i class="fa fa-cog"></i><span></span></a>
-				<a href="#" class="top-nav-menu"><i class="fa fa-lock"></i><span></span></a>
+				<a href="<?=site_url('auth/logout')?>" class="top-nav-menu"><i class="fa fa-lock"></i><span></span></a>
 			</div>
 		</div>
 	</header>

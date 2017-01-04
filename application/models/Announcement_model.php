@@ -55,6 +55,17 @@ class Announcement_model extends MY_Model
     public function fetch_data($limit, $start, $search)
     {
         $this->db->limit($limit, $start);
+        if (isset($search)) {
+            if ($search->priority === "high") {
+                $this->db->where('priority', '1');
+            }elseif ($search->priority === "common") {
+                $this->db->where('priority', '0');
+            }else{
+                $this->db->where_in('priority', array('0', '1'));
+            }
+        }else{
+            $this->db->where_in('priority', array('0', '1'));
+        }
         $this->search($search);
         $this->order_by('expiration_date','desc');
         $query = $this->db->get($this->table);
@@ -72,15 +83,15 @@ class Announcement_model extends MY_Model
      */
      private function search($search)
      {
-        if (isset($search)) {
-            $col = $this->db->list_fields($this->table);
-            $i = 1;
-            foreach ($search as $val) {
-                if(!empty($val)){
-                    $this->db->like($col[$i], $val);}
-                    $i++;
-                }
-            }
-        }
+      if (isset($search)) {
+        if ($search->expiration_date === "newest") {
+            $this->db->order_by('expiration_date','desc');
+        }else{
+          $this->db->order_by('expiration_date','asc');
+      }
+      $this->db->like('name', $search->name);
+      $this->db->like('body', $search->body);
+  }
+}
 
-    }
+}

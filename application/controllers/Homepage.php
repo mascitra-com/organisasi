@@ -435,5 +435,14 @@ class Homepage extends MY_Controller
 	 	$this->_data['number'] = $this->input->get('number') !== NULL ? $this->input->get('number') : 0;
 	 	$this->_data['per_page'] = $this->input->get('per_page') !== NULL ? $this->input->get('per_page') : $default_per_page;
 	 }
+
+    public function info()
+    {
+        $this->_view['title'] = 'Info';
+        $this->_view['page'] = 'homepage/info';
+        $this->_data['infos'] = $this->info_model->get_all();
+        $this->_data['banners'] = $this->images_banners();
+        $this->init();
+    }
 	}
 	

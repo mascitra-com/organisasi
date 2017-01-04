@@ -7,7 +7,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="panel-body table-responsive">
-				<table class="table table-hover table-bordered table-striped">
+				<table class="table table-hover table-striped">
 					<thead>
 						<tr>
 							<th class="text-center">#</th>

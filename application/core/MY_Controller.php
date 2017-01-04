@@ -126,8 +126,10 @@ protected function check_privileges($class, $method){
     {
       if ($condition) {
         $this->message('<strong>Berhasil</strong> '.$status.' '.$type, 'success');
+        return TRUE;
       } else {
         $this->message('<strong>Gagal</strong> '.$status.' '.$type, 'danger');
+        return FALSE;
       }
     }
 

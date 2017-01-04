@@ -327,15 +327,15 @@ class Homepage extends MY_Controller
 	public function gallery_show($slug = NULL)
 	{
 		$this->_data['slug'] = $slug;
-        $this->input_get_for_pagination(8);
-        $this->might_make_errors($this->_data['galleries'] = $this->category_model->get(array('slug' => $this->_data['slug'])));
-        $this->_data['per_page_name'] = 'Foto';
-        $this->_data['per_page_options'] = array(8, 16, 32, 48, 60);
-        $this->pages();
-        $this->_view['title'] = 'Isi Galeri';
-        $this->_view['css'] 	= 'gallery';
-        $this->_view['page'] = 'homepage/gallery-album';
-        $this->init();
+		$this->input_get_for_pagination(8);
+		$this->might_make_errors($this->_data['galleries'] = $this->category_model->get(array('slug' => $this->_data['slug'])));
+		$this->_data['per_page_name'] = 'Foto';
+		$this->_data['per_page_options'] = array(8, 16, 32, 48, 60);
+		$this->pages();
+		$this->_view['title'] = 'Isi Galeri';
+		$this->_view['css'] 	= 'gallery';
+		$this->_view['page'] = 'homepage/gallery-album';
+		$this->init();
 	}
 
 	public function videos($search_status = FALSE)
@@ -436,3 +436,4 @@ class Homepage extends MY_Controller
 	 	$this->_data['per_page'] = $this->input->get('per_page') !== NULL ? $this->input->get('per_page') : $default_per_page;
 	 }
 	}
+	

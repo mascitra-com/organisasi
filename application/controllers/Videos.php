@@ -107,12 +107,6 @@ class Videos extends MY_Controller
                 $this->_view['page'] = 'gallery/videos/create';
                 $this->init();
             }
-        } else {
-            $this->message('Gagal! Video belum di pilih atau link sedang kosong', 'danger');
-            $this->_data['action'] = 'store';
-            $this->_data['data'] = (object) $data;
-            $this->_view['page'] = 'gallery/videos/create';
-            $this->init();
         }
     }
 
@@ -170,7 +164,11 @@ class Videos extends MY_Controller
     public function destroy($name)
     {
         $name = str_replace('-', ' ', $name);
-        $this->is_worked($this->gallery_model->delete(array('name' => $name)), 'menghapus', 'Video');
+        if($this->is_worked($this->gallery_model->delete(array('name' => $name)), 'menghapus', 'Video')){
+            $link = $this->gallery_model->get(array('name' => $name))->link;
+            $file_path = str_replace(base_url(), '', $link);
+            unlink($file_path);
+        }
         $this->go('videos');
     }
 

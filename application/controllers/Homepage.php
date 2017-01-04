@@ -72,6 +72,9 @@ class Homepage extends MY_Controller
 		$this->load->model('regulation_model');
 		$this->_data['regulations'] = $this->regulation_model->limit(3)->order_by('issued_at','desc')->as_object()->get_all();
 
+		$this->load->model('announcement_model');
+		$this->_data['announcements'] = $this->announcement_model->fields('body, priority, created_at')->where('expiration_date','>=', date('Y-m-d'))->order_by('priority','desc')->as_object()->get_all();
+
 		$this->init();
 	}
 

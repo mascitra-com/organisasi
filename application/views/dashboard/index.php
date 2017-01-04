@@ -93,13 +93,13 @@
 				<table class="table table-hover">
 					<tbody>
 					<?php if (!empty($popular_articles)) {foreach ($popular_articles as $article): ?>
-						<tr>
-							<td><img src="<?=base_url('assets/img/news_img/' . check_image($article->img_link, './assets/img/news_img/', 'default-2.png'))?>" alt="thumbnail" height="75"></td>
-							<td>
-								<h4><?=$article->name?></h4>
-								<p><?=trim_article(strip_tags($article->body), 120)?></p>
-							</td>
-						</tr>
+                            <tr>
+                                <td><img src="<?=base_url('assets/img/news_img/' . check_image($article->img_link, './assets/img/news_img/', 'default-2.png'))?>" alt="thumbnail" height="75"></td>
+                                <td>
+                                    <h4><a href="<?=site_url('news/show/'.$article->slug)?>"><?=$article->name?></a></h4>
+                                    <p><?=trim_article(strip_tags($article->body), 120)?></p>
+                                </td>
+                            </tr>
 					<?php endforeach;} else {echo "<tr>Tidak ada berita</tr>";}?>
 					</tbody>
 				</table>

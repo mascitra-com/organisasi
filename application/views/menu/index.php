@@ -18,7 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(!empty($menus)): $no=1; foreach ($menus as $menu): ?>
+                        <?php if(!empty($menus)): $no=1 + $number; foreach ($menus as $menu): ?>
                             <tr>
                                 <td><?=$no++?></td>
                                 <td><?=$menu->nama_menu?></td>
@@ -32,6 +32,7 @@
                         <?php endforeach; endif; ?>
                     </tbody>
                 </table>
+                <?php $this->load->view('template/dashboard/pagination'); ?>
             </div>
         </div>
     </div>

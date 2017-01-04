@@ -49,4 +49,18 @@ class Menu_model extends MY_Model
         parent::__construct();
     }
 
+    public function fetch_data($limit, $start)
+    {
+        $this->db->limit($limit, $start);
+        $this->order_by('link','ASC');
+        $query = $this->db->get($this->table);
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return 'Tidak ditemukan Menu apapun';
+    }
+
 }

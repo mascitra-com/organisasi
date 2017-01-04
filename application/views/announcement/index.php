@@ -54,7 +54,7 @@
 								<td class="text-nowrap"><?=trim_article($announcement->name)?></td>
 								<td><?=trim_article($announcement->body)?></td>
 								<td class="text-center"><?=date('d-m-Y', strtotime($announcement->expiration_date))?></td>
-								<td class="text-center"><a href="#"><i class="fa fa-circle text-<?=($announcement->priority == '1')? 'danger' : 'primary' ?>"></i></a></td>
+								<td class="text-center"><a href="<?=site_url('announcement/update_priority/'.$announcement->id)?>"><i class="fa fa-circle text-<?=($announcement->priority == '1')? 'danger' : 'primary' ?>"></i></a></td>
 								<td class="text-center text-nowrap">
 									<a class="btn btn-xs btn-default" href="<?=site_url('announcement/edit/'.$announcement->slug)?>"><i class="fa fa-info"></i></a>
 									<a class="btn btn-xs btn-default" href="#"><i class="fa fa-trash"></i></a>

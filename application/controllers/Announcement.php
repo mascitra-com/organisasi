@@ -11,6 +11,7 @@ class Announcement extends MY_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->_view['template'] = 'template/dashboard/index';
+		$this->_view['js'] = 'announcement';
 		$this->load->model('announcement_model');
 		$this->slug_config($this->announcement_model->table, 'name');
 	}
@@ -92,6 +93,27 @@ class Announcement extends MY_Controller {
 				$this->_view['page'] = 'announcement/edit';
 				$this->init();
 			}	
+		}else{
+			$this->go('announcement');
+		}
+	}
+
+	public function update_priority($id = NULL) {
+		if ($id != NULL) {
+			$announcement = $this->announcement_model->fields('priority')->as_object()->where('id', $id)->get();
+			$priority = $announcement->priority;
+			if ($priority == '0') {
+				$priority = '1';
+			}else{
+				$priority = '0';
+			}
+
+			if ($this->announcement_model->where('id', $id)->update(array('priority' => $priority))) {
+				$this->message('<strong>Berhasil</strong> merubah Prioritas Pengumuman', 'success');
+			} else {
+				$this->message('<strong>Gagal</strong> merubah Prioritas Pengumuman', 'danger');
+			}	
+			redirect('announcement');
 		}else{
 			$this->go('announcement');
 		}

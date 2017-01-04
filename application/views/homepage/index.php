@@ -60,10 +60,10 @@
 	<div class="row section" id="pengumuman">
 		<div class="row">
 			<div class="col-xs-12 pengumuman">
-			<?php if(!empty($announcements)) { foreach($announcements as $announcements):?>
-				<span class="text-warning text-bold">[30-12-2016] Lorem ipsum dolor sit amet</span>
+				<?php if(!empty($announcements)) { foreach($announcements as $announcement):?>
+					<span class="<?= ($announcement->priority == '1') ? 'text-warning text-bold' : ''?>">[<?=date('d-m-Y', strtotime($announcement->created_at))?>] <?=$announcement->body?></span>
+				<?php endforeach; } else{ echo '<span>Tidak ada pengumuman</span>'; }?>
 			</div>
-		<?php endforeach; } else{ echo '<span>Tidak ada pengumuman</span>'; }?>
 		</div>
 	</div>
 
